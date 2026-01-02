@@ -20,7 +20,7 @@
         /* Logo */
         .logo {
             position: absolute;
-            top: 60px;
+            bottom: 90px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
@@ -40,7 +40,7 @@
         /* Motto under logo */
         .hero-motto {
             position: absolute;
-            top: 230px;
+            bottom: 60px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
@@ -339,7 +339,7 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .logo {
-                top: 40px;
+                bottom: 100px;
             }
 
             .logo img {
@@ -347,7 +347,7 @@
             }
 
             .hero-motto {
-                top: 160px;
+                bottom: 40px;
             }
 
             .hero-motto p {
@@ -402,6 +402,12 @@
             footer {
                 padding: 30px 20px;
             }
+
+            /* Stack photo gallery on mobile */
+            .content-section > div > div[style*="grid-column: span"] {
+                grid-column: span 12 !important;
+                height: 300px !important;
+            }
         }
     </style>
 </head>
@@ -413,12 +419,12 @@
 
     <!-- Motto -->
     <div class="hero-motto">
-        <p>Adventures worth the travel. And the people who bring them to life.</p>
+        <p>Adventures worth writing home about. And the people who make them happen.</p>
     </div>
 
     <!-- Hero Section -->
     <section class="hero">
-        <img src="optimized-images/disneyland-entrance-hero.jpg" alt="Disneyland entrance" class="hero-image">
+        <img src="optimized-images/joshua-tree-sunrise.jpg" alt="Joshua Tree National Park Sunrise" class="hero-image">
         <div class="hero-overlay"></div>
     </section>
 
@@ -452,20 +458,42 @@
         </div>
 
         <!-- Photo Gallery -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 40px 50px;">
-            <div style="position: relative; overflow: hidden; border-radius: 8px; height: 250px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255,110,199,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+        <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; padding: 40px 50px;">
+            <!-- Disneyland Entrance - Large Feature -->
+            <div style="grid-column: span 8; position: relative; overflow: hidden; border-radius: 8px; height: 400px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 25px rgba(255,110,199,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                <img src="optimized-images/disneyland-entrance-hero.jpg" alt="Disneyland Resort" style="width: 100%; height: 100%; object-fit: cover;">
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%); padding: 30px;">
+                    <h3 style="font-size: 1.8rem; font-weight: bold; margin: 0;">Disneyland Resort</h3>
+                    <p style="margin: 8px 0 0; font-size: 1rem; color: rgba(255,255,255,0.8);">The Happiest Place on Earth</p>
+                </div>
+            </div>
+
+            <!-- Crystal Cove - Tall Right -->
+            <div style="grid-column: span 4; position: relative; overflow: hidden; border-radius: 8px; height: 400px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255,110,199,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                <img src="optimized-images/crystal-cove-state-park.jpg" alt="Crystal Cove State Park" style="width: 100%; height: 100%; object-fit: cover;">
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); padding: 20px;">
+                    <h3 style="font-size: 1.3rem; font-weight: bold; margin: 0;">Crystal Cove</h3>
+                </div>
+            </div>
+
+            <!-- Laguna Beach -->
+            <div style="grid-column: span 4; position: relative; overflow: hidden; border-radius: 8px; height: 280px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255,110,199,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
                 <img src="optimized-images/laguna-beach.jpg" alt="Laguna Beach" style="width: 100%; height: 100%; object-fit: cover;">
                 <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); padding: 20px;">
                     <h3 style="font-size: 1.3rem; font-weight: bold; margin: 0;">Laguna Beach</h3>
                 </div>
             </div>
-            <div style="position: relative; overflow: hidden; border-radius: 8px; height: 250px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255,110,199,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+
+            <!-- Dana Point Beach -->
+            <div style="grid-column: span 4; position: relative; overflow: hidden; border-radius: 8px; height: 280px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255,110,199,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
                 <img src="optimized-images/dana-point-beach.jpg" alt="Dana Point Beach" style="width: 100%; height: 100%; object-fit: cover;">
                 <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); padding: 20px;">
                     <h3 style="font-size: 1.3rem; font-weight: bold; margin: 0;">Dana Point Beach</h3>
                 </div>
             </div>
-            <div style="position: relative; overflow: hidden; border-radius: 8px; height: 250px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255,110,199,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+
+            <!-- Dana Point Sea Lions -->
+            <div style="grid-column: span 4; position: relative; overflow: hidden; border-radius: 8px; height: 280px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255,110,199,0.4)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
                 <img src="optimized-images/dana-point-sea-lions.jpg" alt="Dana Point Sea Lions" style="width: 100%; height: 100%; object-fit: cover;">
                 <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); padding: 20px;">
                     <h3 style="font-size: 1.3rem; font-weight: bold; margin: 0;">Dana Point Sea Lions</h3>
