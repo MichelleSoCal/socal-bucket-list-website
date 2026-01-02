@@ -540,7 +540,7 @@
                     },
                     {
                         name: 'newsletter',
-                        value: formData.get('newsletter') === 'true' ? 'Yes' : 'No'
+                        value: formData.get('newsletter') ? 'Yes' : 'No'
                     }
                 ],
                 context: {
@@ -560,6 +560,9 @@
                     body: JSON.stringify(data)
                 });
 
+                const result = await response.json();
+                console.log('HubSpot response:', result);
+
                 if (response.ok) {
                     // Track form submission event
                     if (window._hsq) {
@@ -577,9 +580,11 @@
                     formMessage.textContent = 'Thank you! Your adventure suggestion has been submitted.';
                     form.reset();
                 } else {
-                    throw new Error('Submission failed');
+                    console.error('HubSpot error:', result);
+                    throw new Error(result.message || 'Submission failed');
                 }
             } catch (error) {
+                console.error('Form submission error:', error);
                 // Error message
                 formMessage.style.display = 'block';
                 formMessage.style.color = '#ffcccc';
