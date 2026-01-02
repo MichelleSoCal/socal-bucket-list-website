@@ -391,6 +391,10 @@
                 flex-direction: column;
             }
 
+            .newsletter-form > div {
+                grid-template-columns: 1fr !important;
+            }
+
             .newsletter-button {
                 width: 100%;
             }
@@ -427,9 +431,12 @@
             <h2>Suggest an Adventure</h2>
             <p>Know a place, experience, or person worth adding to the SoCal Bucket List?</p>
             <form id="suggest-form" class="newsletter-form" style="flex-direction: column; align-items: stretch;">
-                <input type="text" name="firstname" class="newsletter-input" placeholder="Your Name" required style="margin-bottom: 15px;">
-                <textarea name="recommended_adventure" class="newsletter-input" placeholder="What's the Adventure?" required style="min-height: 100px; resize: vertical; margin-bottom: 15px; font-family: inherit;"></textarea>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <input type="text" name="firstname" class="newsletter-input" placeholder="First Name" required style="margin-bottom: 0;">
+                    <input type="text" name="lastname" class="newsletter-input" placeholder="Last Name" required style="margin-bottom: 0;">
+                </div>
                 <input type="email" name="email" class="newsletter-input" placeholder="Your Email Address" required style="margin-bottom: 15px;">
+                <textarea name="recommended_adventure" class="newsletter-input" placeholder="What's the Adventure?" required style="min-height: 100px; resize: vertical; margin-bottom: 15px; font-family: inherit;"></textarea>
                 <label style="display: flex; align-items: center; gap: 10px; color: #fff; font-size: 1rem; margin-bottom: 20px; cursor: pointer;">
                     <input type="checkbox" name="newsletter" value="true" style="width: 18px; height: 18px; cursor: pointer;">
                     <span>Sign up for Newsletter</span>
@@ -529,6 +536,10 @@
                     {
                         name: 'firstname',
                         value: formData.get('firstname')
+                    },
+                    {
+                        name: 'lastname',
+                        value: formData.get('lastname')
                     },
                     {
                         name: 'email',
