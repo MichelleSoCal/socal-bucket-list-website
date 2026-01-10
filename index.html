@@ -87,6 +87,12 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .hero-image.active {
+            opacity: 1;
         }
 
         .hero-overlay {
@@ -449,7 +455,9 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <img src="optimized-images/joshua-tree-sunrise.jpg" alt="Joshua Tree National Park Sunrise" class="hero-image">
+        <img src="optimized-images/joshua-tree-sunrise.jpg" alt="Joshua Tree National Park Sunrise" class="hero-image active">
+        <img src="optimized-images/disneyland-night-hero.jpg" alt="Disneyland Castle at Night" class="hero-image">
+        <img src="optimized-images/dana-point-beach.jpg" alt="Dana Point Beach Sunset" class="hero-image">
         <div class="hero-overlay"></div>
     </section>
 
@@ -529,6 +537,24 @@
     </footer>
 
     <script>
+        // Hero image slideshow
+        const heroImages = document.querySelectorAll('.hero-image');
+        let currentImageIndex = 0;
+
+        function rotateHeroImage() {
+            // Remove active class from current image
+            heroImages[currentImageIndex].classList.remove('active');
+
+            // Move to next image
+            currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+
+            // Add active class to new image
+            heroImages[currentImageIndex].classList.add('active');
+        }
+
+        // Rotate every 15 seconds
+        setInterval(rotateHeroImage, 15000);
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
