@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8FCF1EFQXH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8FCF1EFQXH');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoCal Flights | SoCal Bucket List</title>
+    <meta name="description" content="Discover all direct flights from Southern California airports. Find your next adventure from SNA, LGB, and more.">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom, #1a0a1f 0%, #2d1b3d 50%, #1a0a1f 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 60px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff6ec7;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            padding: 30px 50px;
+            background: rgba(163, 25, 132, 0.1);
+            border-bottom: 1px solid rgba(255, 110, 199, 0.2);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-controls label {
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        .filter-controls select {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 110, 199, 0.3);
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Flights Section */
+        .flights-section {
+            padding: 40px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .flights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .flight-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 110, 199, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 110, 199, 0.3);
+            border-color: rgba(255, 110, 199, 0.5);
+        }
+
+        .destination-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff6ec7;
+            text-transform: uppercase;
+        }
+
+        .flight-route {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .airlines {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .airline-tag {
+            padding: 4px 12px;
+            background: rgba(255, 110, 199, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .flight-details {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 50px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #ff6ec7;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            nav {
+                margin-top: 20px;
+            }
+
+            nav a {
+                margin: 0 15px;
+                font-size: 0.9rem;
+            }
+
+            .filter-section {
+                padding: 20px;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .flights-section {
+                padding: 30px 20px;
+            }
+
+            .flights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="../index.html">
+            <img src="../optimized-images/logo-white.png" alt="SoCal Bucket List" class="logo">
+        </a>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="airports/">Airports</a>
+        </nav>
+    </header>
+
+    <!-- Page Title -->
+    <section style="padding: 40px 50px 20px; text-align: center;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">SoCal Flights <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 12px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h1>
+        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.7);">Explore all direct flight options from Southern California airports</p>
+        <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); margin-top: 10px; font-style: italic;">For dreaming purposes only. Please verify flight availability before making travel plans.</p>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-controls">
+            <label>Filter by:</label>
+            <select id="airport-filter">
+                <option value="">All Airports</option>
+                <option value="SNA">SNA - John Wayne</option>
+                <option value="LGB">LGB - Long Beach</option>
+                <option value="LAX">LAX - Los Angeles</option>
+            </select>
+            <select id="airline-filter">
+                <option value="">All Airlines</option>
+            </select>
+            <select id="state-filter">
+                <option value="">All States</option>
+            </select>
+            <select id="country-filter">
+                <option value="">All Countries</option>
+            </select>
+            <select id="sort-filter">
+                <option value="shortest">Shortest Flight Time</option>
+                <option value="longest">Longest Flight Time</option>
+            </select>
+            <button id="consolidate-toggle" style="padding: 10px 20px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; background: rgba(255, 110, 199, 0.2); color: #fff; cursor: pointer; transition: all 0.3s;">
+                Group by City
+            </button>
+        </div>
+    </section>
+
+    <!-- Flights Section -->
+    <section class="flights-section">
+        <h2 class="section-title">Direct Flights from Southern California</h2>
+        <div class="flights-grid" id="flights-grid">
+            <div class="loading">Loading flights...</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SoCal Bucket List. <a href="../index.html">Home</a></p>
+    </footer>
+
+    <script>
+        // Airtable configuration
+        const AIRTABLE_TOKEN = 'pat4HICXlDN0QBxkZ.b8d2092207dd1ee3ec676ab0b131f19ae92d17bcc17b0c9fb25d0a64dd1e0024';
+        const AIRTABLE_BASE_ID = 'appGoQsy2UiGyyZ3T';
+
+        async function fetchAllRecords(tableName) {
+            let records = [];
+            let offset = null;
+
+            do {
+                const url = offset
+                    ? `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}?offset=${offset}`
+                    : `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}`;
+
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
+                });
+
+                if (!response.ok) throw new Error(`Failed to fetch ${tableName}`);
+
+                const data = await response.json();
+                records = records.concat(data.records);
+                offset = data.offset;
+            } while (offset);
+
+            return records;
+        }
+
+        async function fetchFlightsFromAirtable() {
+            try {
+                // Fetch all records with pagination
+                const [flightsRecords, airportsRecords, airlinesRecords, countriesRecords, citiesRecords, statesRecords] = await Promise.all([
+                    fetchAllRecords('Flights'),
+                    fetchAllRecords('Airports'),
+                    fetchAllRecords('Airlines'),
+                    fetchAllRecords('Destinations_Country'),
+                    fetchAllRecords('Destinations_City'),
+                    fetchAllRecords('Destinations_State')
+                ]);
+
+                const flightsData = { records: flightsRecords };
+                const airportsData = { records: airportsRecords };
+                const airlinesData = { records: airlinesRecords };
+                const countriesData = { records: countriesRecords };
+                const citiesData = { records: citiesRecords };
+                const statesData = { records: statesRecords };
+
+                // Create lookup maps for linked tables
+                const countriesMap = {};
+                countriesData.records.forEach(country => {
+                    countriesMap[country.id] = country.fields.Country || country.fields.Name || '';
+                });
+
+                const citiesMap = {};
+                citiesData.records.forEach(city => {
+                    citiesMap[city.id] = city.fields.City || city.fields.Name || '';
+                });
+
+                const statesMap = {};
+                statesData.records.forEach(state => {
+                    statesMap[state.id] = state.fields.State || state.fields.Name || '';
+                });
+
+                // Create lookup maps
+                const airportsMap = {};
+                airportsData.records.forEach(airport => {
+                    // Look up values from linked records
+                    const countryId = airport.fields.Country?.[0];
+                    const cityId = airport.fields.City?.[0];
+                    const stateId = airport.fields.State?.[0];
+
+                    const countryName = countryId ? countriesMap[countryId] : '';
+                    const cityName = cityId ? citiesMap[cityId] : '';
+                    const stateName = stateId ? statesMap[stateId] : '';
+
+                    airportsMap[airport.id] = {
+                        code: airport.fields.Airport_Code,
+                        city: cityName,
+                        state: stateName,
+                        country: countryName
+                    };
+                });
+
+                const airlinesMap = {};
+                airlinesData.records.forEach(airline => {
+                    airlinesMap[airline.id] = airline.fields.Airline_Name;
+                });
+
+                // Enrich flight data with actual names
+                return flightsData.records.map(flight => {
+                    const arrivalAirport = flight.fields.Arrival_Airport?.map(id => airportsMap[id])[0] || {};
+                    const departureAirport = flight.fields.Departure_Airport?.map(id => airportsMap[id])[0] || {};
+
+                    // City is linked on the Flight record, State comes from Airport
+                    const cityId = flight.fields.City?.[0];
+                    const cityName = cityId ? citiesMap[cityId] : '';
+
+                    return {
+                        ...flight,
+                        enriched: {
+                            arrivalAirport: {
+                                ...arrivalAirport,
+                                city: cityName || arrivalAirport.city
+                            },
+                            departureAirport,
+                            airlines: flight.fields.Airlines?.map(id => airlinesMap[id]) || []
+                        }
+                    };
+                });
+            } catch (error) {
+                console.error('Error fetching flights:', error);
+                return [];
+            }
+        }
+
+        function groupFlightsByRoute(flights) {
+            const grouped = {};
+
+            flights.forEach(flight => {
+                const route = flight.fields.Flight_Route;
+                if (!route) return;
+
+                const arrivalInfo = flight.enriched.arrivalAirport;
+                const departureInfo = flight.enriched.departureAirport;
+
+                if (!grouped[route]) {
+                    grouped[route] = {
+                        route: route,
+                        city: arrivalInfo?.city || arrivalInfo?.code || 'Unknown',
+                        state: arrivalInfo?.state || '',
+                        country: arrivalInfo?.country || '',
+                        airportCode: arrivalInfo?.code || 'Unknown',
+                        departureAirport: departureInfo?.code || '',
+                        airlines: [],
+                        duration: flight.fields.Duration_Minutes,
+                        distance: flight.fields.Distance_Miles
+                    };
+                }
+
+                // Add airlines from enriched data
+                flight.enriched.airlines.forEach(airline => {
+                    if (airline && !grouped[route].airlines.includes(airline)) {
+                        grouped[route].airlines.push(airline);
+                    }
+                });
+            });
+
+            return Object.values(grouped);
+        }
+
+        function formatDuration(minutes) {
+            if (!minutes) return '';
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+        }
+
+        function displayFlights(flights, containerId) {
+            const container = document.getElementById(containerId);
+
+            if (flights.length === 0) {
+                container.innerHTML = '<div class="loading">No flights found</div>';
+                return;
+            }
+
+            container.innerHTML = flights.map(flight => {
+                // Check if consolidated view
+                if (flight.isConsolidated) {
+                    // Multi-color gradient border for consolidated
+                    let borderColor = 'linear-gradient(135deg, rgba(255, 140, 60, 0.4), rgba(100, 200, 255, 0.4))';
+
+                    // Build route display showing all airports
+                    const routeDisplay = flight.routes.map(r => {
+                        const color = r.departureAirport === 'SNA' ? '#ff8c3c' : '#64c8ff';
+                        return `<span style="color: ${color};">${r.route}</span>`;
+                    }).join(' • ');
+
+                    return `
+                    <div class="flight-card" style="border: 2px solid transparent; background: linear-gradient(#1a0a1f, #1a0a1f) padding-box, linear-gradient(135deg, rgba(255, 140, 60, 0.5), rgba(100, 200, 255, 0.5)) border-box;">
+                        <div class="destination-name" style="color: #fff;">${flight.city}${flight.state ? ', ' + flight.state : ''}${flight.country && flight.country !== 'USA' ? ', ' + flight.country : ''}</div>
+                        <div class="flight-route" style="font-size: 0.9rem;">${routeDisplay}</div>
+                        <div class="airlines">
+                            ${flight.airlines.map(airline =>
+                                `<span class="airline-tag">${airline}</span>`
+                            ).join('')}
+                        </div>
+                        <div class="flight-details">
+                            ${flight.minDuration ? `⏱️ ~${formatDuration(flight.minDuration)}${flight.maxDuration !== flight.minDuration ? ' - ' + formatDuration(flight.maxDuration) : ''}` : ''}
+                            ${flight.distance ? `📍 ${flight.distance} mi` : ''}
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+                            From: ${flight.airports.join(', ')}
+                        </div>
+                    </div>
+                    `;
+                } else {
+                    // Regular single-route view
+                    let borderColor = 'rgba(255, 110, 199, 0.2)';
+                    let borderColorHover = 'rgba(255, 110, 199, 0.5)';
+                    let cityColor = '#ff6ec7';  // Default pink
+
+                    if (flight.departureAirport === 'SNA') {
+                        borderColor = 'rgba(255, 140, 60, 0.4)';  // Orange for SNA
+                        borderColorHover = 'rgba(255, 140, 60, 0.7)';
+                        cityColor = '#ff8c3c';  // Orange
+                    } else if (flight.departureAirport === 'LGB') {
+                        borderColor = 'rgba(100, 200, 255, 0.4)';  // Blue for LGB
+                        borderColorHover = 'rgba(100, 200, 255, 0.7)';
+                        cityColor = '#64c8ff';  // Blue
+                    } else if (flight.departureAirport === 'LAX') {
+                        borderColor = 'rgba(0, 212, 170, 0.4)';  // Teal for LAX
+                        borderColorHover = 'rgba(0, 212, 170, 0.7)';
+                        cityColor = '#00d4aa';  // Teal
+                    }
+
+                    return `
+                    <div class="flight-card" style="border-color: ${borderColor};"
+                         onmouseover="this.style.borderColor='${borderColorHover}'"
+                         onmouseout="this.style.borderColor='${borderColor}'">
+                        <div class="destination-name" style="color: ${cityColor};">${flight.city}${flight.state ? ', ' + flight.state : ''}${flight.country && flight.country !== 'USA' ? ', ' + flight.country : ''}</div>
+                        <div class="flight-route">${flight.route}</div>
+                        <div class="airlines">
+                            ${flight.airlines.map(airline =>
+                                `<span class="airline-tag">${airline}</span>`
+                            ).join('')}
+                        </div>
+                        <div class="flight-details">
+                            ${flight.duration ? `⏱️ ~${formatDuration(flight.duration)}` : ''}
+                            ${flight.distance ? `📍 ${flight.distance} mi` : ''}
+                        </div>
+                    </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        // Global variables
+        let allGroupedFlights = [];
+        let currentAirportFilter = '';
+        let currentAirlineFilter = '';
+        let currentStateFilter = '';
+        let currentCountryFilter = '';
+        let currentSortMode = 'shortest';
+        let consolidateByDestination = false;
+
+        // Function to consolidate flights by destination
+        function consolidateFlights(flights) {
+            const consolidated = {};
+
+            flights.forEach(flight => {
+                const key = `${flight.city}, ${flight.state}`;
+
+                if (!consolidated[key]) {
+                    consolidated[key] = {
+                        city: flight.city,
+                        state: flight.state,
+                        country: flight.country,
+                        routes: [],
+                        airlines: new Set(),
+                        airports: new Set(),
+                        minDuration: flight.duration || 999999,
+                        maxDuration: flight.duration || 0,
+                        distance: flight.distance
+                    };
+                }
+
+                // Add route info
+                consolidated[key].routes.push({
+                    route: flight.route,
+                    departureAirport: flight.departureAirport,
+                    airlines: flight.airlines,
+                    duration: flight.duration
+                });
+
+                // Track all airlines
+                flight.airlines.forEach(airline => consolidated[key].airlines.add(airline));
+
+                // Track airports
+                consolidated[key].airports.add(flight.departureAirport);
+
+                // Track duration range
+                if (flight.duration) {
+                    consolidated[key].minDuration = Math.min(consolidated[key].minDuration, flight.duration);
+                    consolidated[key].maxDuration = Math.max(consolidated[key].maxDuration, flight.duration);
+                }
+            });
+
+            // Convert to array format
+            return Object.values(consolidated).map(dest => ({
+                ...dest,
+                airlines: Array.from(dest.airlines),
+                airports: Array.from(dest.airports),
+                country: dest.country,
+                duration: dest.minDuration !== 999999 ? dest.minDuration : null,
+                isConsolidated: true
+            }));
+        }
+
+        // Populate airline filter dropdown
+        function populateAirlineFilter(flights) {
+            const airlines = new Set();
+            flights.forEach(flight => {
+                flight.airlines.forEach(airline => airlines.add(airline));
+            });
+
+            const airlineFilter = document.getElementById('airline-filter');
+            const sortedAirlines = Array.from(airlines).sort();
+
+            sortedAirlines.forEach(airline => {
+                const option = document.createElement('option');
+                option.value = airline;
+                option.textContent = airline;
+                airlineFilter.appendChild(option);
+            });
+        }
+
+        // Populate state filter dropdown
+        function populateStateFilter(flights) {
+            const states = new Set();
+            flights.forEach(flight => {
+                if (flight.state) states.add(flight.state);
+            });
+
+            const stateFilter = document.getElementById('state-filter');
+            const sortedStates = Array.from(states).sort();
+
+            sortedStates.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state;
+                option.textContent = state;
+                stateFilter.appendChild(option);
+            });
+        }
+
+        // Populate country filter dropdown
+        function populateCountryFilter(flights) {
+            const countries = new Set();
+            flights.forEach(flight => {
+                if (flight.country) countries.add(flight.country);
+            });
+
+            const countryFilter = document.getElementById('country-filter');
+            const sortedCountries = Array.from(countries).sort();
+
+            sortedCountries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countryFilter.appendChild(option);
+            });
+        }
+
+        // Filter and sort flights
+        function filterAndDisplayFlights() {
+            let filteredFlights = allGroupedFlights;
+
+            // Apply airport filter
+            if (currentAirportFilter) {
+                filteredFlights = filteredFlights.filter(flight =>
+                    flight.route.includes(currentAirportFilter)
+                );
+            }
+
+            // Apply airline filter
+            if (currentAirlineFilter) {
+                filteredFlights = filteredFlights.filter(flight =>
+                    flight.airlines.includes(currentAirlineFilter)
+                );
+            }
+
+            // Apply state filter
+            if (currentStateFilter) {
+                filteredFlights = filteredFlights.filter(flight =>
+                    flight.state === currentStateFilter
+                );
+            }
+
+            // Apply country filter
+            if (currentCountryFilter) {
+                filteredFlights = filteredFlights.filter(flight =>
+                    flight.country === currentCountryFilter
+                );
+            }
+
+            // Consolidate by destination if enabled
+            if (consolidateByDestination) {
+                filteredFlights = consolidateFlights(filteredFlights);
+            }
+
+            // Apply sorting
+            if (currentSortMode === 'shortest') {
+                filteredFlights.sort((a, b) => {
+                    const durationA = a.duration || a.minDuration || 999999;
+                    const durationB = b.duration || b.minDuration || 999999;
+                    return durationA - durationB;
+                });
+            } else if (currentSortMode === 'longest') {
+                filteredFlights.sort((a, b) => {
+                    const durationA = a.duration || a.maxDuration || 0;
+                    const durationB = b.duration || b.maxDuration || 0;
+                    return durationB - durationA;
+                });
+            }
+
+            displayFlights(filteredFlights, 'flights-grid');
+        }
+
+        // Load flights on page load
+        window.addEventListener('DOMContentLoaded', async () => {
+            const allFlights = await fetchFlightsFromAirtable();
+
+            // Filter flights that DEPART from SNA, LGB, or LAX (not arrivals)
+            const socalFlights = allFlights.filter(flight => {
+                const route = flight.fields.Flight_Route || '';
+                const departureAirport = flight.enriched?.departureAirport?.code || '';
+
+                // Only show flights departing from our airports
+                if (!['SNA', 'LGB', 'LAX'].includes(departureAirport)) {
+                    return false;
+                }
+
+                // Don't show flights to the same airport (LAX → LAX)
+                const arrivalAirport = flight.enriched?.arrivalAirport?.code || '';
+                if (departureAirport === arrivalAirport) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            // Group flights by route to combine airlines
+            allGroupedFlights = groupFlightsByRoute(socalFlights);
+
+            // Populate filters
+            populateAirlineFilter(allGroupedFlights);
+            populateStateFilter(allGroupedFlights);
+            populateCountryFilter(allGroupedFlights);
+
+            // Display initial flights
+            filterAndDisplayFlights();
+
+            // Set up filter event listeners
+            document.getElementById('airport-filter').addEventListener('change', (e) => {
+                currentAirportFilter = e.target.value;
+                filterAndDisplayFlights();
+            });
+
+            document.getElementById('airline-filter').addEventListener('change', (e) => {
+                currentAirlineFilter = e.target.value;
+                filterAndDisplayFlights();
+            });
+
+            document.getElementById('state-filter').addEventListener('change', (e) => {
+                currentStateFilter = e.target.value;
+                filterAndDisplayFlights();
+            });
+
+            document.getElementById('country-filter').addEventListener('change', (e) => {
+                currentCountryFilter = e.target.value;
+                filterAndDisplayFlights();
+            });
+
+            document.getElementById('sort-filter').addEventListener('change', (e) => {
+                currentSortMode = e.target.value;
+                filterAndDisplayFlights();
+            });
+
+            // Set up consolidate toggle button
+            const consolidateBtn = document.getElementById('consolidate-toggle');
+            consolidateBtn.addEventListener('click', () => {
+                consolidateByDestination = !consolidateByDestination;
+                if (consolidateByDestination) {
+                    consolidateBtn.textContent = 'Show Individual Routes';
+                    consolidateBtn.style.background = 'rgba(255, 110, 199, 0.4)';
+                } else {
+                    consolidateBtn.textContent = 'Group by City';
+                    consolidateBtn.style.background = 'rgba(255, 110, 199, 0.2)';
+                }
+                filterAndDisplayFlights();
+            });
+
+            console.log('Total SoCal flights:', allGroupedFlights.length);
+        });
+    </script>
+</body>
+</html>

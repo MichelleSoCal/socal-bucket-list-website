@@ -32,7 +32,7 @@
         /* Logo */
         .logo {
             position: absolute;
-            bottom: 90px;
+            bottom: 70px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
@@ -40,7 +40,7 @@
         }
 
         .logo img {
-            height: 150px;
+            height: 120px;
             width: auto;
             filter: drop-shadow(0 4px 20px rgba(255, 110, 199, 0.4));
         }
@@ -52,7 +52,7 @@
         /* Motto under logo */
         .hero-motto {
             position: absolute;
-            bottom: 60px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
@@ -62,7 +62,7 @@
         }
 
         .hero-motto p {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-style: italic;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
             margin: 0;
@@ -71,7 +71,8 @@
         /* Hero Section */
         .hero {
             position: relative;
-            height: 100vh;
+            height: 70vh;
+            min-height: 500px;
             width: 100%;
             overflow: hidden;
             display: flex;
@@ -357,8 +358,8 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero {
-                height: 100vh;
-                min-height: 600px;
+                height: 60vh;
+                min-height: 450px;
             }
 
             .hero-overlay {
@@ -440,29 +441,350 @@
                 height: 300px !important;
             }
         }
+
+        /* Flight Slider Section */
+        .flights-slider-section {
+            padding: 60px 50px;
+            position: relative;
+        }
+
+        .flights-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .flights-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .airport-toggles {
+            display: flex;
+            gap: 10px;
+        }
+
+        .airport-toggle {
+            padding: 8px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 2px solid rgba(255, 110, 199, 0.3);
+            border-radius: 25px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .airport-toggle:hover {
+            border-color: rgba(255, 110, 199, 0.6);
+            color: #fff;
+        }
+
+        .airport-toggle.active {
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .slider-wrapper {
+            position: relative;
+        }
+
+        .flights-slider {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .flights-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .flight-card {
+            min-width: 280px;
+            max-width: 280px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 110, 199, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255, 110, 199, 0.3);
+            border-color: rgba(255, 110, 199, 0.5);
+        }
+
+        .flight-card .destination-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ff6ec7;
+            text-transform: uppercase;
+        }
+
+        .flight-card .flight-route {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .flight-card .flight-details {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 110, 199, 0.3);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .slider-arrow:hover {
+            background: rgba(255, 110, 199, 0.3);
+            border-color: rgba(255, 110, 199, 0.6);
+        }
+
+        .slider-arrow.left {
+            left: -20px;
+        }
+
+        .slider-arrow.right {
+            right: -20px;
+        }
+
+        .view-all-flights {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: transparent;
+            border: 2px solid rgba(255, 110, 199, 0.5);
+            border-radius: 4px;
+            color: #ff6ec7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .view-all-flights:hover {
+            background: rgba(255, 110, 199, 0.15);
+            border-color: #ff6ec7;
+        }
+
+        .flights-loading {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* YouTube Section */
+        .youtube-section {
+            padding: 60px 50px;
+            text-align: center;
+        }
+
+        .youtube-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .youtube-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(255, 110, 199, 0.3);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .subscribe-container {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .subscribe-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #FF0000;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-btn:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+        }
+
+        .subscribe-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .youtube-section {
+                padding: 40px 20px;
+            }
+
+            .youtube-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flights-slider-section {
+                padding: 40px 20px;
+            }
+
+            .flights-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .airport-toggles {
+                flex-wrap: wrap;
+            }
+
+            .airport-toggle {
+                padding: 6px 14px;
+                font-size: 0.85rem;
+            }
+
+            .flight-card {
+                min-width: 250px;
+                max-width: 250px;
+            }
+
+            .slider-arrow {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Logo -->
-    <a href="/" class="logo">
-        <img src="optimized-images/logo-white.png" alt="SoCal Bucket List">
-    </a>
-
-    <!-- Motto -->
-    <div class="hero-motto">
-        <p>Adventures worth writing home about.</p>
-    </div>
-
     <!-- Hero Section -->
     <section class="hero">
         <img src="optimized-images/joshua-tree-sunrise.jpg" alt="Joshua Tree National Park Sunrise" class="hero-image active">
         <img src="optimized-images/disneyland-night-hero.jpg" alt="Disneyland Castle at Night" class="hero-image">
         <img src="optimized-images/dana-point-beach.jpg" alt="Dana Point Beach Sunset" class="hero-image">
         <div class="hero-overlay"></div>
+
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <img src="optimized-images/logo-white.png" alt="SoCal Bucket List">
+        </a>
+
+        <!-- Motto -->
+        <div class="hero-motto">
+            <p>Adventures worth writing home about.</p>
+        </div>
     </section>
 
     <!-- Separator Line -->
     <div style="width: 100%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);"></div>
+
+    <!-- SoCal Flights Slider Section -->
+    <section class="flights-slider-section">
+        <div class="flights-header">
+            <h2 class="flights-title">SoCal Flights <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 10px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h2>
+            <div class="airport-toggles">
+                <button class="airport-toggle active" data-airport="all">All</button>
+                <button class="airport-toggle" data-airport="SNA">SNA</button>
+                <button class="airport-toggle" data-airport="LGB">LGB</button>
+                <button class="airport-toggle" data-airport="LAX">LAX</button>
+            </div>
+        </div>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" id="slide-left">&#8249;</button>
+            <div class="flights-slider" id="flights-slider">
+                <div class="flights-loading">Loading flights...</div>
+            </div>
+            <button class="slider-arrow right" id="slide-right">&#8250;</button>
+        </div>
+        <a href="flights/" class="view-all-flights">All SoCal Flights</a>
+    </section>
+
+    <!-- YouTube Section -->
+    <section class="youtube-section">
+        <h2 class="youtube-title">Watch the Latest Adventure</h2>
+        <div class="youtube-container">
+            <div class="video-wrapper">
+                <iframe
+                    src="https://www.youtube.com/embed/w8W4MkLyPGc"
+                    title="SoCal Bucket List Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="subscribe-container">
+                <a href="https://www.youtube.com/@SoCalBucketList?sub_confirmation=1" target="_blank" class="subscribe-btn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    Subscribe
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- Suggest an Adventure Section -->
     <section class="newsletter-section" id="suggest">
@@ -622,6 +944,187 @@
                 formMessage.textContent = 'Oops! Something went wrong. Please try again.';
             }
         });
+
+        // ===== FLIGHTS SLIDER =====
+        const AIRTABLE_TOKEN = 'pat4HICXlDN0QBxkZ.b8d2092207dd1ee3ec676ab0b131f19ae92d17bcc17b0c9fb25d0a64dd1e0024';
+        const AIRTABLE_BASE_ID = 'appGoQsy2UiGyyZ3T';
+
+        let allFlightsData = [];
+        let currentAirportFilter = 'all';
+
+        async function fetchAllRecords(tableName) {
+            let records = [];
+            let offset = null;
+
+            do {
+                const url = offset
+                    ? `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}?offset=${offset}`
+                    : `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}`;
+
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
+                });
+
+                if (!response.ok) throw new Error(`Failed to fetch ${tableName}`);
+
+                const data = await response.json();
+                records = records.concat(data.records);
+                offset = data.offset;
+            } while (offset);
+
+            return records;
+        }
+
+        async function fetchFlightsForSlider() {
+            try {
+                const [flightsRecords, airportsRecords, airlinesRecords, countriesRecords, citiesRecords, statesRecords] = await Promise.all([
+                    fetchAllRecords('Flights'),
+                    fetchAllRecords('Airports'),
+                    fetchAllRecords('Airlines'),
+                    fetchAllRecords('Destinations_Country'),
+                    fetchAllRecords('Destinations_City'),
+                    fetchAllRecords('Destinations_State')
+                ]);
+
+                // Create lookup maps
+                const countriesMap = {};
+                countriesRecords.forEach(country => {
+                    countriesMap[country.id] = country.fields.Country || country.fields.Name || '';
+                });
+
+                const citiesMap = {};
+                citiesRecords.forEach(city => {
+                    citiesMap[city.id] = city.fields.City || city.fields.Name || '';
+                });
+
+                const statesMap = {};
+                statesRecords.forEach(state => {
+                    statesMap[state.id] = state.fields.State || state.fields.Name || '';
+                });
+
+                const airportsMap = {};
+                airportsRecords.forEach(airport => {
+                    const countryId = airport.fields.Country?.[0];
+                    const cityId = airport.fields.City?.[0];
+                    const stateId = airport.fields.State?.[0];
+
+                    airportsMap[airport.id] = {
+                        code: airport.fields.Airport_Code,
+                        city: cityId ? citiesMap[cityId] : '',
+                        state: stateId ? statesMap[stateId] : '',
+                        country: countryId ? countriesMap[countryId] : ''
+                    };
+                });
+
+                const airlinesMap = {};
+                airlinesRecords.forEach(airline => {
+                    airlinesMap[airline.id] = airline.fields.Airline_Name;
+                });
+
+                // Process flights
+                const flights = flightsRecords.map(flight => {
+                    const arrivalAirport = flight.fields.Arrival_Airport?.map(id => airportsMap[id])[0] || {};
+                    const departureAirport = flight.fields.Departure_Airport?.map(id => airportsMap[id])[0] || {};
+                    const cityId = flight.fields.City?.[0];
+                    const cityName = cityId ? citiesMap[cityId] : '';
+
+                    return {
+                        route: flight.fields.Flight_Route || '',
+                        city: cityName || arrivalAirport.city || 'Unknown',
+                        state: arrivalAirport.state || '',
+                        country: arrivalAirport.country || '',
+                        departureAirport: departureAirport.code || '',
+                        arrivalAirport: arrivalAirport.code || '',
+                        duration: flight.fields.Duration_Minutes,
+                        distance: flight.fields.Distance_Miles
+                    };
+                });
+
+                // Filter to only SoCal departures and remove duplicates
+                const socalFlights = flights.filter(f =>
+                    ['SNA', 'LGB', 'LAX'].includes(f.departureAirport) &&
+                    f.departureAirport !== f.arrivalAirport
+                );
+
+                // Group by route to remove duplicates
+                const grouped = {};
+                socalFlights.forEach(flight => {
+                    if (!grouped[flight.route]) {
+                        grouped[flight.route] = flight;
+                    }
+                });
+
+                // Sort by duration (shortest first)
+                allFlightsData = Object.values(grouped).sort((a, b) => {
+                    const durationA = a.duration || 999999;
+                    const durationB = b.duration || 999999;
+                    return durationA - durationB;
+                });
+
+                displaySliderFlights();
+            } catch (error) {
+                console.error('Error fetching flights:', error);
+                document.getElementById('flights-slider').innerHTML = '<div class="flights-loading">Unable to load flights</div>';
+            }
+        }
+
+        function formatDuration(minutes) {
+            if (!minutes) return '';
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+        }
+
+        function displaySliderFlights() {
+            const slider = document.getElementById('flights-slider');
+
+            // Filter by airport
+            let filtered = allFlightsData;
+            if (currentAirportFilter !== 'all') {
+                filtered = allFlightsData.filter(f => f.departureAirport === currentAirportFilter);
+            }
+
+            // Limit to 20 flights
+            const displayFlights = filtered.slice(0, 20);
+
+            if (displayFlights.length === 0) {
+                slider.innerHTML = '<div class="flights-loading">No flights found</div>';
+                return;
+            }
+
+            slider.innerHTML = displayFlights.map(flight => `
+                <div class="flight-card">
+                    <div class="destination-name">${flight.city}${flight.state ? ', ' + flight.state : ''}${flight.country && flight.country !== 'USA' ? ', ' + flight.country : ''}</div>
+                    <div class="flight-route">${flight.route}</div>
+                    <div class="flight-details">
+                        ${flight.duration ? `⏱️ ~${formatDuration(flight.duration)}` : ''}
+                        ${flight.distance ? ` · ${flight.distance} mi` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Airport toggle handlers
+        document.querySelectorAll('.airport-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.airport-toggle').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentAirportFilter = btn.dataset.airport;
+                displaySliderFlights();
+            });
+        });
+
+        // Slider arrow handlers
+        document.getElementById('slide-left').addEventListener('click', () => {
+            document.getElementById('flights-slider').scrollBy({ left: -300, behavior: 'smooth' });
+        });
+
+        document.getElementById('slide-right').addEventListener('click', () => {
+            document.getElementById('flights-slider').scrollBy({ left: 300, behavior: 'smooth' });
+        });
+
+        // Load flights on page load
+        fetchFlightsForSlider();
     </script>
 </body>
 </html>

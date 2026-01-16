@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8FCF1EFQXH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8FCF1EFQXH');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Southern California Airports | SoCal Bucket List</title>
+    <meta name="description" content="Explore flights from Southern California airports including John Wayne (SNA), Long Beach (LGB), and LAX. Discover your next adventure.">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom, #1a0a1f 0%, #2d1b3d 50%, #1a0a1f 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 60px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff6ec7;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            text-align: center;
+            padding: 60px 50px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Airport Grid */
+        .airports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 40px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .airport-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 350px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #000;
+        }
+
+        .airport-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(255, 110, 199, 0.4);
+        }
+
+        .airport-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .airport-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .airport-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0) 100%);
+            padding: 30px;
+        }
+
+        .airport-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .airport-code {
+            font-size: 1.1rem;
+            color: #ff6ec7;
+            margin-bottom: 12px;
+        }
+
+        .airport-stats {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 50px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #ff6ec7;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            nav {
+                margin-top: 20px;
+            }
+
+            nav a {
+                margin: 0 15px;
+                font-size: 0.9rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .page-hero p {
+                font-size: 1.1rem;
+            }
+
+            .airports-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .airport-card {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="../../index.html">
+            <img src="../../optimized-images/logo-white.png" alt="SoCal Bucket List" class="logo">
+        </a>
+        <nav>
+            <a href="../../index.html">Home</a>
+            <a href="../">All Flights</a>
+            <a href="./">Airports</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="page-hero">
+        <h1>Southern California Airports</h1>
+        <p>Discover flights from Southern California's premier airports. Where will your next adventure take you?</p>
+    </section>
+
+    <!-- Airports Grid -->
+    <div class="airports-grid" id="airports-grid">
+        <!-- John Wayne Airport -->
+        <div class="airport-card" onclick="window.location.href='SNA.html'">
+            <img src="../../optimized-images/john-wayne-airport.jpg" alt="John Wayne Airport Orange County">
+            <div class="airport-overlay">
+                <div class="airport-name">John Wayne Airport</div>
+                <div class="airport-code">SNA - Orange County</div>
+                <div class="airport-stats">Loading destinations...</div>
+            </div>
+        </div>
+
+        <!-- Long Beach Airport -->
+        <div class="airport-card" onclick="window.location.href='LGB.html'">
+            <img src="../../optimized-images/long-beach-airport.jpg" alt="Long Beach Airport">
+            <div class="airport-overlay">
+                <div class="airport-name">Long Beach Airport</div>
+                <div class="airport-code">LGB - Long Beach</div>
+                <div class="airport-stats">Loading destinations...</div>
+            </div>
+        </div>
+
+        <!-- LAX -->
+        <div class="airport-card" onclick="window.location.href='LAX.html'">
+            <img src="../../optimized-images/lax-airport.jpg" alt="Los Angeles International Airport">
+            <div class="airport-overlay">
+                <div class="airport-name">LAX</div>
+                <div class="airport-code">Los Angeles International</div>
+                <div class="airport-stats">Loading destinations...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SoCal Bucket List. <a href="../../index.html">Home</a></p>
+    </footer>
+
+    <script>
+        // Airtable configuration
+        const AIRTABLE_TOKEN = 'pat4HICXlDN0QBxkZ.b8d2092207dd1ee3ec676ab0b131f19ae92d17bcc17b0c9fb25d0a64dd1e0024';
+        const AIRTABLE_BASE_ID = 'appGoQsy2UiGyyZ3T';
+
+        async function fetchAllRecords(tableName) {
+            let records = [];
+            let offset = null;
+
+            do {
+                const url = offset
+                    ? `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}?offset=${offset}`
+                    : `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}`;
+
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
+                });
+
+                if (!response.ok) throw new Error(`Failed to fetch ${tableName}`);
+
+                const data = await response.json();
+                records = records.concat(data.records);
+                offset = data.offset;
+            } while (offset);
+
+            return records;
+        }
+
+        async function loadAirportStats() {
+            try {
+                const records = await fetchAllRecords('Flights');
+
+                // Count unique destinations per airport
+                const snaDestinations = new Set();
+                const lgbDestinations = new Set();
+                const laxDestinations = new Set();
+
+                records.forEach(flight => {
+                    const route = flight.fields.Flight_Route || '';
+                    if (route.startsWith('SNA →')) {
+                        const dest = route.split(' → ')[1];
+                        if (dest) snaDestinations.add(dest);
+                    } else if (route.startsWith('LGB →')) {
+                        const dest = route.split(' → ')[1];
+                        if (dest) lgbDestinations.add(dest);
+                    } else if (route.startsWith('LAX →')) {
+                        const dest = route.split(' → ')[1];
+                        if (dest) laxDestinations.add(dest);
+                    }
+                });
+
+                // Update the stats
+                const airportCards = document.querySelectorAll('.airport-card');
+                airportCards[0].querySelector('.airport-stats').textContent =
+                    `${snaDestinations.size} destinations`;
+                airportCards[1].querySelector('.airport-stats').textContent =
+                    `${lgbDestinations.size} destinations`;
+                airportCards[2].querySelector('.airport-stats').textContent =
+                    `${laxDestinations.size} destinations`;
+
+            } catch (error) {
+                console.error('Error loading airport stats:', error);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadAirportStats);
+    </script>
+</body>
+</html>
