@@ -801,6 +801,27 @@
         </div>
     </section>
 
+    <!-- SoCal Cruises Slider Section -->
+    <section class="flights-slider-section" style="padding-top: 60px;">
+        <div class="flights-header">
+            <h2 class="flights-title">SoCal Cruise Lines <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 10px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h2>
+            <div class="airport-toggles">
+                <button class="airport-toggle active cruise-toggle" data-port="all">All</button>
+                <button class="airport-toggle cruise-toggle" data-port="San Diego">San Diego</button>
+                <button class="airport-toggle cruise-toggle" data-port="Los Angeles">Los Angeles</button>
+                <button class="airport-toggle cruise-toggle" data-port="Long Beach">Long Beach</button>
+            </div>
+        </div>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" id="cruise-slide-left">&#8249;</button>
+            <div class="flights-slider" id="cruises-slider">
+                <div class="flights-loading">Loading cruise lines...</div>
+            </div>
+            <button class="slider-arrow right" id="cruise-slide-right">&#8250;</button>
+        </div>
+        <a href="cruises/" class="view-all-flights">All SoCal Cruise Ports</a>
+    </section>
+
     <!-- Suggest an Adventure Section -->
     <section class="newsletter-section" id="suggest">
         <div class="newsletter-content">
@@ -1140,6 +1161,106 @@
 
         // Load flights on page load
         fetchFlightsForSlider();
+
+        // ===== CRUISE LINES SLIDER =====
+        let allCruiseLinesData = [];
+        let currentPortFilter = 'all';
+
+        const PORT_NAMES = {
+            'San Diego': 'Port of San Diego',
+            'Los Angeles': 'Los Angeles World Cruise Center',
+            'Long Beach': 'Long Beach Cruise Terminal'
+        };
+
+        async function fetchCruiseLinesForSlider() {
+            try {
+                const [cruisePortsRecords, cruiseLinesRecords] = await Promise.all([
+                    fetchAllRecords('Cruise_Ports'),
+                    fetchAllRecords('Cruise_Lines')
+                ]);
+
+                // Create port lookup map
+                const portsMap = {};
+                cruisePortsRecords.forEach(port => {
+                    portsMap[port.id] = {
+                        name: port.fields.Cruise_Port,
+                        displayName: Object.keys(PORT_NAMES).find(key => PORT_NAMES[key] === port.fields.Cruise_Port) || port.fields.Cruise_Port
+                    };
+                });
+
+                // Process cruise lines with their ports
+                const cruiseLines = cruiseLinesRecords.map(line => {
+                    const departurePorts = line.fields.Departure_Port || [];
+                    const ports = departurePorts.map(portId => portsMap[portId]).filter(Boolean);
+
+                    return {
+                        name: line.fields.Cruise_Line || 'Unknown Cruise Line',
+                        photo: line.fields.Cruise_Photo && line.fields.Cruise_Photo[0]
+                            ? line.fields.Cruise_Photo[0].url
+                            : 'optimized-images/cruise-default.png',
+                        website: line.fields.Official_Website || null,
+                        ports: ports
+                    };
+                });
+
+                allCruiseLinesData = cruiseLines.filter(line => line.ports.length > 0);
+                displaySliderCruiseLines();
+            } catch (error) {
+                console.error('Error fetching cruise lines:', error);
+                document.getElementById('cruises-slider').innerHTML = '<div class="flights-loading">Unable to load cruise lines</div>';
+            }
+        }
+
+        function displaySliderCruiseLines() {
+            const slider = document.getElementById('cruises-slider');
+
+            // Filter by port
+            let filtered = allCruiseLinesData;
+            if (currentPortFilter !== 'all') {
+                const fullPortName = PORT_NAMES[currentPortFilter];
+                filtered = allCruiseLinesData.filter(line =>
+                    line.ports.some(port => port.name === fullPortName)
+                );
+            }
+
+            if (filtered.length === 0) {
+                slider.innerHTML = '<div class="flights-loading">No cruise lines found</div>';
+                return;
+            }
+
+            slider.innerHTML = filtered.map(line => `
+                <div class="flight-card" style="text-align: center;">
+                    <img src="${line.photo}" alt="${line.name}" style="width: 100%; height: 120px; object-fit: contain; margin-bottom: 15px; border-radius: 8px;">
+                    <div class="destination-name" style="font-size: 1.2rem; margin-bottom: 8px;">${line.name}</div>
+                    <div class="flight-details" style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6);">
+                        ${line.ports.map(p => p.displayName).join(' · ')}
+                    </div>
+                    ${line.website ? `<a href="${line.website}" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 12px; color: #ff6ec7; text-decoration: none; font-size: 0.85rem;">Visit Website</a>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Port toggle handlers
+        document.querySelectorAll('.cruise-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.cruise-toggle').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentPortFilter = btn.dataset.port;
+                displaySliderCruiseLines();
+            });
+        });
+
+        // Cruise slider arrow handlers
+        document.getElementById('cruise-slide-left').addEventListener('click', () => {
+            document.getElementById('cruises-slider').scrollBy({ left: -300, behavior: 'smooth' });
+        });
+
+        document.getElementById('cruise-slide-right').addEventListener('click', () => {
+            document.getElementById('cruises-slider').scrollBy({ left: 300, behavior: 'smooth' });
+        });
+
+        // Load cruise lines on page load
+        fetchCruiseLinesForSlider();
     </script>
 </body>
 </html>
