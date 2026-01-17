@@ -486,7 +486,8 @@
             gap: 10px;
         }
 
-        .airport-toggle {
+        .airport-toggle,
+        .cruise-toggle {
             padding: 8px 20px;
             font-size: 0.95rem;
             font-weight: 600;
@@ -498,12 +499,14 @@
             transition: all 0.3s ease;
         }
 
-        .airport-toggle:hover {
+        .airport-toggle:hover,
+        .cruise-toggle:hover {
             border-color: rgba(255, 110, 199, 0.6);
             color: #fff;
         }
 
-        .airport-toggle.active {
+        .airport-toggle.active,
+        .cruise-toggle.active {
             background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
             border-color: transparent;
             color: #fff;
@@ -719,7 +722,8 @@
                 flex-wrap: wrap;
             }
 
-            .airport-toggle {
+            .airport-toggle,
+            .cruise-toggle {
                 padding: 6px 14px;
                 font-size: 0.85rem;
             }
