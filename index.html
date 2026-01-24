@@ -44,129 +44,15 @@
             color: #fff;
         }
 
-        /* Logo */
-        .logo {
-            position: absolute;
-            bottom: 140px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1001;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo img {
-            height: 120px;
-            width: auto;
-            filter: drop-shadow(0 4px 20px rgba(255, 110, 199, 0.4));
-        }
-
-        .logo:hover {
-            opacity: 0.9;
-        }
-
-        /* Motto under logo */
-        .hero-motto {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1001;
-            text-align: center;
-            width: 100%;
-            padding: 0 20px;
-        }
-
-        .hero-motto p {
-            font-size: 1.3rem;
-            font-style: italic;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
-            margin: 0 0 20px 0;
-        }
-
-        /* Hero Navigation */
-        .hero-nav {
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            align-items: center;
-            margin-top: 15px;
-        }
-
-        .hero-nav a {
-            color: rgba(255, 255, 255, 0.95);
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            padding: 8px 20px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-            background: rgba(255, 110, 199, 0.1);
-            border: 1px solid rgba(255, 110, 199, 0.3);
-        }
-
-        .hero-nav a:hover {
-            background: rgba(255, 110, 199, 0.25);
-            border-color: rgba(255, 110, 199, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 110, 199, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .hero-nav {
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-
-            .hero-nav a {
-                font-size: 0.95rem;
-                padding: 6px 16px;
-            }
-        }
-
-        /* Extra small phones (very old iPhones) */
-        @media (max-width: 480px) {
-            .hero {
-                min-height: 480px;
-            }
-
-            .logo {
-                bottom: 180px;
-            }
-
-            .logo img {
-                height: 60px;
-            }
-
-            .hero-motto {
-                bottom: 10px;
-            }
-
-            .hero-motto p {
-                font-size: 0.9rem;
-                margin-bottom: 10px;
-            }
-
-            .hero-nav {
-                gap: 5px;
-            }
-
-            .hero-nav a {
-                font-size: 0.75rem;
-                padding: 4px 8px;
-            }
-        }
-
         /* Hero Section */
         .hero {
             position: relative;
-            height: 55vh;
-            min-height: 400px;
+            height: 400px;
             width: 100%;
             overflow: hidden;
             display: flex;
+            align-items: flex-end;
             justify-content: center;
-            align-items: center;
         }
 
         .hero-image {
@@ -176,13 +62,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-        }
-
-        .hero-image.active {
-            opacity: 1;
+            z-index: 0;
         }
 
         .hero-overlay {
@@ -191,74 +71,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 50%, rgba(26,10,31,0.8) 80%, rgba(26,10,31,1) 100%);
-            z-index: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(26,10,31,0.8) 100%);
+            z-index: 1;
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             text-align: center;
-            padding: 0 20px;
-            max-width: 800px;
-            align-self: flex-end;
-            margin-bottom: 60px;
+            padding: 40px 20px;
         }
 
-        h1 {
-            font-size: 4.5rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.9);
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
-            margin-bottom: 2rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(255,110,199,0.4);
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #ff85d1 0%, #ffaa70 100%);
-            box-shadow: 0 6px 20px rgba(255,110,199,0.6);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: 2px solid rgba(255,110,199,0.5);
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(255,110,199,0.2);
-            border-color: #ff6ec7;
+        .hero-motto {
+            font-size: 2.5rem;
+            font-style: italic;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+            margin-bottom: 0;
         }
 
         /* Content Section */
@@ -447,44 +275,11 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero {
-                height: 60vh;
-                min-height: 450px;
-            }
-
-            .hero-overlay {
-                background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 70%, rgba(26,10,31,0.7) 95%, rgba(26,10,31,1) 100%);
-            }
-
-            .hero-image {
-                object-position: 65% center;
-            }
-
-            .logo {
-                bottom: 70px;
-            }
-
-            .logo img {
-                height: 100px;
+                height: 300px;
             }
 
             .hero-motto {
-                bottom: 10px;
-            }
-
-            .hero-motto p {
-                font-size: 1.3rem;
-            }
-
-            .hero-content {
-                margin-bottom: 40px;
-            }
-
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .subtitle {
-                font-size: 1.2rem;
+                font-size: 1.8rem;
             }
 
             .content-section {
@@ -838,31 +633,17 @@
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
     <!-- Hero Section -->
     <section class="hero">
-        <img src="optimized-images/joshua-tree-sunrise.jpg" alt="Joshua Tree National Park Sunrise" class="hero-image active">
-        <img src="optimized-images/disneyland-night-hero.jpg" alt="Disneyland Castle at Night" class="hero-image">
-        <img src="optimized-images/dana-point-beach.jpg" alt="Dana Point Beach Sunset" class="hero-image">
+        <img src="optimized-images/joshua-tree-sunrise.jpg" alt="Southern California Adventure" class="hero-image">
         <div class="hero-overlay"></div>
-
-        <!-- Logo -->
-        <a href="/" class="logo">
-            <img src="optimized-images/logo-white.png" alt="SoCal Bucket List">
-        </a>
-
-        <!-- Motto -->
-        <div class="hero-motto">
-            <p>Adventures worth writing home about.</p>
-            <nav class="hero-nav">
-                <a href="/flights/">Flights</a>
-                <a href="/cruises/">Cruises</a>
-                <a href="/destinations/">Destinations</a>
-            </nav>
+        <div class="hero-content">
+            <p class="hero-motto">Adventures worth writing home about.</p>
         </div>
     </section>
-
-    <!-- Separator Line -->
-    <div style="width: 100%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);"></div>
 
     <!-- YouTube Section -->
     <section class="youtube-section">
@@ -984,24 +765,6 @@
 
     <script src="components/loader.js"></script>
     <script>
-        // Hero image slideshow
-        const heroImages = document.querySelectorAll('.hero-image');
-        let currentImageIndex = 0;
-
-        function rotateHeroImage() {
-            // Remove active class from current image
-            heroImages[currentImageIndex].classList.remove('active');
-
-            // Move to next image
-            currentImageIndex = (currentImageIndex + 1) % heroImages.length;
-
-            // Add active class to new image
-            heroImages[currentImageIndex].classList.add('active');
-        }
-
-        // Rotate every 15 seconds
-        setInterval(rotateHeroImage, 15000);
-
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
