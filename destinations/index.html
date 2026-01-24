@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoCal Destinations - SoCal Bucket List</title>
+    <meta name="description" content="Explore amazing destinations across Southern California. Find beaches, hikes, theme parks, and more.">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom, #1a0a1f 0%, #2d1b3d 50%, #1a0a1f 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(26, 10, 31, 0.95);
+            padding: 20px 50px;
+            border-bottom: 2px solid rgba(255, 110, 199, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-link {
+            text-decoration: none;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(255, 110, 199, 0.3));
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff6ec7;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 50px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .beta-badge {
+            display: inline-block;
+            background: rgba(255, 110, 199, 0.2);
+            border: 1px solid rgba(255, 110, 199, 0.4);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #ff6ec7;
+            margin-top: 10px;
+        }
+
+        /* Distance Calculator */
+        .distance-calculator {
+            background: rgba(255, 110, 199, 0.1);
+            border: 2px solid rgba(255, 110, 199, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .calculator-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ff6ec7;
+            text-align: center;
+        }
+
+        .address-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .address-input {
+            flex: 1;
+            padding: 12px 18px;
+            font-size: 1rem;
+            border: 2px solid rgba(255, 110, 199, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .address-input:focus {
+            border-color: #ff6ec7;
+        }
+
+        .address-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .calculate-btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 110, 199, 0.4);
+        }
+
+        .calculate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .clear-btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: transparent;
+            border: 2px solid rgba(255, 110, 199, 0.3);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .clear-btn:hover {
+            border-color: #ff6ec7;
+            color: #fff;
+        }
+
+        .calculator-message {
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 10px;
+        }
+
+        .calculator-message.error {
+            color: #ff6e6e;
+        }
+
+        .calculator-message.success {
+            color: #6eff6e;
+        }
+
+        .card-distance {
+            font-size: 1rem;
+            color: #ff9a56;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Filters */
+        .filters-section {
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        .filter-btn {
+            padding: 10px 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 2px solid rgba(255, 110, 199, 0.3);
+            border-radius: 25px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(255, 110, 199, 0.6);
+            color: #fff;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        /* Cards Grid */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .destination-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 110, 199, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(255, 110, 199, 0.4);
+            border-color: rgba(255, 110, 199, 0.5);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: linear-gradient(135deg, rgba(255, 110, 199, 0.1) 0%, rgba(255, 154, 86, 0.1) 100%);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff6ec7;
+        }
+
+        .card-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .category-tag {
+            background: rgba(255, 110, 199, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card-location {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+        }
+
+        .card-address {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: #a31984;
+            padding: 40px 50px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-info {
+            margin-bottom: 20px;
+        }
+
+        .footer-info img {
+            height: 80px;
+            width: auto;
+            margin-bottom: 15px;
+        }
+
+        .footer-info p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .destinations-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filters-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .filter-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .distance-calculator {
+                padding: 20px;
+            }
+
+            .address-input-group {
+                flex-direction: column;
+            }
+
+            .calculate-btn, .clear-btn {
+                width: 100%;
+            }
+
+            footer {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">SoCal Destinations</h1>
+            <p class="page-subtitle">Discover amazing places across Southern California</p>
+            <span class="beta-badge">BETA - More destinations being added!</span>
+        </div>
+
+        <!-- Distance Calculator -->
+        <div class="distance-calculator">
+            <h2 class="calculator-title">📍 Find Destinations Near You</h2>
+            <div class="address-input-group">
+                <input
+                    type="text"
+                    id="address-input"
+                    class="address-input"
+                    placeholder="Enter your address (e.g., 123 Main St, Irvine, CA)"
+                >
+                <button id="calculate-btn" class="calculate-btn">Calculate</button>
+                <button id="clear-btn" class="clear-btn" style="display: none;">Clear</button>
+            </div>
+            <div id="calculator-message" class="calculator-message"></div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <span class="filter-label">Filter by:</span>
+            <button class="filter-btn active" data-category="all">All</button>
+            <div id="category-filters"></div>
+        </div>
+
+        <!-- Destinations Grid -->
+        <div class="destinations-grid" id="destinations-grid">
+            <div class="loading">Loading destinations...</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../components/loader.js"></script>
+    <script>
+        const AIRTABLE_TOKEN = 'pat4HICXlDN0QBxkZ.b8d2092207dd1ee3ec676ab0b131f19ae92d17bcc17b0c9fb25d0a64dd1e0024';
+        const AIRTABLE_BASE_ID = 'appGoQsy2UiGyyZ3T';
+        const DESTINATIONS_TABLE = 'Destinations';
+
+        let allDestinations = [];
+        let currentFilter = 'all';
+        let allCategories = new Set();
+        let userLocation = null; // { lat, lng, address }
+
+        // Haversine formula to calculate distance between two lat/lng points
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 3959; // Earth's radius in miles
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // Distance in miles
+        }
+
+        // Geocode address using Nominatim (OpenStreetMap)
+        async function geocodeAddress(address) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`;
+
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'User-Agent': 'SoCalBucketList/1.0'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Geocoding failed');
+
+                const data = await response.json();
+
+                if (data.length === 0) {
+                    throw new Error('Address not found');
+                }
+
+                return {
+                    lat: parseFloat(data[0].lat),
+                    lng: parseFloat(data[0].lon),
+                    displayName: data[0].display_name
+                };
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function fetchAllRecords(tableName) {
+            let records = [];
+            let offset = null;
+
+            do {
+                const url = offset
+                    ? `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}?offset=${offset}`
+                    : `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableName}`;
+
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${AIRTABLE_TOKEN}` }
+                });
+
+                if (!response.ok) throw new Error(`Failed to fetch ${tableName}`);
+
+                const data = await response.json();
+                records = records.concat(data.records);
+                offset = data.offset;
+            } while (offset);
+
+            return records;
+        }
+
+        async function loadDestinations() {
+            try {
+                const records = await fetchAllRecords(DESTINATIONS_TABLE);
+
+                allDestinations = records.map(record => {
+                    const fields = record.fields;
+
+                    // Get categories (could be array if multiple select)
+                    let categories = [];
+                    if (fields.Category) {
+                        categories = Array.isArray(fields.Category) ? fields.Category : [fields.Category];
+                        categories.forEach(cat => allCategories.add(cat));
+                    }
+
+                    // Get photo URL
+                    const photo = fields.Photos && fields.Photos[0]
+                        ? fields.Photos[0].url
+                        : null;
+
+                    return {
+                        name: fields.Place_Name || 'Unnamed Place',
+                        categories: categories,
+                        address: fields.Address || '',
+                        city: fields.City || '',
+                        state: fields.State || '',
+                        latitude: fields.Latitude,
+                        longitude: fields.Longitude,
+                        photo: photo
+                    };
+                });
+
+                createCategoryFilters();
+                displayDestinations();
+            } catch (error) {
+                console.error('Error loading destinations:', error);
+                document.getElementById('destinations-grid').innerHTML =
+                    '<div class="loading">Unable to load destinations. Please try again later.</div>';
+            }
+        }
+
+        function createCategoryFilters() {
+            const filtersContainer = document.getElementById('category-filters');
+            const sortedCategories = Array.from(allCategories).sort();
+
+            filtersContainer.innerHTML = sortedCategories.map(category =>
+                `<button class="filter-btn" data-category="${category}">${category}</button>`
+            ).join('');
+
+            // Add event listeners to all filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.category;
+                    displayDestinations();
+                });
+            });
+        }
+
+        function displayDestinations() {
+            const grid = document.getElementById('destinations-grid');
+
+            // Filter destinations
+            let filtered = allDestinations;
+            if (currentFilter !== 'all') {
+                filtered = allDestinations.filter(dest =>
+                    dest.categories.includes(currentFilter)
+                );
+            }
+
+            // Calculate distances if user location is set
+            if (userLocation) {
+                filtered = filtered.map(dest => {
+                    if (dest.latitude && dest.longitude) {
+                        dest.distance = calculateDistance(
+                            userLocation.lat,
+                            userLocation.lng,
+                            dest.latitude,
+                            dest.longitude
+                        );
+                    } else {
+                        dest.distance = null;
+                    }
+                    return dest;
+                });
+
+                // Sort by distance (closest first)
+                filtered.sort((a, b) => {
+                    if (a.distance === null) return 1;
+                    if (b.distance === null) return -1;
+                    return a.distance - b.distance;
+                });
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="no-results">No destinations found for this category.</div>';
+                return;
+            }
+
+            grid.innerHTML = filtered.map(dest => {
+                const location = [dest.city, dest.state].filter(Boolean).join(', ');
+
+                return `
+                    <div class="destination-card">
+                        ${dest.photo ?
+                            `<img src="${dest.photo}" alt="${dest.name}" class="card-image">` :
+                            `<div class="card-image"></div>`
+                        }
+                        <div class="card-content">
+                            ${dest.distance !== null && dest.distance !== undefined ? `
+                                <div class="card-distance">🚗 ${dest.distance.toFixed(1)} miles away</div>
+                            ` : ''}
+                            <h2 class="card-title">${dest.name}</h2>
+                            ${dest.categories.length > 0 ? `
+                                <div class="card-categories">
+                                    ${dest.categories.map(cat =>
+                                        `<span class="category-tag">${cat}</span>`
+                                    ).join('')}
+                                </div>
+                            ` : ''}
+                            ${location ? `<div class="card-location">📍 ${location}</div>` : ''}
+                            ${dest.address ? `<div class="card-address">${dest.address}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Distance calculator button handlers
+        document.getElementById('calculate-btn').addEventListener('click', async () => {
+            const addressInput = document.getElementById('address-input');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const message = document.getElementById('calculator-message');
+            const address = addressInput.value.trim();
+
+            if (!address) {
+                message.textContent = 'Please enter an address';
+                message.className = 'calculator-message error';
+                return;
+            }
+
+            // Disable button and show loading
+            calculateBtn.disabled = true;
+            calculateBtn.textContent = 'Calculating...';
+            message.textContent = 'Finding your location...';
+            message.className = 'calculator-message';
+
+            try {
+                const location = await geocodeAddress(address);
+                userLocation = location;
+
+                message.textContent = `Showing distances from: ${location.displayName}`;
+                message.className = 'calculator-message success';
+
+                calculateBtn.style.display = 'none';
+                clearBtn.style.display = 'inline-block';
+
+                // Redisplay destinations with distances
+                displayDestinations();
+            } catch (error) {
+                console.error('Geocoding error:', error);
+                message.textContent = 'Unable to find that address. Please try again with a more specific address.';
+                message.className = 'calculator-message error';
+                calculateBtn.disabled = false;
+                calculateBtn.textContent = 'Calculate';
+            }
+        });
+
+        document.getElementById('clear-btn').addEventListener('click', () => {
+            const addressInput = document.getElementById('address-input');
+            const calculateBtn = document.getElementById('calculate-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const message = document.getElementById('calculator-message');
+
+            userLocation = null;
+            addressInput.value = '';
+            message.textContent = '';
+            message.className = 'calculator-message';
+
+            calculateBtn.style.display = 'inline-block';
+            calculateBtn.disabled = false;
+            calculateBtn.textContent = 'Calculate';
+            clearBtn.style.display = 'none';
+
+            // Redisplay destinations without distances
+            displayDestinations();
+        });
+
+        // Allow Enter key to trigger calculation
+        document.getElementById('address-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('calculate-btn').click();
+            }
+        });
+
+        // Load destinations on page load
+        loadDestinations();
+    </script>
+</body>
+</html>

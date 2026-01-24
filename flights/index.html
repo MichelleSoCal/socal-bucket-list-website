@@ -31,30 +31,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
-        header {
-            padding: 30px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            height: 60px;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #ff6ec7;
-        }
-
         /* Filter Section */
         .filter-section {
             padding: 30px 50px;
@@ -161,34 +137,7 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Footer */
-        footer {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 40px 50px;
-            text-align: center;
-            margin-top: 60px;
-        }
-
-        footer a {
-            color: #ff6ec7;
-            text-decoration: none;
-        }
-
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 20px;
-            }
-
-            nav {
-                margin-top: 20px;
-            }
-
-            nav a {
-                margin: 0 15px;
-                font-size: 0.9rem;
-            }
-
             .filter-section {
                 padding: 20px;
             }
@@ -210,15 +159,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <a href="../index.html">
-            <img src="../optimized-images/logo-white.png" alt="SoCal Bucket List" class="logo">
-        </a>
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="airports/">Airports</a>
-        </nav>
-    </header>
+    <div id="header-placeholder"></div>
 
     <!-- Page Title -->
     <section style="padding: 40px 50px 20px; text-align: center;">
@@ -265,10 +206,9 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 SoCal Bucket List. <a href="../index.html">Home</a></p>
-    </footer>
+    <div id="footer-placeholder"></div>
 
+    <script src="../components/loader.js"></script>
     <script>
         // Airtable configuration
         const AIRTABLE_TOKEN = 'pat4HICXlDN0QBxkZ.b8d2092207dd1ee3ec676ab0b131f19ae92d17bcc17b0c9fb25d0a64dd1e0024';

@@ -47,7 +47,7 @@
         /* Logo */
         .logo {
             position: absolute;
-            bottom: 70px;
+            bottom: 140px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
@@ -80,7 +80,48 @@
             font-size: 1.3rem;
             font-style: italic;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
-            margin: 0;
+            margin: 0 0 20px 0;
+        }
+
+        /* Hero Navigation */
+        .hero-nav {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .hero-nav a {
+            color: rgba(255, 255, 255, 0.95);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 8px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+            background: rgba(255, 110, 199, 0.1);
+            border: 1px solid rgba(255, 110, 199, 0.3);
+        }
+
+        .hero-nav a:hover {
+            background: rgba(255, 110, 199, 0.25);
+            border-color: rgba(255, 110, 199, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 110, 199, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-nav {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .hero-nav a {
+                font-size: 0.95rem;
+                padding: 6px 16px;
+            }
         }
 
         /* Hero Section */
@@ -535,10 +576,20 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 110, 199, 0.2);
             border-radius: 12px;
-            padding: 20px;
+            overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
             flex-shrink: 0;
+        }
+
+        .flight-card-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .flight-card-content {
+            padding: 20px;
         }
 
         .flight-card:hover {
@@ -564,6 +615,20 @@
         .flight-card .flight-details {
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.5);
+        }
+
+        .airlines {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .airline-tag {
+            padding: 4px 12px;
+            background: rgba(255, 110, 199, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
         }
 
         .slider-arrow {
@@ -755,6 +820,11 @@
         <!-- Motto -->
         <div class="hero-motto">
             <p>Adventures worth writing home about.</p>
+            <nav class="hero-nav">
+                <a href="/flights/">Flights</a>
+                <a href="/cruises/">Cruises</a>
+                <a href="/destinations/">Destinations</a>
+            </nav>
         </div>
     </section>
 
@@ -785,28 +855,8 @@
     </section>
 
     <!-- SoCal Flights Slider Section -->
-    <section class="flights-slider-section">
-        <div class="flights-header">
-            <h2 class="flights-title">SoCal Flights <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 10px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h2>
-            <div class="airport-toggles">
-                <button class="airport-toggle active" data-airport="all">All</button>
-                <button class="airport-toggle" data-airport="SNA">SNA</button>
-                <button class="airport-toggle" data-airport="LGB">LGB</button>
-                <button class="airport-toggle" data-airport="LAX">LAX</button>
-            </div>
-        </div>
-        <div class="slider-wrapper">
-            <button class="slider-arrow left" id="slide-left">&#8249;</button>
-            <div class="flights-slider" id="flights-slider">
-                <div class="flights-loading">Loading flights...</div>
-            </div>
-            <button class="slider-arrow right" id="slide-right">&#8250;</button>
-        </div>
-        <a href="flights/" class="view-all-flights">All SoCal Flights</a>
-    </section>
-
     <!-- SoCal Cruises Slider Section -->
-    <section class="flights-slider-section" style="padding-top: 60px;">
+    <section class="flights-slider-section">
         <div class="flights-header">
             <h2 class="flights-title">SoCal Cruise Lines <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 10px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h2>
             <div class="airport-toggles">
@@ -824,6 +874,21 @@
             <button class="slider-arrow right" id="cruise-slide-right">&#8250;</button>
         </div>
         <a href="cruises/" class="view-all-flights">All SoCal Cruise Ports</a>
+    </section>
+
+    <!-- Featured Flights Slider Section -->
+    <section class="flights-slider-section" style="padding-top: 60px;">
+        <div class="flights-header">
+            <h2 class="flights-title">Featured Flights From SoCal <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 10px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h2>
+        </div>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" id="slide-left">&#8249;</button>
+            <div class="flights-slider" id="flights-slider">
+                <div class="flights-loading">Loading flights...</div>
+            </div>
+            <button class="slider-arrow right" id="slide-right">&#8250;</button>
+        </div>
+        <a href="flights/" class="view-all-flights">All SoCal Flights</a>
     </section>
 
     <!-- Suggest an Adventure Section -->
@@ -882,23 +947,9 @@
     </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-info">
-                <img src="optimized-images/logo-white.png" alt="SoCal Bucket List" style="height: 80px; width: auto; margin-bottom: 15px;">
-                <p style="font-style: italic; margin-bottom: 15px;">Adventures worth writing home about.</p>
-                <p>200 Spectrum Center Drive, Suite 300</p>
-                <p>Irvine, CA 92618</p>
-                <p>(949) 237-2986</p>
-                <p><a href="mailto:Contact@SoCalBucketList.com" style="color: rgba(255, 255, 255, 0.8); text-decoration: none;">Contact@SoCalBucketList.com</a></p>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 SoCal Bucket List. All rights reserved.</p>
-                <p style="margin-top: 10px; font-size: 0.85rem;">SoCal Bucket List is an independent travel advisor affiliated with Fora, a registered Seller of Travel with the State of California (Registration No. 2151995-50)</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
+    <script src="components/loader.js"></script>
     <script>
         // Hero image slideshow
         const heroImages = document.querySelectorAll('.hero-image');
@@ -991,7 +1042,6 @@
         const AIRTABLE_BASE_ID = 'appGoQsy2UiGyyZ3T';
 
         let allFlightsData = [];
-        let currentAirportFilter = 'all';
 
         async function fetchAllRecords(tableName) {
             let records = [];
@@ -1035,7 +1085,10 @@
 
                 const citiesMap = {};
                 citiesRecords.forEach(city => {
-                    citiesMap[city.id] = city.fields.City || city.fields.Name || '';
+                    citiesMap[city.id] = {
+                        name: city.fields.City || city.fields.Name || '',
+                        photo: city.fields.Photo && city.fields.Photo[0] ? city.fields.Photo[0].url : null
+                    };
                 });
 
                 const statesMap = {};
@@ -1051,7 +1104,8 @@
 
                     airportsMap[airport.id] = {
                         code: airport.fields.Airport_Code,
-                        city: cityId ? citiesMap[cityId] : '',
+                        city: cityId ? citiesMap[cityId].name : '',
+                        cityId: cityId, // Store the city ID so we can look up photos later
                         state: stateId ? statesMap[stateId] : '',
                         country: countryId ? countriesMap[countryId] : ''
                     };
@@ -1062,24 +1116,35 @@
                     airlinesMap[airline.id] = airline.fields.Airline_Name;
                 });
 
-                // Process flights
-                const flights = flightsRecords.map(flight => {
-                    const arrivalAirport = flight.fields.Arrival_Airport?.map(id => airportsMap[id])[0] || {};
-                    const departureAirport = flight.fields.Departure_Airport?.map(id => airportsMap[id])[0] || {};
-                    const cityId = flight.fields.City?.[0];
-                    const cityName = cityId ? citiesMap[cityId] : '';
+                // Process flights - filter for Featured flights only
+                const flights = flightsRecords
+                    .filter(flight => flight.fields.Featured === true)
+                    .map(flight => {
+                        const arrivalAirport = flight.fields.Arrival_Airport?.map(id => airportsMap[id])[0] || {};
+                        const departureAirport = flight.fields.Departure_Airport?.map(id => airportsMap[id])[0] || {};
 
-                    return {
-                        route: flight.fields.Flight_Route || '',
-                        city: cityName || arrivalAirport.city || 'Unknown',
-                        state: arrivalAirport.state || '',
-                        country: arrivalAirport.country || '',
-                        departureAirport: departureAirport.code || '',
-                        arrivalAirport: arrivalAirport.code || '',
-                        duration: flight.fields.Duration_Minutes,
-                        distance: flight.fields.Distance_Miles
-                    };
-                });
+                        // Get the city ID from the arrival airport (since Airports → Destinations_City)
+                        const cityId = arrivalAirport.cityId;
+                        const cityData = cityId ? citiesMap[cityId] : null;
+                        const cityName = cityData ? cityData.name : (arrivalAirport.city || 'Unknown');
+                        const cityPhoto = cityData ? cityData.photo : null;
+
+                        const airlineIds = flight.fields.Airlines || [];
+                        const airlines = airlineIds.map(id => airlinesMap[id]).filter(Boolean);
+
+                        return {
+                            route: flight.fields.Flight_Route || '',
+                            city: cityName,
+                            state: arrivalAirport.state || '',
+                            country: arrivalAirport.country || '',
+                            departureAirport: departureAirport.code || '',
+                            arrivalAirport: arrivalAirport.code || '',
+                            duration: flight.fields.Duration_Minutes,
+                            distance: flight.fields.Distance_Miles,
+                            airlines: airlines,
+                            cityPhoto: cityPhoto
+                        };
+                    });
 
                 // Filter to only SoCal departures and remove duplicates
                 const socalFlights = flights.filter(f =>
@@ -1119,41 +1184,98 @@
         function displaySliderFlights() {
             const slider = document.getElementById('flights-slider');
 
-            // Filter by airport
-            let filtered = allFlightsData;
-            if (currentAirportFilter !== 'all') {
-                filtered = allFlightsData.filter(f => f.departureAirport === currentAirportFilter);
-            }
-
-            // Limit to 20 flights
-            const displayFlights = filtered.slice(0, 20);
-
-            if (displayFlights.length === 0) {
+            if (allFlightsData.length === 0) {
                 slider.innerHTML = '<div class="flights-loading">No flights found</div>';
                 return;
             }
 
-            slider.innerHTML = displayFlights.map(flight => `
-                <div class="flight-card">
-                    <div class="destination-name">${flight.city}${flight.state ? ', ' + flight.state : ''}${flight.country && flight.country !== 'USA' ? ', ' + flight.country : ''}</div>
-                    <div class="flight-route">${flight.route}</div>
-                    <div class="flight-details">
-                        ${flight.duration ? `⏱️ ~${formatDuration(flight.duration)}` : ''}
-                        ${flight.distance ? ` · ${flight.distance} mi` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
+            // Group flights by city
+            const cityGroups = {};
+            allFlightsData.forEach(flight => {
+                const cityKey = `${flight.city}${flight.state ? ', ' + flight.state : ''}${flight.country && flight.country !== 'USA' ? ', ' + flight.country : ''}`;
 
-        // Airport toggle handlers
-        document.querySelectorAll('.airport-toggle').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.airport-toggle').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentAirportFilter = btn.dataset.airport;
-                displaySliderFlights();
+                if (!cityGroups[cityKey]) {
+                    cityGroups[cityKey] = {
+                        displayName: cityKey,
+                        city: flight.city,
+                        state: flight.state,
+                        country: flight.country,
+                        cityPhoto: flight.cityPhoto,
+                        flights: []
+                    };
+                }
+
+                cityGroups[cityKey].flights.push(flight);
             });
-        });
+
+            // Convert to array and limit to 20 cities
+            const displayCities = Object.values(cityGroups).slice(0, 20);
+
+            slider.innerHTML = displayCities.map(cityGroup => {
+                // If only one flight to this city, show simple route
+                if (cityGroup.flights.length === 1) {
+                    const flight = cityGroup.flights[0];
+                    return `
+                        <div class="flight-card">
+                            ${cityGroup.cityPhoto ? `<img src="${cityGroup.cityPhoto}" alt="${cityGroup.displayName}" class="flight-card-image">` : ''}
+                            <div class="flight-card-content">
+                                <div class="destination-name">${cityGroup.displayName}</div>
+                                <div class="flight-route">${flight.route}</div>
+                                ${flight.airlines && flight.airlines.length > 0 ? `
+                                    <div class="airlines">
+                                        ${flight.airlines.map(airline => `<span class="airline-tag">${airline}</span>`).join('')}
+                                    </div>
+                                ` : ''}
+                                <div class="flight-details">
+                                    ${flight.duration ? `⏱️ ~${formatDuration(flight.duration)}` : ''}
+                                    ${flight.distance ? ` · ${flight.distance} mi` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Multiple flights to this city - show all routes
+                const routes = cityGroup.flights.map(f => f.route).join(', ');
+                const avgDuration = Math.round(
+                    cityGroup.flights.reduce((sum, f) => sum + (f.duration || 0), 0) / cityGroup.flights.length
+                );
+                const avgDistance = Math.round(
+                    cityGroup.flights.reduce((sum, f) => sum + (f.distance || 0), 0) / cityGroup.flights.length
+                );
+
+                // Get unique airlines across all flights to this city
+                const allAirlines = new Set();
+                cityGroup.flights.forEach(f => {
+                    if (f.airlines) {
+                        f.airlines.forEach(airline => allAirlines.add(airline));
+                    }
+                });
+                const airlinesArray = Array.from(allAirlines);
+
+                return `
+                    <div class="flight-card">
+                        ${cityGroup.cityPhoto ? `<img src="${cityGroup.cityPhoto}" alt="${cityGroup.displayName}" class="flight-card-image">` : ''}
+                        <div class="flight-card-content">
+                            <div class="destination-name">${cityGroup.displayName}</div>
+                            <div class="flight-route" style="font-size: 0.85rem;">${routes}</div>
+                            ${airlinesArray.length > 0 ? `
+                                <div class="airlines">
+                                    ${airlinesArray.map(airline => `<span class="airline-tag">${airline}</span>`).join('')}
+                                </div>
+                            ` : ''}
+                            <div class="flight-details">
+                                ${avgDuration ? `⏱️ ~${formatDuration(avgDuration)} avg` : ''}
+                                ${avgDistance ? ` · ${avgDistance} mi avg` : ''}
+                            </div>
+                            <div style="font-size: 0.75rem; color: rgba(255, 110, 199, 0.8); margin-top: 8px;">
+                                ${cityGroup.flights.length} routes available
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         // Slider arrow handlers
         document.getElementById('slide-left').addEventListener('click', () => {

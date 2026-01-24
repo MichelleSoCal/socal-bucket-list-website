@@ -39,62 +39,6 @@
             padding-bottom: 100px;
         }
 
-        /* Header */
-        .header {
-            background: rgba(26, 10, 31, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 40px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 110, 199, 0.1);
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: inherit;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo-link:hover {
-            opacity: 0.8;
-        }
-
-        .header-logo {
-            height: 70px;
-            width: auto;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 8px;
-        }
-
-        .nav-links a:hover {
-            color: #ff6ec7;
-            background: rgba(255, 110, 199, 0.1);
-        }
-
         /* Page Header */
         .page-header {
             padding: 80px 40px 60px;
@@ -238,19 +182,6 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-            }
-
-            .nav-links {
-                gap: 15px;
-            }
-
-            .nav-links a {
-                font-size: 0.9rem;
-                padding: 6px 12px;
-            }
-
             .page-header {
                 padding: 60px 20px 40px;
             }
@@ -276,18 +207,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <a href="../index.html" class="logo-link">
-                <img src="../optimized-images/logo-white.png" alt="SoCal Bucket List" class="header-logo">
-            </a>
-            <nav class="nav-links">
-                <a href="../index.html">Home</a>
-                <a href="../flights/">Flights</a>
-                <a href="../cruises/">Cruises</a>
-            </nav>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <!-- Page Header -->
     <section class="page-header">
@@ -406,5 +326,10 @@
         // Load ports when page loads
         loadPorts();
     </script>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="../components/loader.js"></script>
 </body>
 </html>
