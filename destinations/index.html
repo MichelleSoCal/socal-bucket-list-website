@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Cookie Consent & Analytics Manager -->
+    <script src="../components/consent.js"></script>
+    <!-- Caching System -->
+    <script src="../components/cache.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SoCal Destinations - SoCal Bucket List</title>
@@ -539,7 +544,19 @@
             }
         }
 
+        // Fetch records with caching support
         async function fetchAllRecords(tableName) {
+            // Try to get from cache first
+            const cacheKey = `socal_cache_${tableName.toLowerCase()}`;
+            const cached = CacheManager.get(cacheKey);
+
+            if (cached) {
+                console.log(`Using cached data for ${tableName}`);
+                return cached;
+            }
+
+            // Not in cache, fetch from Airtable
+            console.log(`Fetching fresh data for ${tableName}`);
             let records = [];
             let offset = null;
 
@@ -558,6 +575,9 @@
                 records = records.concat(data.records);
                 offset = data.offset;
             } while (offset);
+
+            // Cache the results
+            CacheManager.set(cacheKey, records);
 
             return records;
         }
@@ -589,7 +609,8 @@
                         state: fields.State || '',
                         latitude: fields.Latitude,
                         longitude: fields.Longitude,
-                        photo: photo
+                        photo: photo,
+                        defaultOrder: fields.Default_Order || null
                     };
                 });
 
@@ -654,6 +675,26 @@
                     if (b.distance === null) return -1;
                     return a.distance - b.distance;
                 });
+            } else {
+                // Clear any existing distance values
+                filtered = filtered.map(dest => {
+                    dest.distance = null;
+                    return dest;
+                });
+
+                // Sort by Default_Order when no user location
+                filtered.sort((a, b) => {
+                    if (a.defaultOrder !== null && b.defaultOrder !== null) {
+                        return a.defaultOrder - b.defaultOrder;
+                    }
+                    if (a.defaultOrder !== null && b.defaultOrder === null) {
+                        return -1;
+                    }
+                    if (a.defaultOrder === null && b.defaultOrder !== null) {
+                        return 1;
+                    }
+                    return 0;
+                });
             }
 
             if (filtered.length === 0) {
@@ -714,6 +755,10 @@
                 const location = await geocodeAddress(address);
                 userLocation = location;
 
+                // Save address and location to cache for persistence
+                CacheManager.saveUserAddress(address);
+                CacheManager.saveUserLocation(location.lat, location.lng);
+
                 message.textContent = `Showing distances from: ${location.displayName}`;
                 message.className = 'calculator-message success';
 
@@ -742,6 +787,10 @@
             message.textContent = '';
             message.className = 'calculator-message';
 
+            // Clear saved address from cache
+            CacheManager.clear(CacheManager.KEYS.USER_ADDRESS);
+            CacheManager.clear(CacheManager.KEYS.USER_LOCATION);
+
             calculateBtn.style.display = 'inline-block';
             calculateBtn.disabled = false;
             calculateBtn.textContent = 'Calculate';
@@ -758,8 +807,40 @@
             }
         });
 
+        // Restore saved address on page load
+        function restoreSavedAddress() {
+            const savedAddress = CacheManager.getUserAddress();
+            const savedLocation = CacheManager.getUserLocation();
+
+            if (savedAddress && savedLocation) {
+                const addressInput = document.getElementById('address-input');
+                const calculateBtn = document.getElementById('calculate-btn');
+                const clearBtn = document.getElementById('clear-btn');
+                const message = document.getElementById('calculator-message');
+
+                // Restore the address and location
+                addressInput.value = savedAddress;
+                userLocation = {
+                    lat: savedLocation.lat,
+                    lng: savedLocation.lng,
+                    displayName: savedAddress
+                };
+
+                message.textContent = `Showing distances from your saved location`;
+                message.className = 'calculator-message success';
+
+                calculateBtn.style.display = 'none';
+                clearBtn.style.display = 'inline-block';
+
+                console.log('Restored saved address:', savedAddress);
+            }
+        }
+
         // Load destinations on page load
         loadDestinations();
+
+        // Restore saved address after destinations are loaded
+        restoreSavedAddress();
     </script>
 </body>
 </html>
