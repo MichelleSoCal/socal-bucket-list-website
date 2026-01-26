@@ -1,13 +1,238 @@
-<header style="background: rgba(26, 10, 31, 0.95); padding: 20px 50px; border-bottom: 2px solid rgba(255, 110, 199, 0.3); position: sticky; top: 0; z-index: 100;">
-    <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-        <a href="/" style="text-decoration: none;">
-            <img src="/optimized-images/logo-white.png" alt="SoCal Bucket List" style="height: 60px; width: auto; filter: drop-shadow(0 2px 10px rgba(255, 110, 199, 0.3));">
+<header id="main-header">
+    <div class="header-container">
+        <!-- Logo -->
+        <a href="/" class="header-logo">
+            <img src="/optimized-images/logo-white.png" alt="SoCal Bucket List">
         </a>
-        <nav>
-            <a href="/" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; margin-left: 30px; font-weight: 500; transition: color 0.3s;">Home</a>
-            <a href="/flights/" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; margin-left: 30px; font-weight: 500; transition: color 0.3s;">Flights</a>
-            <a href="/cruises/" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; margin-left: 30px; font-weight: 500; transition: color 0.3s;">Cruises</a>
-            <a href="/destinations/" style="color: rgba(255, 255, 255, 0.8); text-decoration: none; margin-left: 30px; font-weight: 500; transition: color 0.3s;">Destinations</a>
+
+        <!-- Desktop Navigation (centered) -->
+        <nav class="desktop-nav">
+            <a href="/destinations/">Destinations</a>
+            <a href="/flights/">Flights</a>
+            <a href="/cruises/">Cruises</a>
+        </nav>
+
+        <!-- Phone Number (desktop shows full, mobile shows icon only) -->
+        <a href="tel:+19492372986" class="header-phone">
+            <svg class="phone-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+            </svg>
+            <span class="phone-text">+1 (949) 237-2986</span>
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <nav class="mobile-nav">
+            <a href="/destinations/">Destinations</a>
+            <a href="/flights/">Flights</a>
+            <a href="/cruises/">Cruises</a>
         </nav>
     </div>
 </header>
+
+<style>
+    #main-header {
+        background: rgba(26, 10, 31, 0.95);
+        padding: 20px 50px;
+        border-bottom: 2px solid rgba(255, 110, 199, 0.3);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+    }
+
+    .header-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    /* Logo */
+    .header-logo img {
+        height: 60px;
+        width: auto;
+        filter: drop-shadow(0 2px 10px rgba(255, 110, 199, 0.3));
+        transition: transform 0.3s;
+    }
+
+    .header-logo:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Desktop Navigation - Centered */
+    .desktop-nav {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 40px;
+    }
+
+    .desktop-nav a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.05rem;
+        transition: color 0.3s;
+        white-space: nowrap;
+    }
+
+    .desktop-nav a:hover {
+        color: #ff6ec7;
+    }
+
+    /* Phone Number */
+    .header-phone {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        white-space: nowrap;
+    }
+
+    .header-phone:hover {
+        color: #ff6ec7;
+    }
+
+    .phone-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .phone-text {
+        font-size: 1rem;
+    }
+
+    /* Hamburger Button - Hidden on Desktop */
+    .hamburger-btn {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 24px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+    }
+
+    .hamburger-line {
+        width: 100%;
+        height: 3px;
+        background: #fff;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    /* Hamburger Animation to X */
+    .hamburger-btn.active .hamburger-line:nth-child(1) {
+        transform: translateY(10.5px) rotate(45deg);
+    }
+
+    .hamburger-btn.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-btn.active .hamburger-line:nth-child(3) {
+        transform: translateY(-10.5px) rotate(-45deg);
+    }
+
+    /* Mobile Menu - Slide from Left */
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: rgba(26, 10, 31, 0.98);
+        backdrop-filter: blur(10px);
+        z-index: 999;
+        transition: left 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile-menu.active {
+        left: 0;
+    }
+
+    .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .mobile-nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        padding: 10px 0;
+    }
+
+    .mobile-nav a:hover {
+        color: #ff6ec7;
+        transform: translateX(10px);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        #main-header {
+            padding: 15px 20px;
+        }
+
+        /* Hide desktop nav */
+        .desktop-nav {
+            display: none;
+        }
+
+        /* Show hamburger button */
+        .hamburger-btn {
+            display: flex;
+        }
+
+        /* Hide phone text, show only icon */
+        .phone-text {
+            display: none;
+        }
+
+        .phone-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Adjust logo size */
+        .header-logo img {
+            height: 45px;
+        }
+
+        /* Reorder: Logo, Phone, Hamburger */
+        .header-container {
+            gap: 15px;
+        }
+
+        .header-phone {
+            margin-left: auto;
+            margin-right: 15px;
+        }
+    }
+</style>

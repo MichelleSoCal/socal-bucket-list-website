@@ -65,4 +65,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadComponent('header-placeholder', getComponentPath('header.html')),
         loadComponent('footer-placeholder', getComponentPath('footer.html'))
     ]);
+
+    // Load header.js after header is loaded
+    const headerScript = document.createElement('script');
+    headerScript.src = getComponentPath('header.js');
+    document.body.appendChild(headerScript);
 });
