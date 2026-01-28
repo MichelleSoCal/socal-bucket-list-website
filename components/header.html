@@ -8,8 +8,21 @@
         <!-- Desktop Navigation (centered) -->
         <nav class="desktop-nav">
             <a href="/destinations/">Destinations</a>
-            <a href="/flights/">Flights</a>
-            <a href="/cruises/">Cruises</a>
+            <div class="nav-dropdown">
+                <a href="/flights/" class="dropdown-trigger">Flights</a>
+                <div class="dropdown-menu">
+                    <a href="/flights/">All Flights</a>
+                    <a href="/flights/airports/">Airports</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <a href="/cruises/" class="dropdown-trigger">Cruises</a>
+                <div class="dropdown-menu" id="cruises-dropdown">
+                    <a href="/cruises/ports/">SoCal Cruise Ports</a>
+                    <a href="/cruises/cruise-lines/">SoCal Cruise Lines</a>
+                    <!-- Dynamic cruise lines will be inserted here -->
+                </div>
+            </div>
         </nav>
 
         <!-- Phone Number (desktop shows full, mobile shows icon only) -->
@@ -30,10 +43,14 @@
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobile-menu">
-        <nav class="mobile-nav">
+        <nav class="mobile-nav" id="mobile-nav">
             <a href="/destinations/">Destinations</a>
             <a href="/flights/">Flights</a>
+            <a href="/flights/airports/" style="font-size: 1.6rem; padding-left: 20px;">Airports</a>
             <a href="/cruises/">Cruises</a>
+            <a href="/cruises/ports/" style="font-size: 1.6rem; padding-left: 20px;">SoCal Cruise Ports</a>
+            <a href="/cruises/cruise-lines/" style="font-size: 1.6rem; padding-left: 20px;">SoCal Cruise Lines</a>
+            <!-- Dynamic cruise lines will be inserted here -->
         </nav>
     </div>
 </header>
@@ -90,6 +107,64 @@
 
     .desktop-nav a:hover {
         color: #ff6ec7;
+    }
+
+    /* Dropdown Navigation */
+    .nav-dropdown {
+        position: relative;
+    }
+
+    .dropdown-trigger {
+        cursor: pointer;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(26, 10, 31, 0.98);
+        border: 1px solid rgba(255, 110, 199, 0.3);
+        border-radius: 8px;
+        padding: 10px 0;
+        min-width: 150px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .nav-dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        margin-top: 15px;
+    }
+
+    .dropdown-menu a {
+        display: block;
+        padding: 10px 20px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .dropdown-menu a:hover {
+        background: rgba(255, 110, 199, 0.15);
+        color: #ff6ec7;
+    }
+
+    .dropdown-section-label {
+        padding: 10px 20px 5px;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-top: 1px solid rgba(255, 110, 199, 0.2);
+        margin-top: 5px;
     }
 
     /* Phone Number */
@@ -236,3 +311,101 @@
         }
     }
 </style>
+
+<script>
+    // Airtable Configuration
+    const AIRTABLE_API_KEY = 'patZKMy2YWWGMwsEk.8e0c2bbad3055e887e7bc1a0b5f56c56f2ea86cb9a15b5c49a2ede4f07d19816';
+    const BASE_ID = 'appGoQsy2UiGyyZ3T';
+    const CRUISE_LINES_TABLE = 'tbl9oXySE9617moOx';
+
+    // Fetch all records from a table with pagination
+    async function fetchAllRecords(tableName) {
+        let allRecords = [];
+        let offset = null;
+
+        do {
+            const url = offset
+                ? `https://api.airtable.com/v0/${BASE_ID}/${tableName}?offset=${offset}`
+                : `https://api.airtable.com/v0/${BASE_ID}/${tableName}`;
+
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+                }
+            });
+
+            const data = await response.json();
+            allRecords = allRecords.concat(data.records);
+            offset = data.offset;
+        } while (offset);
+
+        return allRecords;
+    }
+
+    // Load dynamic cruise line links
+    async function loadDynamicCruiseLinks() {
+        try {
+            const cruiseLines = await fetchAllRecords(CRUISE_LINES_TABLE);
+            const dropdown = document.getElementById('cruises-dropdown');
+            const mobileNav = document.getElementById('mobile-nav');
+
+            // Filter for cruise lines with Page_URL
+            const withPages = cruiseLines
+                .filter(line => line.fields.Page_URL)
+                .sort((a, b) => {
+                    // Sort by Display_Order if available, otherwise alphabetically
+                    if (a.fields.Display_Order !== undefined && b.fields.Display_Order !== undefined) {
+                        return a.fields.Display_Order - b.fields.Display_Order;
+                    }
+                    const nameA = (a.fields.Cruise_Line || '').toLowerCase();
+                    const nameB = (b.fields.Cruise_Line || '').toLowerCase();
+                    return nameA.localeCompare(nameB);
+                });
+
+            // Add dynamic cruise line links to desktop dropdown
+            withPages.forEach(line => {
+                const link = document.createElement('a');
+                link.href = line.fields.Page_URL;
+                link.textContent = line.fields.Cruise_Line;
+                dropdown.appendChild(link);
+            });
+
+            // Add dynamic cruise line links to mobile menu (indented)
+            withPages.forEach(line => {
+                const mobileLink = document.createElement('a');
+                mobileLink.href = line.fields.Page_URL;
+                mobileLink.textContent = line.fields.Cruise_Line;
+                mobileLink.style.fontSize = '1.6rem';
+                mobileLink.style.paddingLeft = '20px';
+                mobileNav.appendChild(mobileLink);
+            });
+        } catch (error) {
+            console.error('Error loading dynamic cruise links:', error);
+        }
+    }
+
+    // Hamburger Menu Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener('click', function() {
+                hamburgerBtn.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Close menu when clicking a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburgerBtn.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+            });
+        }
+
+        // Load dynamic cruise links
+        loadDynamicCruiseLinks();
+    });
+</script>

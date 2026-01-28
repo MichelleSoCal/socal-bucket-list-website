@@ -310,7 +310,7 @@
         // Airtable configuration
         const AIRTABLE_TOKEN = 'pat4HICXlDN0QBxkZ.b8d2092207dd1ee3ec676ab0b131f19ae92d17bcc17b0c9fb25d0a64dd1e0024';
         const AIRTABLE_BASE_ID = 'appGoQsy2UiGyyZ3T';
-        const PORT_NAME = 'Long Beach Cruise Terminal';
+        const PORT_NAME = 'Port of Long Beach';
 
         async function fetchAllRecords(tableName) {
             let records = [];
@@ -351,7 +351,7 @@
                 );
 
                 if (!port) {
-                    grid.innerHTML = '<div class="error">Long Beach Cruise Terminal not found in database.</div>';
+                    grid.innerHTML = '<div class="error">Port of Long Beach not found in database.</div>';
                     return;
                 }
 
@@ -373,7 +373,7 @@
                 });
 
                 if (cruiseLinesForPort.length === 0) {
-                    grid.innerHTML = '<div class="error">No cruise lines found for Long Beach Cruise Terminal.</div>';
+                    grid.innerHTML = '<div class="error">No cruise lines found for Port of Long Beach.</div>';
                     return;
                 }
 

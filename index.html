@@ -903,7 +903,7 @@
             </div>
             <button class="slider-arrow right" id="cruise-slide-right">&#8250;</button>
         </div>
-        <a href="cruises/" class="view-all-flights">All SoCal Cruise Ports</a>
+        <a href="cruises/ports/" class="view-all-flights">All SoCal Cruise Ports</a>
     </section>
 
     <!-- Featured Flights Slider Section -->
@@ -1335,8 +1335,8 @@
 
         const PORT_NAMES = {
             'San Diego': 'Port of San Diego',
-            'Los Angeles': 'Los Angeles World Cruise Center',
-            'Long Beach': 'Long Beach Cruise Terminal'
+            'Los Angeles': 'Port of Los Angeles',
+            'Long Beach': 'Port of Long Beach'
         };
 
         async function fetchCruiseLinesForSlider() {
@@ -1366,6 +1366,7 @@
                             ? line.fields.Cruise_Photo[0].url
                             : 'optimized-images/cruise-default.png',
                         website: line.fields.Official_Website || null,
+                        pageUrl: line.fields.Page_URL || null,
                         ports: ports,
                         displayOrder: line.fields.Display_Order || null
                     };
@@ -1414,16 +1415,22 @@
                 return;
             }
 
-            slider.innerHTML = filtered.map(line => `
-                <div class="flight-card" style="text-align: center;">
+            slider.innerHTML = filtered.map(line => {
+                const cardContent = `
                     <img src="${line.photo}" alt="${line.name}" class="flight-card-image">
                     <div class="destination-name" style="font-size: 1.2rem; margin-bottom: 8px;">${line.name}</div>
                     <div class="flight-details" style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6);">
                         ${line.ports.map(p => p.displayName).join(' · ')}
                     </div>
-                    ${line.website ? `<a href="${line.website}" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 12px; color: #ff6ec7; text-decoration: none; font-size: 0.85rem;">Visit Website</a>` : ''}
-                </div>
-            `).join('');
+                    ${line.pageUrl ? `<div style="display: inline-block; margin-top: 12px; color: #ff6ec7; text-decoration: none; font-size: 0.85rem;">View Cruises →</div>` : line.website ? `<a href="${line.website}" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 12px; color: #ff6ec7; text-decoration: none; font-size: 0.85rem;">Visit Website</a>` : ''}
+                `;
+
+                if (line.pageUrl) {
+                    return `<a href="${line.pageUrl}" class="flight-card" style="text-align: center; text-decoration: none; color: inherit; display: block;">${cardContent}</a>`;
+                } else {
+                    return `<div class="flight-card" style="text-align: center;">${cardContent}</div>`;
+                }
+            }).join('');
         }
 
         // Port toggle handlers
