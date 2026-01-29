@@ -8,14 +8,14 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoCal Cruise Ports | SoCal Bucket List</title>
-    <meta name="description" content="Discover cruise ports in Southern California. Find cruise lines departing from San Diego, Los Angeles, and Long Beach.">
+    <title>SoCal Cruises | SoCal Bucket List</title>
+    <meta name="description" content="Discover all cruises to and from Southern California ports. Find your next cruise from San Diego, Los Angeles, Long Beach, and repositioning cruises to SoCal.">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://socalbucketlist.com/cruises/">
-    <meta property="og:title" content="SoCal Cruise Ports | SoCal Bucket List">
-    <meta property="og:description" content="Discover cruise ports in Southern California. Find cruise lines departing from San Diego, Los Angeles, and Long Beach.">
+    <meta property="og:title" content="SoCal Cruises | SoCal Bucket List">
+    <meta property="og:description" content="Discover all cruises to and from Southern California ports. Find your next cruise from San Diego, Los Angeles, Long Beach, and repositioning cruises to SoCal.">
 
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -32,171 +32,191 @@
             background: linear-gradient(to bottom, #1a0a1f 0%, #2d1b3d 50%, #1a0a1f 100%);
             color: #fff;
             min-height: 100vh;
-            padding-bottom: 100px;
         }
 
-        /* Page Header */
-        .page-header {
-            padding: 80px 40px 60px;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(255, 110, 199, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+        /* Filter Section */
+        .filter-section {
+            padding: 30px 50px;
+            background: rgba(163, 25, 132, 0.1);
             border-bottom: 1px solid rgba(255, 110, 199, 0.2);
         }
 
-        .page-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
-        .page-header p {
+        .filter-controls label {
             font-size: 1rem;
-            color: rgba(255, 255, 255, 0.7);
+            margin-right: 10px;
         }
 
-        .beta-disclaimer {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 10px;
-            font-style: italic;
+        .filter-controls select {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 110, 199, 0.3);
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            cursor: pointer;
         }
 
-        /* Ports Section */
-        .ports-section {
-            padding: 60px 40px;
+        input[type="date"] {
+            color-scheme: dark;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: brightness(0) saturate(100%) invert(70%) sepia(50%) saturate(2000%) hue-rotate(290deg) brightness(100%) contrast(95%);
+            cursor: pointer;
+        }
+
+        /* Cruises Section */
+        .cruises-section {
+            padding: 40px 50px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .section-title {
             font-size: 2rem;
-            margin-bottom: 40px;
-            text-align: center;
-            background: linear-gradient(135deg, #ff6ec7 0%, #a78bfa 100%);
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ff6ec7 0%, #ff9a56 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        /* Port Cards */
-        .ports-grid {
+        .cruises-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
 
-        .port-card {
+        .cruise-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 110, 199, 0.2);
-            border-radius: 16px;
-            overflow: hidden;
+            border-radius: 12px;
+            padding: 25px;
             transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
             text-decoration: none;
             color: inherit;
             display: block;
         }
 
-        .port-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 110, 199, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-        }
-
-        .port-card:hover {
+        .cruise-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(255, 110, 199, 0.4);
-            box-shadow: 0 8px 32px rgba(255, 110, 199, 0.2);
+            box-shadow: 0 8px 20px rgba(255, 110, 199, 0.3);
+            border-color: rgba(255, 110, 199, 0.5);
         }
 
-        .port-card:hover::before {
-            opacity: 1;
-        }
-
-        .port-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        .port-card-content {
-            padding: 25px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .port-location {
-            font-size: 0.9rem;
+        .cruise-title {
+            font-size: 1.5rem;
+            font-weight: bold;
             color: #ff6ec7;
-            margin-bottom: 8px;
-        }
-
-        .port-name {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #fff;
             margin-bottom: 12px;
         }
 
-        .port-info {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 15px;
+        .cruise-line-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
-        .cruise-lines-count {
-            display: inline-block;
-            padding: 6px 14px;
+        .cruise-line-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 110, 199, 0.3);
+        }
+
+        .cruise-line-name {
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .cruise-ship-name {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .cruise-dates {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .cruise-route {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .cruise-destinations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .destination-tag {
+            padding: 4px 10px;
             background: rgba(255, 110, 199, 0.2);
             border-radius: 20px;
-            font-size: 0.85rem;
-            color: #ff6ec7;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .destination-photo {
+            width: 72px;
+            height: 72px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 110, 199, 0.3);
+        }
+
+        .cruise-details {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .loading {
             text-align: center;
             padding: 60px 20px;
+            font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.6);
-            font-size: 1.1rem;
         }
 
-        .error {
-            text-align: center;
-            padding: 60px 20px;
-            color: #ff6ec7;
-            font-size: 1.1rem;
+        #clear-filters-btn:hover {
+            background: rgba(255, 110, 199, 0.2);
+            border-color: rgba(255, 110, 199, 0.8);
+            transform: translateY(-1px);
         }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .page-header {
-                padding: 60px 20px 40px;
+            .filter-section {
+                padding: 20px;
             }
 
-            .page-header h1 {
-                font-size: 2rem;
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
             }
 
-            .ports-section {
-                padding: 40px 20px;
+            .cruises-section {
+                padding: 30px 20px;
             }
 
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .ports-grid {
+            .cruises-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
         }
     </style>
@@ -205,17 +225,74 @@
     <!-- Header -->
     <div id="header-placeholder"></div>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <h1>Southern California Cruise Ports <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 12px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h1>
-        <p>Explore cruise lines departing from SoCal's major cruise terminals</p>
-        <p class="beta-disclaimer">For dreaming purposes only. Please verify cruise availability before making travel plans.</p>
+    <!-- Page Title -->
+    <section style="padding: 40px 50px 20px; text-align: center;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">SoCal Cruises <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 12px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h1>
+        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.7);">Explore all cruises to and from Southern California ports</p>
+        <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); margin-top: 10px; font-style: italic;">For dreaming purposes only. Please verify cruise availability before making travel plans.</p>
     </section>
 
-    <!-- Ports Section -->
-    <section class="ports-section">
-        <div class="ports-grid" id="ports-grid">
-            <div class="loading">Loading cruise ports...</div>
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-controls">
+            <label>Filter by:</label>
+            <select id="direction-filter">
+                <option value="all">All Directions</option>
+                <option value="from-socal">From SoCal</option>
+                <option value="to-socal">To SoCal (One Way)</option>
+            </select>
+            <select id="cruise-line-filter">
+                <option value="">All Cruise Lines</option>
+            </select>
+            <select id="cruise-ship-filter">
+                <option value="">All Ships</option>
+            </select>
+            <select id="departure-port-filter">
+                <option value="">All Departure Ports</option>
+            </select>
+            <select id="destination-city-filter">
+                <option value="">All Destinations</option>
+            </select>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <label style="margin: 0;">Dates:</label>
+                <input type="date" id="date-from-filter" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer;">
+                <span style="color: rgba(255, 255, 255, 0.5);">to</span>
+                <input type="date" id="date-to-filter" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer;">
+            </div>
+            <select id="date-flexibility-filter">
+                <option value="0">Exact dates</option>
+                <option value="1">±1 day</option>
+                <option value="2">±2 days</option>
+                <option value="3">±3 days</option>
+                <option value="7">±1 week</option>
+            </select>
+            <select id="nights-filter">
+                <option value="">All Durations</option>
+                <option value="1-3">1-3 Nights</option>
+                <option value="4-7">4-7 Nights</option>
+                <option value="8-14">8-14 Nights</option>
+                <option value="15+">15+ Nights</option>
+            </select>
+            <select id="sort-filter">
+                <option value="date-asc">Earliest Date</option>
+                <option value="date-desc">Latest Date</option>
+                <option value="nights-asc">Shortest Duration</option>
+                <option value="nights-desc">Longest Duration</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Cruises Section -->
+    <section class="cruises-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Cruises to and from Southern California</h2>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div id="cruise-count" style="font-size: 1rem; color: rgba(255, 255, 255, 0.7);"></div>
+                <button id="clear-filters-btn" style="padding: 10px 20px; font-size: 0.95rem; border: 1px solid rgba(255, 110, 199, 0.5); border-radius: 4px; background: rgba(255, 110, 199, 0.1); color: #ff6ec7; cursor: pointer; transition: all 0.3s;">Clear Filters</button>
+            </div>
+        </div>
+        <div class="cruises-grid" id="cruises-grid">
+            <div class="loading">Loading cruises...</div>
         </div>
     </section>
 
@@ -223,13 +300,6 @@
         // Airtable configuration
         const AIRTABLE_TOKEN = 'pat4HICXlDN0QBxkZ.b8d2092207dd1ee3ec676ab0b131f19ae92d17bcc17b0c9fb25d0a64dd1e0024';
         const AIRTABLE_BASE_ID = 'appGoQsy2UiGyyZ3T';
-
-        // Port mapping to page URLs
-        const PORT_PAGES = {
-            'Port of San Diego': 'ports/san-diego.html',
-            'Port of Los Angeles': 'ports/los-angeles.html',
-            'Port of Long Beach': 'ports/long-beach.html'
-        };
 
         async function fetchAllRecords(tableName) {
             let records = [];
@@ -254,73 +324,482 @@
             return records;
         }
 
-        async function loadPorts() {
-            const grid = document.getElementById('ports-grid');
-
+        async function fetchCruisesFromAirtable() {
             try {
-                // Fetch all tables
-                const [cruisePorts, cruiseLines] = await Promise.all([
+                const [cruisesRecords, cruiseLinesRecords, cruiseShipsRecords, cruisePortsRecords, citiesRecords] = await Promise.all([
+                    fetchAllRecords('Cruises'),
+                    fetchAllRecords('Cruise_Lines'),
+                    fetchAllRecords('Cruise_Ships'),
                     fetchAllRecords('Cruise_Ports'),
-                    fetchAllRecords('Cruise_Lines')
+                    fetchAllRecords('Destinations_City')
                 ]);
 
-                // Filter to only SoCal ports we have pages for
-                const socalPorts = cruisePorts.filter(port =>
-                    PORT_PAGES.hasOwnProperty(port.fields.Cruise_Port)
-                );
+                // Create lookup maps
+                const cruiseLinesMap = {};
+                const cruiseLinesPhotoMap = {};
+                cruiseLinesRecords.forEach(line => {
+                    cruiseLinesMap[line.id] = line.fields.Cruise_Line || 'Unknown';
+                    // Store photo URL if available
+                    if (line.fields.Cruise_Photo && line.fields.Cruise_Photo[0]) {
+                        cruiseLinesPhotoMap[line.id] = line.fields.Cruise_Photo[0].url;
+                    }
+                });
 
-                if (socalPorts.length === 0) {
-                    grid.innerHTML = '<div class="error">No cruise ports found.</div>';
-                    return;
-                }
+                const cruiseShipsMap = {};
+                cruiseShipsRecords.forEach(ship => {
+                    cruiseShipsMap[ship.id] = ship.fields.Cruise_Ship || 'Unknown';
+                });
 
-                // Create port cards
-                grid.innerHTML = socalPorts.map(port => {
-                    const portName = port.fields.Cruise_Port || 'Unknown Port';
+                const cruisePortsMap = {};
+                const soCalPortIds = new Set();
+                const soCalPortNames = ['Port of San Diego', 'Port of Los Angeles', 'Port of Long Beach'];
 
-                    // Map port names to locations
-                    let location = 'California';
-                    if (portName === 'Port of San Diego') {
-                        location = 'San Diego, California';
-                    } else if (portName === 'Port of Los Angeles') {
-                        location = 'Los Angeles, California';
-                    } else if (portName === 'Port of Long Beach') {
-                        location = 'Long Beach, California';
+                cruisePortsRecords.forEach(port => {
+                    const portName = port.fields.Cruise_Port || 'Unknown';
+                    cruisePortsMap[port.id] = portName;
+
+                    // Track which ports are SoCal ports
+                    // Use checkbox if available, otherwise fall back to port names
+                    if (port.fields.SoCal_port === true || soCalPortNames.includes(portName)) {
+                        soCalPortIds.add(port.id);
+                    }
+                });
+
+                console.log('SoCal port IDs:', soCalPortIds.size);
+
+                const citiesMap = {};
+                const citiesPhotoMap = {};
+                citiesRecords.forEach(city => {
+                    citiesMap[city.id] = city.fields.City || 'Unknown';
+                    // Store photo URL if available
+                    if (city.fields.Photo && city.fields.Photo[0]) {
+                        citiesPhotoMap[city.id] = city.fields.Photo[0].url;
+                    }
+                });
+
+                // Enrich cruise data
+                const enrichedCruises = cruisesRecords.map(cruise => {
+                    // Try both singular and plural field names
+                    const cruiseLineId = cruise.fields.Cruise_Lines?.[0] || cruise.fields.Cruise_Line?.[0];
+                    const departurePortId = cruise.fields.Departure_Cruise_Port?.[0];
+                    const arrivalPortId = cruise.fields.Arrival_Cruise_Port?.[0];
+                    const destinationCityIds = cruise.fields.Destinations_City || [];
+
+                    // Check if Cruise_Ship is a text field or a linked record
+                    let cruiseShip = 'Unknown';
+                    if (typeof cruise.fields.Cruise_Ship === 'string') {
+                        // It's a text field
+                        cruiseShip = cruise.fields.Cruise_Ship;
+                    } else if (Array.isArray(cruise.fields.Cruise_Ship) && cruise.fields.Cruise_Ship[0]) {
+                        // It's a linked record
+                        cruiseShip = cruiseShipsMap[cruise.fields.Cruise_Ship[0]] || 'Unknown';
                     }
 
-                    const photo = port.fields.Port_Photo && port.fields.Port_Photo[0]
-                        ? port.fields.Port_Photo[0].url
-                        : '../optimized-images/cruise-default.png';
+                    return {
+                        ...cruise,
+                        enriched: {
+                            cruiseLine: cruiseLineId ? cruiseLinesMap[cruiseLineId] : 'Unknown',
+                            cruiseLinePhoto: cruiseLineId ? cruiseLinesPhotoMap[cruiseLineId] : null,
+                            cruiseShip: cruiseShip,
+                            departurePort: departurePortId ? cruisePortsMap[departurePortId] : 'Unknown',
+                            arrivalPort: arrivalPortId ? cruisePortsMap[arrivalPortId] : 'Unknown',
+                            destinationCities: destinationCityIds.map(id => citiesMap[id]).filter(Boolean),
+                            destinationCitiesWithPhotos: destinationCityIds.map(id => ({
+                                name: citiesMap[id],
+                                photo: citiesPhotoMap[id] || null
+                            })).filter(city => city.name),
+                            isDepartureFromSoCal: departurePortId ? soCalPortIds.has(departurePortId) : false,
+                            isArrivalToSoCal: arrivalPortId ? soCalPortIds.has(arrivalPortId) : false
+                        }
+                    };
+                });
 
-                    // Count cruise lines for this port
-                    const cruiseLinesCount = cruiseLines.filter(line => {
-                        const departurePorts = line.fields.Departure_Port || [];
-                        return departurePorts.includes(port.id);
-                    }).length;
-
-                    const pageUrl = PORT_PAGES[portName] || '#';
-
-                    return `
-                        <a href="${pageUrl}" class="port-card">
-                            <img src="${photo}" alt="${portName}" class="port-image">
-                            <div class="port-card-content">
-                                <div class="port-location">${location}</div>
-                                <div class="port-name">${portName}</div>
-                                <div class="port-info">Explore cruise lines departing from this port</div>
-                                <span class="cruise-lines-count">${cruiseLinesCount} Cruise Line${cruiseLinesCount !== 1 ? 's' : ''}</span>
-                            </div>
-                        </a>
-                    `;
-                }).join('');
-
+                return enrichedCruises;
             } catch (error) {
-                console.error('Error loading ports:', error);
-                grid.innerHTML = '<div class="error">Failed to load cruise ports. Please try again later.</div>';
+                console.error('Error fetching cruises:', error);
+                return [];
             }
         }
 
-        // Load ports when page loads
-        loadPorts();
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            // Parse as YYYY-MM-DD and create date in local timezone to avoid timezone conversion
+            const [year, month, day] = dateString.split('-').map(Number);
+            const date = new Date(year, month - 1, day); // month is 0-indexed
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        function displayCruises(cruises, containerId) {
+            const container = document.getElementById(containerId);
+
+            // Update cruise count display
+            document.getElementById('cruise-count').textContent = `Showing ${cruises.length} cruise${cruises.length !== 1 ? 's' : ''}`;
+
+            if (cruises.length === 0) {
+                container.innerHTML = '<div class="loading">No cruises found</div>';
+                return;
+            }
+
+            container.innerHTML = cruises.map(cruise => {
+                const cruiseTitle = cruise.fields.Cruise_Title || 'Untitled Cruise';
+                const cruiseLine = cruise.enriched.cruiseLine;
+                const cruiseLinePhoto = cruise.enriched.cruiseLinePhoto;
+                const cruiseShip = cruise.enriched.cruiseShip;
+                const startDate = formatDate(cruise.fields.Departure_Date);
+                const endDate = formatDate(cruise.fields.Arrival_Date);
+                const departurePort = cruise.enriched.departurePort;
+                const arrivalPort = cruise.enriched.arrivalPort;
+                const destinationCities = cruise.enriched.destinationCities;
+                const totalNights = cruise.fields.Total_Nights;
+                const cruiseUrl = cruise.fields.Cruise_URL;
+
+                const cardContent = `
+                    <div class="cruise-title">${cruiseTitle}</div>
+                    <div class="cruise-line-header">
+                        ${cruiseLinePhoto ? `<img src="${cruiseLinePhoto}" alt="${cruiseLine}" class="cruise-line-photo">` : ''}
+                        <div class="cruise-line-name">${cruiseLine}</div>
+                    </div>
+                    <div class="cruise-ship-name">⛴️ ${cruiseShip}</div>
+                    <div class="cruise-dates">📅 ${startDate} - ${endDate}</div>
+                    <div class="cruise-route">🚢 ${departurePort} → ${arrivalPort}</div>
+                    ${cruise.enriched.destinationCitiesWithPhotos.length > 0 ? `
+                        <div class="cruise-destinations">
+                            ${cruise.enriched.destinationCitiesWithPhotos.map(city =>
+                                city.photo
+                                    ? `<span class="destination-tag with-photo">
+                                        <img src="${city.photo}" alt="${city.name}" class="destination-photo">
+                                        ${city.name}
+                                       </span>`
+                                    : `<span class="destination-tag">${city.name}</span>`
+                            ).join('')}
+                        </div>
+                    ` : ''}
+                    <div class="cruise-details">
+                        ${totalNights ? `🌙 ${totalNights} Night${totalNights !== 1 ? 's' : ''}` : ''}
+                    </div>
+                `;
+
+                if (cruiseUrl) {
+                    return `<a href="${cruiseUrl}" target="_blank" rel="noopener noreferrer" class="cruise-card">${cardContent}</a>`;
+                } else {
+                    return `<div class="cruise-card">${cardContent}</div>`;
+                }
+            }).join('');
+        }
+
+        // Global variables
+        let allCruises = [];
+        let currentDirectionFilter = 'all';
+        let currentCruiseLineFilter = '';
+        let currentCruiseShipFilter = '';
+        let currentDeparturePortFilter = '';
+        let currentDestinationCityFilter = '';
+        let currentDateFrom = '';
+        let currentDateTo = '';
+        let currentDateFlexibility = 0;
+        let currentNightsFilter = '';
+        let currentSortMode = 'date-asc';
+
+        // Populate filter dropdowns
+        function populateCruiseLineFilter(cruises) {
+            const cruiseLines = new Set();
+            cruises.forEach(cruise => {
+                cruiseLines.add(cruise.enriched.cruiseLine);
+            });
+
+            const filter = document.getElementById('cruise-line-filter');
+            const sortedLines = Array.from(cruiseLines).sort();
+
+            sortedLines.forEach(line => {
+                const option = document.createElement('option');
+                option.value = line;
+                option.textContent = line;
+                filter.appendChild(option);
+            });
+        }
+
+        function populateCruiseShipFilter(cruises) {
+            const ships = new Set();
+            cruises.forEach(cruise => {
+                ships.add(cruise.enriched.cruiseShip);
+            });
+
+            const filter = document.getElementById('cruise-ship-filter');
+            const sortedShips = Array.from(ships).sort();
+
+            sortedShips.forEach(ship => {
+                const option = document.createElement('option');
+                option.value = ship;
+                option.textContent = ship;
+                filter.appendChild(option);
+            });
+        }
+
+        function populateDeparturePortFilter(cruises) {
+            const ports = new Set();
+            cruises.forEach(cruise => {
+                ports.add(cruise.enriched.departurePort);
+            });
+
+            const filter = document.getElementById('departure-port-filter');
+            const sortedPorts = Array.from(ports).sort();
+
+            sortedPorts.forEach(port => {
+                const option = document.createElement('option');
+                option.value = port;
+                option.textContent = port;
+                filter.appendChild(option);
+            });
+        }
+
+        function populateDestinationCityFilter(cruises) {
+            const cities = new Set();
+            cruises.forEach(cruise => {
+                cruise.enriched.destinationCities.forEach(city => cities.add(city));
+            });
+
+            const filter = document.getElementById('destination-city-filter');
+            const sortedCities = Array.from(cities).sort();
+
+            sortedCities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                filter.appendChild(option);
+            });
+        }
+
+        // Filter and sort cruises
+        function filterAndDisplayCruises() {
+            let filteredCruises = allCruises;
+
+            // Apply direction filter
+            if (currentDirectionFilter === 'from-socal') {
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.isDepartureFromSoCal
+                );
+            } else if (currentDirectionFilter === 'to-socal') {
+                filteredCruises = filteredCruises.filter(cruise =>
+                    !cruise.enriched.isDepartureFromSoCal && cruise.enriched.isArrivalToSoCal
+                );
+            } else {
+                // 'all' - show cruises that either depart from or arrive to SoCal
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.isDepartureFromSoCal || cruise.enriched.isArrivalToSoCal
+                );
+            }
+
+            // Apply cruise line filter
+            if (currentCruiseLineFilter) {
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.cruiseLine === currentCruiseLineFilter
+                );
+            }
+
+            // Apply cruise ship filter
+            if (currentCruiseShipFilter) {
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.cruiseShip === currentCruiseShipFilter
+                );
+            }
+
+            // Apply departure port filter
+            if (currentDeparturePortFilter) {
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.departurePort === currentDeparturePortFilter
+                );
+            }
+
+            // Apply destination city filter
+            if (currentDestinationCityFilter) {
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.destinationCities.includes(currentDestinationCityFilter)
+                );
+            }
+
+            // Apply date range filter
+            if (currentDateFrom || currentDateTo) {
+                filteredCruises = filteredCruises.filter(cruise => {
+                    const departureDate = new Date(cruise.fields.Departure_Date);
+                    const arrivalDate = new Date(cruise.fields.Arrival_Date);
+                    const flexDays = parseInt(currentDateFlexibility) || 0;
+
+                    if (currentDateFrom && currentDateTo) {
+                        // Both dates selected - vacation window mode
+                        let fromDate = new Date(currentDateFrom);
+                        let toDate = new Date(currentDateTo);
+
+                        // Apply flexibility buffer
+                        fromDate.setDate(fromDate.getDate() - flexDays);
+                        toDate.setDate(toDate.getDate() + flexDays);
+
+                        // Both departure and arrival must be within the vacation window
+                        return departureDate >= fromDate && departureDate <= toDate &&
+                               arrivalDate >= fromDate && arrivalDate <= toDate;
+                    } else if (currentDateFrom) {
+                        // Only fromDate selected - departure date matching mode
+                        const selectedDate = new Date(currentDateFrom);
+
+                        if (flexDays === 0) {
+                            // Exact date match
+                            return departureDate.toDateString() === selectedDate.toDateString();
+                        } else {
+                            // Create a window around the selected date
+                            const windowStart = new Date(selectedDate);
+                            windowStart.setDate(windowStart.getDate() - flexDays);
+                            const windowEnd = new Date(selectedDate);
+                            windowEnd.setDate(windowEnd.getDate() + flexDays);
+                            return departureDate >= windowStart && departureDate <= windowEnd;
+                        }
+                    } else if (currentDateTo) {
+                        // Only toDate selected - return by date matching mode
+                        const selectedDate = new Date(currentDateTo);
+
+                        if (flexDays === 0) {
+                            // Exact date match for arrival
+                            return arrivalDate.toDateString() === selectedDate.toDateString();
+                        } else {
+                            // Create a window around the selected date
+                            const windowStart = new Date(selectedDate);
+                            windowStart.setDate(windowStart.getDate() - flexDays);
+                            const windowEnd = new Date(selectedDate);
+                            windowEnd.setDate(windowEnd.getDate() + flexDays);
+                            return arrivalDate >= windowStart && arrivalDate <= windowEnd;
+                        }
+                    }
+                    return true;
+                });
+            }
+
+            // Apply nights filter
+            if (currentNightsFilter) {
+                filteredCruises = filteredCruises.filter(cruise => {
+                    const nights = cruise.fields.Total_Nights || 0;
+                    if (currentNightsFilter === '1-3') return nights >= 1 && nights <= 3;
+                    if (currentNightsFilter === '4-7') return nights >= 4 && nights <= 7;
+                    if (currentNightsFilter === '8-14') return nights >= 8 && nights <= 14;
+                    if (currentNightsFilter === '15+') return nights >= 15;
+                    return true;
+                });
+            }
+
+            // Apply sorting
+            filteredCruises.sort((a, b) => {
+                if (currentSortMode === 'date-asc') {
+                    const dateA = new Date(a.fields.Departure_Date || 0);
+                    const dateB = new Date(b.fields.Departure_Date || 0);
+                    return dateA - dateB;
+                } else if (currentSortMode === 'date-desc') {
+                    const dateA = new Date(a.fields.Departure_Date || 0);
+                    const dateB = new Date(b.fields.Departure_Date || 0);
+                    return dateB - dateA;
+                } else if (currentSortMode === 'nights-asc') {
+                    return (a.fields.Total_Nights || 0) - (b.fields.Total_Nights || 0);
+                } else if (currentSortMode === 'nights-desc') {
+                    return (b.fields.Total_Nights || 0) - (a.fields.Total_Nights || 0);
+                }
+                return 0;
+            });
+
+            displayCruises(filteredCruises, 'cruises-grid');
+        }
+
+        // Load cruises on page load
+        window.addEventListener('DOMContentLoaded', async () => {
+            allCruises = await fetchCruisesFromAirtable();
+
+            // Populate filters (no initial filtering - the direction filter handles this)
+            populateCruiseLineFilter(allCruises);
+            populateCruiseShipFilter(allCruises);
+            populateDeparturePortFilter(allCruises);
+            populateDestinationCityFilter(allCruises);
+
+            // Display initial cruises
+            filterAndDisplayCruises();
+
+            // Set up filter event listeners
+            document.getElementById('direction-filter').addEventListener('change', (e) => {
+                currentDirectionFilter = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('cruise-line-filter').addEventListener('change', (e) => {
+                currentCruiseLineFilter = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('cruise-ship-filter').addEventListener('change', (e) => {
+                currentCruiseShipFilter = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('departure-port-filter').addEventListener('change', (e) => {
+                currentDeparturePortFilter = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('destination-city-filter').addEventListener('change', (e) => {
+                currentDestinationCityFilter = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('date-from-filter').addEventListener('change', (e) => {
+                currentDateFrom = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('date-to-filter').addEventListener('change', (e) => {
+                currentDateTo = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('date-flexibility-filter').addEventListener('change', (e) => {
+                currentDateFlexibility = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('nights-filter').addEventListener('change', (e) => {
+                currentNightsFilter = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('sort-filter').addEventListener('change', (e) => {
+                currentSortMode = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            // Clear filters button
+            document.getElementById('clear-filters-btn').addEventListener('click', () => {
+                // Reset all filter variables
+                currentDirectionFilter = 'all';
+                currentCruiseLineFilter = '';
+                currentCruiseShipFilter = '';
+                currentDeparturePortFilter = '';
+                currentDestinationCityFilter = '';
+                currentDateFrom = '';
+                currentDateTo = '';
+                currentDateFlexibility = 0;
+                currentNightsFilter = '';
+                currentSortMode = 'date-asc';
+
+                // Reset all filter form elements
+                document.getElementById('direction-filter').value = 'all';
+                document.getElementById('cruise-line-filter').value = '';
+                document.getElementById('cruise-ship-filter').value = '';
+                document.getElementById('departure-port-filter').value = '';
+                document.getElementById('destination-city-filter').value = '';
+                document.getElementById('date-from-filter').value = '';
+                document.getElementById('date-to-filter').value = '';
+                document.getElementById('date-flexibility-filter').value = '0';
+                document.getElementById('nights-filter').value = '';
+                document.getElementById('sort-filter').value = 'date-asc';
+
+                // Refresh display
+                filterAndDisplayCruises();
+            });
+
+            console.log('Total SoCal cruises:', allCruises.length);
+        });
     </script>
 
     <!-- Footer -->

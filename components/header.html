@@ -18,6 +18,7 @@
             <div class="nav-dropdown">
                 <a href="/cruises/" class="dropdown-trigger">Cruises</a>
                 <div class="dropdown-menu" id="cruises-dropdown">
+                    <a href="/cruises/">All Cruises</a>
                     <a href="/cruises/ports/">SoCal Cruise Ports</a>
                     <a href="/cruises/cruise-lines/">SoCal Cruise Lines</a>
                     <!-- Dynamic cruise lines will be inserted here -->
@@ -46,14 +47,18 @@
         <nav class="mobile-nav" id="mobile-nav">
             <a href="/destinations/">Destinations</a>
             <a href="/flights/">Flights</a>
+            <a href="/flights/" style="font-size: 1.6rem; padding-left: 20px;">All Flights</a>
             <a href="/flights/airports/" style="font-size: 1.6rem; padding-left: 20px;">Airports</a>
             <a href="/cruises/">Cruises</a>
+            <a href="/cruises/" style="font-size: 1.6rem; padding-left: 20px;">All Cruises</a>
             <a href="/cruises/ports/" style="font-size: 1.6rem; padding-left: 20px;">SoCal Cruise Ports</a>
             <a href="/cruises/cruise-lines/" style="font-size: 1.6rem; padding-left: 20px;">SoCal Cruise Lines</a>
             <!-- Dynamic cruise lines will be inserted here -->
         </nav>
     </div>
 </header>
+
+<!-- JavaScript functionality is in header.js which is loaded by loader.js -->
 
 <style>
     #main-header {
@@ -241,7 +246,8 @@
         transition: left 0.3s ease;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
+        padding-left: 40px;
     }
 
     .mobile-menu.active {
@@ -251,8 +257,8 @@
     .mobile-nav {
         display: flex;
         flex-direction: column;
-        gap: 40px;
-        text-align: center;
+        gap: 20px;
+        text-align: left;
     }
 
     .mobile-nav a {
@@ -311,101 +317,3 @@
         }
     }
 </style>
-
-<script>
-    // Airtable Configuration
-    const AIRTABLE_API_KEY = 'patZKMy2YWWGMwsEk.8e0c2bbad3055e887e7bc1a0b5f56c56f2ea86cb9a15b5c49a2ede4f07d19816';
-    const BASE_ID = 'appGoQsy2UiGyyZ3T';
-    const CRUISE_LINES_TABLE = 'tbl9oXySE9617moOx';
-
-    // Fetch all records from a table with pagination
-    async function fetchAllRecords(tableName) {
-        let allRecords = [];
-        let offset = null;
-
-        do {
-            const url = offset
-                ? `https://api.airtable.com/v0/${BASE_ID}/${tableName}?offset=${offset}`
-                : `https://api.airtable.com/v0/${BASE_ID}/${tableName}`;
-
-            const response = await fetch(url, {
-                headers: {
-                    'Authorization': `Bearer ${AIRTABLE_API_KEY}`
-                }
-            });
-
-            const data = await response.json();
-            allRecords = allRecords.concat(data.records);
-            offset = data.offset;
-        } while (offset);
-
-        return allRecords;
-    }
-
-    // Load dynamic cruise line links
-    async function loadDynamicCruiseLinks() {
-        try {
-            const cruiseLines = await fetchAllRecords(CRUISE_LINES_TABLE);
-            const dropdown = document.getElementById('cruises-dropdown');
-            const mobileNav = document.getElementById('mobile-nav');
-
-            // Filter for cruise lines with Page_URL
-            const withPages = cruiseLines
-                .filter(line => line.fields.Page_URL)
-                .sort((a, b) => {
-                    // Sort by Display_Order if available, otherwise alphabetically
-                    if (a.fields.Display_Order !== undefined && b.fields.Display_Order !== undefined) {
-                        return a.fields.Display_Order - b.fields.Display_Order;
-                    }
-                    const nameA = (a.fields.Cruise_Line || '').toLowerCase();
-                    const nameB = (b.fields.Cruise_Line || '').toLowerCase();
-                    return nameA.localeCompare(nameB);
-                });
-
-            // Add dynamic cruise line links to desktop dropdown
-            withPages.forEach(line => {
-                const link = document.createElement('a');
-                link.href = line.fields.Page_URL;
-                link.textContent = line.fields.Cruise_Line;
-                dropdown.appendChild(link);
-            });
-
-            // Add dynamic cruise line links to mobile menu (indented)
-            withPages.forEach(line => {
-                const mobileLink = document.createElement('a');
-                mobileLink.href = line.fields.Page_URL;
-                mobileLink.textContent = line.fields.Cruise_Line;
-                mobileLink.style.fontSize = '1.6rem';
-                mobileLink.style.paddingLeft = '20px';
-                mobileNav.appendChild(mobileLink);
-            });
-        } catch (error) {
-            console.error('Error loading dynamic cruise links:', error);
-        }
-    }
-
-    // Hamburger Menu Toggle
-    document.addEventListener('DOMContentLoaded', function() {
-        const hamburgerBtn = document.getElementById('hamburger-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if (hamburgerBtn && mobileMenu) {
-            hamburgerBtn.addEventListener('click', function() {
-                hamburgerBtn.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-            });
-
-            // Close menu when clicking a link
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    hamburgerBtn.classList.remove('active');
-                    mobileMenu.classList.remove('active');
-                });
-            });
-        }
-
-        // Load dynamic cruise links
-        loadDynamicCruiseLinks();
-    });
-</script>
