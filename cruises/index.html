@@ -98,12 +98,18 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 110, 199, 0.2);
             border-radius: 12px;
-            padding: 25px;
+            overflow: hidden;
             transition: all 0.3s ease;
             cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            position: relative;
+        }
+
+        .cruise-card.collapsed {
+            max-height: none;
+        }
+
+        .cruise-card.expanded {
+            max-height: none;
         }
 
         .cruise-card:hover {
@@ -112,38 +118,103 @@
             border-color: rgba(255, 110, 199, 0.5);
         }
 
+        .cruise-hero-photo {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .cruise-card-content {
+            padding: 20px;
+        }
+
         .cruise-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: #ff6ec7;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
-        .cruise-line-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .cruise-line-photo {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            object-fit: cover;
-            border: 1px solid rgba(255, 110, 199, 0.3);
-        }
-
-        .cruise-line-name {
+        .cruise-ship {
             font-size: 1rem;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
         }
 
-        .cruise-ship-name {
+        .cruise-meta {
+            display: flex;
+            gap: 15px;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .cruise-photo-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .cruise-thumbnail {
+            width: 100%;
+            height: 60px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .cruise-destinations-collapsed,
+        .cruise-destinations-expanded {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .more-destinations {
+            color: #ff9a56;
+            font-weight: 600;
+        }
+
+        .cruise-all-photos {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .cruise-photo-large {
+            width: 100%;
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .cruise-website-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 110, 199, 0.2);
+            border: 1px solid rgba(255, 110, 199, 0.4);
+            border-radius: 6px;
+            color: #ff6ec7;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cruise-website-btn:hover {
+            background: rgba(255, 110, 199, 0.3);
+            border-color: #ff6ec7;
+            transform: translateY(-2px);
         }
 
         .cruise-dates {
@@ -234,12 +305,33 @@
 
     <!-- Filter Section -->
     <section class="filter-section">
+        <!-- Spring Break Helper -->
+        <div style="background: rgba(255, 110, 199, 0.1); border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 15px; color: #ff6ec7;">🎉 Spring Break Helper</h3>
+            <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 15px;">Select your school district to auto-fill spring break dates, or enter your own dates below.</p>
+
+            <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
+                <label for="spring-break-district" style="font-size: 1rem;">School District:</label>
+                <select id="spring-break-district" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.5); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer; min-width: 250px;">
+                    <option value="">Choose a district...</option>
+                </select>
+                <button id="clear-spring-break" style="padding: 10px 20px; font-size: 0.9rem; background: transparent; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; color: rgba(255, 255, 255, 0.7); cursor: pointer; display: none;" onmouseover="this.style.borderColor='rgba(255, 110, 199, 0.6)'; this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255, 110, 199, 0.3)'; this.style.color='rgba(255, 255, 255, 0.7)'">Clear</button>
+            </div>
+
+            <div id="spring-break-dates-display" style="display: none; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); padding: 12px; background: rgba(255, 110, 199, 0.08); border-radius: 6px; border: 1px solid rgba(255, 110, 199, 0.2);">
+                <strong id="selected-district-name"></strong> Spring Break:
+                <span id="selected-spring-dates" style="color: #ff6ec7; font-weight: 600;"></span>
+                <a id="selected-calendar-link" href="#" target="_blank" style="margin-left: 15px; color: #ff9a56; text-decoration: none; font-size: 0.85rem;">View Calendar →</a>
+            </div>
+        </div>
+
         <div class="filter-controls">
             <label>Filter by:</label>
             <select id="direction-filter">
                 <option value="all">All Directions</option>
-                <option value="from-socal">From SoCal</option>
-                <option value="to-socal">To SoCal (One Way)</option>
+                <option value="round-trip">Round Trip</option>
+                <option value="one-way-to-socal">One-Way to SoCal</option>
+                <option value="one-way-from-socal">One-Way from SoCal</option>
             </select>
             <select id="cruise-line-filter">
                 <option value="">All Cruise Lines</option>
@@ -249,6 +341,9 @@
             </select>
             <select id="departure-port-filter">
                 <option value="">All Departure Ports</option>
+            </select>
+            <select id="arrival-port-filter">
+                <option value="">All Arrival Ports</option>
             </select>
             <select id="destination-city-filter">
                 <option value="">All Destinations</option>
@@ -323,6 +418,143 @@
 
             return records;
         }
+
+        // Spring Break Helper functionality
+        let schoolHolidaysData = [];
+
+        async function loadSchoolHolidays() {
+            try {
+                const records = await fetchAllRecords('School_Holidays');
+
+                schoolHolidaysData = records.map(record => ({
+                    district: record.fields.School_District || '',
+                    startDate: record.fields.Spring_Break_2026_Start || null,
+                    endDate: record.fields.Spring_Break_2026_End || null,
+                    calendarLink: record.fields.Calendar_Link || ''
+                })).filter(h => h.district && h.startDate && h.endDate);
+
+                // Sort alphabetically
+                schoolHolidaysData.sort((a, b) => a.district.localeCompare(b.district));
+
+                // Populate dropdown
+                const dropdown = document.getElementById('spring-break-district');
+                schoolHolidaysData.forEach(holiday => {
+                    const option = document.createElement('option');
+                    option.value = holiday.district;
+                    option.textContent = holiday.district;
+                    dropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading school holidays:', error);
+            }
+        }
+
+        function formatDateForInput(dateString) {
+            // Parse date string directly to avoid timezone issues
+            // Airtable returns dates in YYYY-MM-DD format
+            if (dateString.includes('T')) {
+                // If it has time component, extract just the date part
+                return dateString.split('T')[0];
+            }
+            return dateString;
+        }
+
+        function formatDateForDisplay(dateString) {
+            // Parse date in UTC to avoid timezone shifts
+            const [year, month, day] = dateString.split('T')[0].split('-');
+            const date = new Date(year, month - 1, day);
+            const options = { month: 'long', day: 'numeric', year: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // School district dropdown handler
+        document.getElementById('spring-break-district').addEventListener('change', (e) => {
+            const selectedDistrict = e.target.value;
+
+            if (!selectedDistrict) {
+                document.getElementById('spring-break-dates-display').style.display = 'none';
+                document.getElementById('clear-spring-break').style.display = 'none';
+                return;
+            }
+
+            const holiday = schoolHolidaysData.find(h => h.district === selectedDistrict);
+            if (holiday) {
+                // Auto-fill the date inputs
+                const dateFromInput = document.getElementById('date-from-filter');
+                const dateToInput = document.getElementById('date-to-filter');
+
+                const fromDateFormatted = formatDateForInput(holiday.startDate);
+                const toDateFormatted = formatDateForInput(holiday.endDate);
+
+                dateFromInput.value = fromDateFormatted;
+                dateToInput.value = toDateFormatted;
+
+                // Update the global filter variables directly
+                currentDateFrom = fromDateFormatted;
+                currentDateTo = toDateFormatted;
+
+                // Show the dates display
+                document.getElementById('selected-district-name').textContent = holiday.district;
+                document.getElementById('selected-spring-dates').textContent =
+                    `${formatDateForDisplay(holiday.startDate)} - ${formatDateForDisplay(holiday.endDate)}`;
+
+                const calendarLink = document.getElementById('selected-calendar-link');
+                if (holiday.calendarLink) {
+                    calendarLink.href = holiday.calendarLink;
+                    calendarLink.style.display = 'inline';
+                } else {
+                    calendarLink.style.display = 'none';
+                }
+
+                document.getElementById('spring-break-dates-display').style.display = 'block';
+                document.getElementById('clear-spring-break').style.display = 'inline-block';
+
+                // Trigger filter update
+                filterAndDisplayCruises();
+            }
+        });
+
+        // Clear button handler
+        document.getElementById('clear-spring-break').addEventListener('click', () => {
+            document.getElementById('spring-break-district').value = '';
+            document.getElementById('date-from-filter').value = '';
+            document.getElementById('date-to-filter').value = '';
+            document.getElementById('spring-break-dates-display').style.display = 'none';
+            document.getElementById('clear-spring-break').style.display = 'none';
+            filterAndDisplayCruises();
+        });
+
+        // Load school holidays on page load
+        loadSchoolHolidays();
+
+        // Check for URL parameters and auto-fill the Spring Break Helper
+        function checkUrlParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const district = urlParams.get('district');
+            const fromDate = urlParams.get('from');
+            const toDate = urlParams.get('to');
+
+            if (district && fromDate && toDate) {
+                // Wait for both school holidays data AND cruise data to load
+                const checkDataLoaded = setInterval(() => {
+                    if (schoolHolidaysData.length > 0 && allCruises.length > 0) {
+                        clearInterval(checkDataLoaded);
+
+                        const dropdown = document.getElementById('spring-break-district');
+                        dropdown.value = district;
+
+                        // Trigger the change event to auto-fill dates and filter
+                        dropdown.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }, 100);
+
+                // Timeout after 10 seconds
+                setTimeout(() => clearInterval(checkDataLoaded), 10000);
+            }
+        }
+
+        // Call after page loads
+        window.addEventListener('DOMContentLoaded', checkUrlParameters);
 
         async function fetchCruisesFromAirtable() {
             try {
@@ -440,7 +672,7 @@
                 return;
             }
 
-            container.innerHTML = cruises.map(cruise => {
+            container.innerHTML = cruises.map((cruise, index) => {
                 const cruiseTitle = cruise.fields.Cruise_Title || 'Untitled Cruise';
                 const cruiseLine = cruise.enriched.cruiseLine;
                 const cruiseLinePhoto = cruise.enriched.cruiseLinePhoto;
@@ -449,42 +681,117 @@
                 const endDate = formatDate(cruise.fields.Arrival_Date);
                 const departurePort = cruise.enriched.departurePort;
                 const arrivalPort = cruise.enriched.arrivalPort;
-                const destinationCities = cruise.enriched.destinationCities;
+                const destinationCities = cruise.enriched.destinationCitiesWithPhotos;
                 const totalNights = cruise.fields.Total_Nights;
                 const cruiseUrl = cruise.fields.Cruise_URL;
+                const cardId = `cruise-card-${index}`;
 
-                const cardContent = `
-                    <div class="cruise-title">${cruiseTitle}</div>
-                    <div class="cruise-line-header">
-                        ${cruiseLinePhoto ? `<img src="${cruiseLinePhoto}" alt="${cruiseLine}" class="cruise-line-photo">` : ''}
-                        <div class="cruise-line-name">${cruiseLine}</div>
-                    </div>
-                    <div class="cruise-ship-name">⛴️ ${cruiseShip}</div>
-                    <div class="cruise-dates">📅 ${startDate} - ${endDate}</div>
-                    <div class="cruise-route">🚢 ${departurePort} → ${arrivalPort}</div>
-                    ${cruise.enriched.destinationCitiesWithPhotos.length > 0 ? `
-                        <div class="cruise-destinations">
-                            ${cruise.enriched.destinationCitiesWithPhotos.map(city =>
-                                city.photo
-                                    ? `<span class="destination-tag with-photo">
-                                        <img src="${city.photo}" alt="${city.name}" class="destination-photo">
-                                        ${city.name}
-                                       </span>`
-                                    : `<span class="destination-tag">${city.name}</span>`
-                            ).join('')}
+                // Get photos: destination photos first, then cruise line photo
+                const destinationPhotos = destinationCities
+                    .filter(city => city.photo)
+                    .map(city => ({ url: city.photo, name: city.name }));
+
+                // Hero photo (first destination photo)
+                const heroPhoto = destinationPhotos.length > 0 ? destinationPhotos[0] :
+                                 (cruiseLinePhoto ? { url: cruiseLinePhoto, name: cruiseLine } : null);
+
+                // Thumbnail photos: cruise line photo first, then remaining destination photos (max 4 total)
+                const thumbnailPhotos = [];
+                if (cruiseLinePhoto) thumbnailPhotos.push({ url: cruiseLinePhoto, name: cruiseLine });
+                const remainingDestPhotos = destinationPhotos.slice(1);
+                thumbnailPhotos.push(...remainingDestPhotos.slice(0, 4 - thumbnailPhotos.length));
+
+                // All photos for expanded view
+                const allPhotos = [heroPhoto, ...thumbnailPhotos, ...remainingDestPhotos.slice(4 - (cruiseLinePhoto ? 1 : 0))].filter(Boolean);
+
+                // Destination names for collapsed state (first 3)
+                const visibleDestinations = destinationCities.slice(0, 3);
+                const remainingCount = destinationCities.length - 3;
+
+                return `
+                    <div class="cruise-card collapsed" id="${cardId}" data-expanded="false">
+                        <!-- Hero Photo -->
+                        ${heroPhoto ? `
+                            <div class="cruise-hero-photo" style="background-image: url('${heroPhoto.url}')"></div>
+                        ` : ''}
+
+                        <!-- Card Content -->
+                        <div class="cruise-card-content">
+                            <h3 class="cruise-title">${cruiseTitle}</h3>
+                            <div class="cruise-ship">${cruiseShip}</div>
+                            <div class="cruise-meta">
+                                <span>📅 ${startDate} - ${endDate}</span>
+                                ${totalNights ? `<span>🌙 ${totalNights} Night${totalNights !== 1 ? 's' : ''}` : ''}
+                            </div>
+
+                            <!-- Photo Strip -->
+                            ${thumbnailPhotos.length > 0 ? `
+                                <div class="cruise-photo-strip">
+                                    ${thumbnailPhotos.map(photo => `
+                                        <div class="cruise-thumbnail" style="background-image: url('${photo.url}')" title="${photo.name}"></div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+
+                            <!-- Destinations - Collapsed -->
+                            <div class="cruise-destinations-collapsed">
+                                ${visibleDestinations.map(city => city.name).join(' • ')}${remainingCount > 0 ? ` <span class="more-destinations">+ ${remainingCount} More</span>` : ''}
+                            </div>
+
+                            <!-- Destinations - Expanded -->
+                            <div class="cruise-destinations-expanded" style="display: none;">
+                                ${destinationCities.map(city => city.name).join(' • ')}
+                            </div>
+
+                            <!-- All Photos - Expanded -->
+                            <div class="cruise-all-photos" style="display: none;">
+                                ${allPhotos.map(photo => `
+                                    <div class="cruise-photo-large" style="background-image: url('${photo.url}')" title="${photo.name}"></div>
+                                `).join('')}
+                            </div>
+
+                            <!-- Website Button -->
+                            ${cruiseUrl ? `
+                                <a href="${cruiseUrl}" target="_blank" rel="noopener noreferrer" class="cruise-website-btn" onclick="event.stopPropagation()">
+                                    View Cruise on ${cruiseLine}'s Website →
+                                </a>
+                            ` : ''}
                         </div>
-                    ` : ''}
-                    <div class="cruise-details">
-                        ${totalNights ? `🌙 ${totalNights} Night${totalNights !== 1 ? 's' : ''}` : ''}
                     </div>
                 `;
-
-                if (cruiseUrl) {
-                    return `<a href="${cruiseUrl}" target="_blank" rel="noopener noreferrer" class="cruise-card">${cardContent}</a>`;
-                } else {
-                    return `<div class="cruise-card">${cardContent}</div>`;
-                }
             }).join('');
+
+            // Add click handlers for expand/collapse
+            document.querySelectorAll('.cruise-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Don't toggle if clicking the website button
+                    if (e.target.classList.contains('cruise-website-btn') || e.target.closest('.cruise-website-btn')) {
+                        return;
+                    }
+
+                    const isExpanded = card.dataset.expanded === 'true';
+
+                    if (isExpanded) {
+                        // Collapse
+                        card.classList.add('collapsed');
+                        card.classList.remove('expanded');
+                        card.dataset.expanded = 'false';
+                        card.querySelector('.cruise-destinations-collapsed').style.display = 'block';
+                        card.querySelector('.cruise-destinations-expanded').style.display = 'none';
+                        const allPhotos = card.querySelector('.cruise-all-photos');
+                        if (allPhotos) allPhotos.style.display = 'none';
+                    } else {
+                        // Expand
+                        card.classList.remove('collapsed');
+                        card.classList.add('expanded');
+                        card.dataset.expanded = 'true';
+                        card.querySelector('.cruise-destinations-collapsed').style.display = 'none';
+                        card.querySelector('.cruise-destinations-expanded').style.display = 'block';
+                        const allPhotos = card.querySelector('.cruise-all-photos');
+                        if (allPhotos) allPhotos.style.display = 'grid';
+                    }
+                });
+            });
         }
 
         // Global variables
@@ -493,6 +800,7 @@
         let currentCruiseLineFilter = '';
         let currentCruiseShipFilter = '';
         let currentDeparturePortFilter = '';
+        let currentArrivalPortFilter = '';
         let currentDestinationCityFilter = '';
         let currentDateFrom = '';
         let currentDateTo = '';
@@ -552,6 +860,23 @@
             });
         }
 
+        function populateArrivalPortFilter(cruises) {
+            const ports = new Set();
+            cruises.forEach(cruise => {
+                ports.add(cruise.enriched.arrivalPort);
+            });
+
+            const filter = document.getElementById('arrival-port-filter');
+            const sortedPorts = Array.from(ports).sort();
+
+            sortedPorts.forEach(port => {
+                const option = document.createElement('option');
+                option.value = port;
+                option.textContent = port;
+                filter.appendChild(option);
+            });
+        }
+
         function populateDestinationCityFilter(cruises) {
             const cities = new Set();
             cruises.forEach(cruise => {
@@ -574,18 +899,28 @@
             let filteredCruises = allCruises;
 
             // Apply direction filter
-            if (currentDirectionFilter === 'from-socal') {
-                filteredCruises = filteredCruises.filter(cruise =>
-                    cruise.enriched.isDepartureFromSoCal
-                );
-            } else if (currentDirectionFilter === 'to-socal') {
-                filteredCruises = filteredCruises.filter(cruise =>
-                    !cruise.enriched.isDepartureFromSoCal && cruise.enriched.isArrivalToSoCal
-                );
-            } else {
-                // 'all' - show cruises that either depart from or arrive to SoCal
+            if (currentDirectionFilter === 'all') {
+                // All directions: show any cruise that departs from or arrives to SoCal
                 filteredCruises = filteredCruises.filter(cruise =>
                     cruise.enriched.isDepartureFromSoCal || cruise.enriched.isArrivalToSoCal
+                );
+            } else if (currentDirectionFilter === 'round-trip') {
+                // Round trip: departure port equals arrival port
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.departurePort === cruise.enriched.arrivalPort &&
+                    (cruise.enriched.isDepartureFromSoCal || cruise.enriched.isArrivalToSoCal)
+                );
+            } else if (currentDirectionFilter === 'one-way-to-socal') {
+                // One-way to SoCal: departure and arrival ports differ, and arrives at SoCal
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.departurePort !== cruise.enriched.arrivalPort &&
+                    cruise.enriched.isArrivalToSoCal
+                );
+            } else if (currentDirectionFilter === 'one-way-from-socal') {
+                // One-way from SoCal: departure and arrival ports differ, and departs from SoCal
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.departurePort !== cruise.enriched.arrivalPort &&
+                    cruise.enriched.isDepartureFromSoCal
                 );
             }
 
@@ -607,6 +942,13 @@
             if (currentDeparturePortFilter) {
                 filteredCruises = filteredCruises.filter(cruise =>
                     cruise.enriched.departurePort === currentDeparturePortFilter
+                );
+            }
+
+            // Apply arrival port filter
+            if (currentArrivalPortFilter) {
+                filteredCruises = filteredCruises.filter(cruise =>
+                    cruise.enriched.arrivalPort === currentArrivalPortFilter
                 );
             }
 
@@ -712,6 +1054,7 @@
             populateCruiseLineFilter(allCruises);
             populateCruiseShipFilter(allCruises);
             populateDeparturePortFilter(allCruises);
+            populateArrivalPortFilter(allCruises);
             populateDestinationCityFilter(allCruises);
 
             // Display initial cruises
@@ -735,6 +1078,11 @@
 
             document.getElementById('departure-port-filter').addEventListener('change', (e) => {
                 currentDeparturePortFilter = e.target.value;
+                filterAndDisplayCruises();
+            });
+
+            document.getElementById('arrival-port-filter').addEventListener('change', (e) => {
+                currentArrivalPortFilter = e.target.value;
                 filterAndDisplayCruises();
             });
 
@@ -775,6 +1123,7 @@
                 currentCruiseLineFilter = '';
                 currentCruiseShipFilter = '';
                 currentDeparturePortFilter = '';
+                currentArrivalPortFilter = '';
                 currentDestinationCityFilter = '';
                 currentDateFrom = '';
                 currentDateTo = '';
@@ -787,6 +1136,7 @@
                 document.getElementById('cruise-line-filter').value = '';
                 document.getElementById('cruise-ship-filter').value = '';
                 document.getElementById('departure-port-filter').value = '';
+                document.getElementById('arrival-port-filter').value = '';
                 document.getElementById('destination-city-filter').value = '';
                 document.getElementById('date-from-filter').value = '';
                 document.getElementById('date-to-filter').value = '';

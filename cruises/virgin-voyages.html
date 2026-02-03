@@ -295,7 +295,7 @@
                 <h1>Virgin Voyages from SoCal</h1>
                 <p>Discover unforgettable voyages departing from Southern California ports. Experience world-class dining, entertainment, and destinations aboard Virgin Voyages' modern ships.</p>
                 <a id="book-cruise-link" class="book-cruise-btn" target="_blank" rel="noopener noreferrer">Book Your Voyage</a>
-                <p class="help-text">Want help booking? <a href="tel:+19492372986">Call/Text us at +1 (949) 237-2986</a></p>
+                <p class="help-text">Want help booking? <a href="tel:+19498781509">Call/Text us at +1 (949) 878-1509</a></p>
             </div>
         </div>
     </section>
@@ -386,11 +386,12 @@
 
             try {
                 // Fetch all necessary tables
-                const [cruisesRecords, cruiseLinesRecords, citiesRecords, cruisePortsRecords] = await Promise.all([
+                const [cruisesRecords, cruiseLinesRecords, citiesRecords, cruisePortsRecords, cruiseShipsRecords] = await Promise.all([
                     fetchAllRecords('Cruises'),
                     fetchAllRecords('Cruise_Lines'),
                     fetchAllRecords('Destinations_City'),
-                    fetchAllRecords('Cruise_Ports')
+                    fetchAllRecords('Cruise_Ports'),
+                    fetchAllRecords('Cruise_Ships')
                 ]);
 
                 // Create lookup maps
@@ -407,6 +408,11 @@
                 const portsMap = {};
                 cruisePortsRecords.forEach(port => {
                     portsMap[port.id] = port.fields.Cruise_Port;
+                });
+
+                const cruiseShipsMap = {};
+                cruiseShipsRecords.forEach(ship => {
+                    cruiseShipsMap[ship.id] = ship.fields.Cruise_Ship || 'Unknown';
                 });
 
                 // Filter for Virgin Voyages cruises
@@ -435,7 +441,17 @@
                     const fields = cruise.fields;
 
                     const title = fields.Cruise_Title || 'Virgin Voyages Cruise';
-                    const ship = fields.Cruise_Ship || '';
+
+                    // Handle Cruise_Ship as either text or linked record
+                    let ship = '';
+                    if (typeof fields.Cruise_Ship === 'string') {
+                        // It's a text field
+                        ship = fields.Cruise_Ship;
+                    } else if (Array.isArray(fields.Cruise_Ship) && fields.Cruise_Ship[0]) {
+                        // It's a linked record
+                        ship = cruiseShipsMap[fields.Cruise_Ship[0]] || '';
+                    }
+
                     const nights = fields.Total_Nights || '';
 
                     // Get port names

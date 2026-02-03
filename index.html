@@ -5,6 +5,8 @@
     <script src="components/consent.js"></script>
     <!-- Caching System -->
     <script src="components/cache.js"></script>
+    <!-- HubSpot Forms -->
+    <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,10 +36,19 @@
             box-sizing: border-box;
         }
 
+        html {
+            background: #1a0a1f;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a0a1f;
             background: linear-gradient(to bottom, #1a0a1f 0%, #2d1b3d 50%, #1a0a1f 100%);
+            background-attachment: fixed;
             color: #fff;
+            min-height: 100vh;
         }
 
         /* Hero Section */
@@ -115,6 +126,8 @@
             scroll-behavior: smooth;
             padding: 10px;
             scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            will-change: scroll-position;
         }
 
         .cards-container::-webkit-scrollbar {
@@ -446,6 +459,8 @@
             scroll-behavior: smooth;
             padding: 10px 0;
             scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            will-change: scroll-position;
         }
 
         .flights-slider::-webkit-scrollbar {
@@ -807,6 +822,36 @@
                 width: 100%;
             }
         }
+
+        /* HubSpot Form Styling */
+        #contact-form-container .hs-form-field > label,
+        #contact-form-container .hs-form-field label.hs-form-label {
+            font-weight: bold !important;
+            color: #fff !important;
+            font-size: 1rem !important;
+        }
+
+        #contact-form-container textarea.hs-input,
+        #contact-form-container .hs-input[type="textarea"] {
+            min-height: 120px !important;
+            height: 120px !important;
+        }
+
+        #contact-form-container .submitted-message,
+        #contact-form-container .hs-form > .submitted-message {
+            color: #fff !important;
+            font-size: 1.1rem !important;
+        }
+
+        #contact-form-container .hs-error-msgs label {
+            font-weight: normal !important;
+        }
+
+        /* Additional HubSpot overrides */
+        #contact-form-container .hs-form .hs-form-field label span {
+            color: #fff !important;
+            font-weight: bold !important;
+        }
     </style>
 </head>
 <body>
@@ -885,25 +930,35 @@
         <a href="destinations/" class="view-all-flights">All SoCal Destinations</a>
     </section>
 
-    <!-- SoCal Cruises Slider Section -->
+    <!-- Spring Break Cruises Section -->
     <section class="flights-slider-section">
-        <div class="flights-header">
-            <h2 class="flights-title">SoCal Cruise Lines <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 10px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h2>
-            <div class="airport-toggles">
-                <button class="cruise-toggle active" data-port="all">All</button>
-                <button class="cruise-toggle" data-port="San Diego">San Diego</button>
-                <button class="cruise-toggle" data-port="Los Angeles">Los Angeles</button>
-                <button class="cruise-toggle" data-port="Long Beach">Long Beach</button>
+        <div class="flights-header" style="flex-direction: column; align-items: flex-start;">
+            <h2 class="flights-title">Spring Break Cruises!</h2>
+            <p style="font-size: 1.1rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; max-width: 800px;">It's not too late to book your spring break cruise out of LA, San Diego or Long Beach. Pick your school district to see what cruises you could take during your break.</p>
+
+            <!-- School District Selector -->
+            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+                <label for="school-district-select" style="font-size: 1rem; color: rgba(255, 255, 255, 0.9);">Select Your School District:</label>
+                <select id="school-district-select" style="padding: 10px 20px; font-size: 1rem; border-radius: 6px; border: 2px solid rgba(255, 110, 199, 0.5); background: rgba(255, 255, 255, 0.1); color: #fff; cursor: pointer;">
+                    <option value="">Choose a district...</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Upcoming Cruises -->
+        <div style="margin-top: 30px;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 20px; color: #ff6ec7;">Upcoming Cruises</h3>
+            <div class="slider-wrapper">
+                <button class="slider-arrow left" id="spring-cruise-slide-left">&#8249;</button>
+                <div class="flights-slider" id="spring-cruises-slider">
+                    <div class="flights-loading">Loading upcoming cruises...</div>
+                </div>
+                <button class="slider-arrow right" id="spring-cruise-slide-right">&#8250;</button>
             </div>
         </div>
-        <div class="slider-wrapper">
-            <button class="slider-arrow left" id="cruise-slide-left">&#8249;</button>
-            <div class="flights-slider" id="cruises-slider">
-                <div class="flights-loading">Loading cruise lines...</div>
-            </div>
-            <button class="slider-arrow right" id="cruise-slide-right">&#8250;</button>
-        </div>
-        <a href="cruises/" class="view-all-flights">View SoCal Cruises</a>
+
+        <a href="cruises/" class="view-all-flights">View All SoCal Cruises</a>
     </section>
 
     <!-- Featured Flights Slider Section -->
@@ -924,37 +979,21 @@
     <!-- Contact and Suggest an Adventure Section -->
     <section class="newsletter-section" id="suggest">
         <div class="contact-grid">
-            <!-- Get in Touch Section -->
+            <!-- About Michelle Section -->
             <div class="contact-box">
-                <h2>Get in Touch</h2>
-                <div class="contact-info">
-                    <h3>Mailing Address:</h3>
-                    <p>300 Spectrum Dr. Suite 400<br>Irvine, CA 92618</p>
-
-                    <h3 style="margin-top: 25px;">Questions?</h3>
-                    <p><strong>Call or Text:</strong><br>
-                    <a href="tel:+19492372986">+1 (949) 237-2986</a></p>
-
-                    <p><strong>Email:</strong><br>
-                    <a href="mailto:Contact@SoCalBucketList.com">Contact@SoCalBucketList.com</a></p>
+                <h2>Meet Michelle</h2>
+                <div style="text-align: center; padding: 20px;">
+                    <img src="optimized-images/Michelle-Atkinson-Profile-Pic.jpg" alt="Michelle Atkinson" style="width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 4px solid rgba(255, 255, 255, 0.3); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); margin-bottom: 25px;">
+                    <p style="font-size: 1.3rem; line-height: 1.8; color: rgba(255, 255, 255, 0.95); text-align: left; margin-bottom: 20px;">Hi, I'm Michelle Atkinson, a mom of three based in Southern California who loves adventure. I come from a background in journalism, documentary filmmaking, and web development.</p>
+                    <p style="font-size: 1.3rem; line-height: 1.8; color: rgba(255, 255, 255, 0.95); text-align: left;">I help families and travelers of all ages plan trips in Southern California, from local adventures to cruises and flights. Whether you're planning around school breaks, a special occasion, or a specific window of time, I can help you find options that fit your schedule.</p>
                 </div>
             </div>
 
-            <!-- Suggest an Adventure Section -->
+            <!-- Contact Form Section -->
             <div class="contact-box">
-                <h2>Suggest an Adventure</h2>
-                <p>Know a place experience worth adding to the SoCal Bucket List?</p>
-                <form id="suggest-form" class="newsletter-form" style="flex-direction: column; align-items: stretch;">
-                    <input type="text" name="firstname" class="newsletter-input" placeholder="Your Name" required style="margin-bottom: 15px;">
-                    <textarea name="recommended_adventure" class="newsletter-input" placeholder="What's the Adventure?" required style="min-height: 100px; resize: vertical; margin-bottom: 15px; font-family: inherit;"></textarea>
-                    <input type="email" name="email" class="newsletter-input" placeholder="Your Email Address" required style="margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; gap: 10px; color: #fff; font-size: 1rem; margin-bottom: 20px; cursor: pointer;">
-                        <input type="checkbox" name="newsletter" value="true" style="width: 18px; height: 18px; cursor: pointer;">
-                        <span>Sign up for Newsletter</span>
-                    </label>
-                    <button type="submit" class="newsletter-button" style="width: 100%;">Submit Adventure</button>
-                    <div id="form-message" style="margin-top: 15px; font-size: 1rem; display: none;"></div>
-                </form>
+                <h2>Let's Talk Adventures</h2>
+                <p style="margin-bottom: 25px; font-size: 1.3rem; line-height: 1.8; color: rgba(255, 255, 255, 0.95); text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; padding-left: 10px;">Planning a trip, have a place to recommend, or want to collaborate? I'd love to hear from you.</p>
+                <div id="contact-form-container"></div>
             </div>
         </div>
     </section>
@@ -1008,57 +1047,44 @@
             });
         });
 
-        // HubSpot Form Integration
-        const form = document.getElementById('suggest-form');
-        const formMessage = document.getElementById('form-message');
+        // HubSpot Contact Form Integration
+        window.addEventListener('load', function() {
+            if (window.hbspt) {
+                hbspt.forms.create({
+                    region: "na2",
+                    portalId: "244742774",
+                    formId: "1fdf245d-cd38-4dee-a264-48828db2548f",
+                    target: "#contact-form-container",
+                    onFormReady: function($form) {
+                        // Apply custom styles after form loads
+                        const labels = $form[0].querySelectorAll('.hs-form-field > label');
+                        labels.forEach(label => {
+                            label.style.fontWeight = 'bold';
+                            label.style.color = '#fff';
+                            label.style.fontSize = '1rem';
+                        });
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-
-            const data = {
-                fields: [
-                    {
-                        name: 'firstname',
-                        value: formData.get('firstname')
+                        // Make message textarea taller
+                        const textarea = $form[0].querySelector('textarea.hs-input');
+                        if (textarea) {
+                            textarea.style.minHeight = '120px';
+                            textarea.style.height = '120px';
+                        }
                     },
-                    {
-                        name: 'email',
-                        value: formData.get('email')
+                    onFormSubmit: function($form) {
+                        // Style will be applied by HubSpot's success message
                     },
-                    {
-                        name: 'recommended_adventure',
-                        value: formData.get('recommended_adventure')
-                    },
-                    {
-                        name: 'newsletter',
-                        value: formData.get('newsletter') ? 'Yes' : 'No'
+                    onFormSubmitted: function($form) {
+                        // Make success message white after submission
+                        setTimeout(() => {
+                            const successMsg = document.querySelector('#contact-form-container .submitted-message');
+                            if (successMsg) {
+                                successMsg.style.color = '#fff';
+                                successMsg.style.fontSize = '1.1rem';
+                            }
+                        }, 100);
                     }
-                ]
-            };
-
-            try {
-                const response = await fetch('https://api.hsforms.com/submissions/v3/integration/submit/244742774/974a31bc-af19-47b2-be3a-1d55943630d9', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
                 });
-
-                if (response.ok) {
-                    formMessage.style.display = 'block';
-                    formMessage.style.color = '#fff';
-                    formMessage.textContent = 'Thank you! Your adventure suggestion has been submitted.';
-                    form.reset();
-                } else {
-                    throw new Error('Submission failed');
-                }
-            } catch (error) {
-                formMessage.style.display = 'block';
-                formMessage.style.color = '#ffcccc';
-                formMessage.textContent = 'Oops! Something went wrong. Please try again.';
             }
         });
 
@@ -1329,131 +1355,201 @@
         // Load flights on page load
         fetchFlightsForSlider();
 
-        // ===== CRUISE LINES SLIDER =====
-        let allCruiseLinesData = [];
-        let currentPortFilter = 'all';
+        // ===== SPRING BREAK CRUISES =====
+        let schoolHolidaysData = [];
 
-        const PORT_NAMES = {
-            'San Diego': 'Port of San Diego',
-            'Los Angeles': 'Port of Los Angeles',
-            'Long Beach': 'Port of Long Beach'
-        };
-
-        async function fetchCruiseLinesForSlider() {
+        async function fetchSchoolHolidays() {
             try {
-                const [cruisePortsRecords, cruiseLinesRecords] = await Promise.all([
-                    fetchAllRecords('Cruise_Ports'),
-                    fetchAllRecords('Cruise_Lines')
-                ]);
+                const schoolHolidaysRecords = await fetchAllRecords('School_Holidays');
 
-                // Create port lookup map
-                const portsMap = {};
-                cruisePortsRecords.forEach(port => {
-                    portsMap[port.id] = {
-                        name: port.fields.Cruise_Port,
-                        displayName: Object.keys(PORT_NAMES).find(key => PORT_NAMES[key] === port.fields.Cruise_Port) || port.fields.Cruise_Port
-                    };
+                // Store school holidays data
+                schoolHolidaysData = schoolHolidaysRecords.map(record => ({
+                    district: record.fields.School_District || '',
+                    startDate: record.fields.Spring_Break_2026_Start ? new Date(record.fields.Spring_Break_2026_Start) : null,
+                    endDate: record.fields.Spring_Break_2026_End ? new Date(record.fields.Spring_Break_2026_End) : null,
+                    calendarLink: record.fields.Calendar_Link || ''
+                })).filter(h => h.district && h.startDate && h.endDate);
+
+                // Populate school district dropdown
+                const dropdown = document.getElementById('school-district-select');
+                schoolHolidaysData.sort((a, b) => a.district.localeCompare(b.district));
+                schoolHolidaysData.forEach(holiday => {
+                    const option = document.createElement('option');
+                    option.value = holiday.district;
+                    option.textContent = holiday.district;
+                    dropdown.appendChild(option);
                 });
-
-                // Process cruise lines with their ports
-                const cruiseLines = cruiseLinesRecords.map(line => {
-                    const departurePorts = line.fields.Departure_Port || [];
-                    const ports = departurePorts.map(portId => portsMap[portId]).filter(Boolean);
-
-                    return {
-                        name: line.fields.Cruise_Line || 'Unknown Cruise Line',
-                        photo: line.fields.Cruise_Photo && line.fields.Cruise_Photo[0]
-                            ? line.fields.Cruise_Photo[0].url
-                            : 'optimized-images/cruise-default.png',
-                        website: line.fields.Official_Website || null,
-                        pageUrl: line.fields.Page_URL || null,
-                        ports: ports,
-                        displayOrder: line.fields.Display_Order || null
-                    };
-                });
-
-                allCruiseLinesData = cruiseLines.filter(line => line.ports.length > 0);
-                displaySliderCruiseLines();
             } catch (error) {
-                console.error('Error fetching cruise lines:', error);
-                document.getElementById('cruises-slider').innerHTML = '<div class="flights-loading">Unable to load cruise lines</div>';
+                console.error('Error fetching school holidays:', error);
             }
         }
 
-        function displaySliderCruiseLines() {
-            const slider = document.getElementById('cruises-slider');
+        async function fetchUpcomingCruises() {
+            try {
+                const [cruisesRecords, cruiseLinesRecords, cruisePortsRecords, citiesRecords] = await Promise.all([
+                    fetchAllRecords('Cruises'),
+                    fetchAllRecords('Cruise_Lines'),
+                    fetchAllRecords('Cruise_Ports'),
+                    fetchAllRecords('Destinations_City')
+                ]);
 
-            // Filter by port
-            let filtered = allCruiseLinesData;
-            if (currentPortFilter !== 'all') {
-                const fullPortName = PORT_NAMES[currentPortFilter];
-                filtered = allCruiseLinesData.filter(line =>
-                    line.ports.some(port => port.name === fullPortName)
-                );
+                // Create lookup maps
+                const cruiseLinesMap = {};
+                const cruiseLinesPhotoMap = {};
+                cruiseLinesRecords.forEach(line => {
+                    cruiseLinesMap[line.id] = line.fields.Cruise_Line || 'Unknown';
+                    if (line.fields.Cruise_Photo && line.fields.Cruise_Photo[0]) {
+                        cruiseLinesPhotoMap[line.id] = line.fields.Cruise_Photo[0].url;
+                    }
+                });
+
+                const cruisePortsMap = {};
+                const soCalPortIds = new Set();
+                const soCalPortNames = ['Port of San Diego', 'Port of Los Angeles', 'Port of Long Beach'];
+
+                cruisePortsRecords.forEach(port => {
+                    const portName = port.fields.Cruise_Port || 'Unknown';
+                    cruisePortsMap[port.id] = portName;
+                    if (port.fields.SoCal_port === true || soCalPortNames.includes(portName)) {
+                        soCalPortIds.add(port.id);
+                    }
+                });
+
+                const citiesMap = {};
+                const citiesPhotoMap = {};
+                citiesRecords.forEach(city => {
+                    citiesMap[city.id] = city.fields.City || 'Unknown';
+                    if (city.fields.Photo && city.fields.Photo[0]) {
+                        citiesPhotoMap[city.id] = city.fields.Photo[0].url;
+                    }
+                });
+
+                // Process cruises
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                const upcomingCruises = cruisesRecords
+                    .map(cruise => {
+                        const cruiseLineId = cruise.fields.Cruise_Lines?.[0] || cruise.fields.Cruise_Line?.[0];
+                        const departurePortId = cruise.fields.Departure_Cruise_Port?.[0];
+                        const arrivalPortId = cruise.fields.Arrival_Cruise_Port?.[0];
+                        const destinationCityIds = cruise.fields.Destinations_City || [];
+
+                        const isDepartureFromSoCal = departurePortId ? soCalPortIds.has(departurePortId) : false;
+                        const isArrivalToSoCal = arrivalPortId ? soCalPortIds.has(arrivalPortId) : false;
+
+                        // Only include SoCal cruises
+                        if (!isDepartureFromSoCal && !isArrivalToSoCal) {
+                            return null;
+                        }
+
+                        const departureDate = cruise.fields.Departure_Date ? new Date(cruise.fields.Departure_Date) : null;
+
+                        // Only include future cruises
+                        if (!departureDate || departureDate < today) {
+                            return null;
+                        }
+
+                        const destinationCities = destinationCityIds.map(id => citiesMap[id]).filter(Boolean);
+                        const heroPhoto = destinationCityIds.length > 0 && citiesPhotoMap[destinationCityIds[0]]
+                            ? citiesPhotoMap[destinationCityIds[0]]
+                            : (cruiseLineId && cruiseLinesPhotoMap[cruiseLineId] ? cruiseLinesPhotoMap[cruiseLineId] : null);
+
+                        return {
+                            title: cruise.fields.Cruise_Title || 'Untitled Cruise',
+                            cruiseLine: cruiseLineId ? cruiseLinesMap[cruiseLineId] : 'Unknown',
+                            departureDate: departureDate,
+                            totalNights: cruise.fields.Total_Nights || 0,
+                            destinationCities: destinationCities,
+                            photo: heroPhoto,
+                            url: cruise.fields.Cruise_URL || null
+                        };
+                    })
+                    .filter(Boolean)
+                    .sort((a, b) => a.departureDate - b.departureDate)
+                    .slice(0, 20);
+
+                displayUpcomingCruises(upcomingCruises);
+            } catch (error) {
+                console.error('Error fetching upcoming cruises:', error);
+                document.getElementById('spring-cruises-slider').innerHTML = '<div class="flights-loading">Unable to load cruises</div>';
             }
+        }
 
-            // Sort by Display_Order: priority items first (by number), then others alphabetically
-            filtered.sort((a, b) => {
-                // If both have displayOrder, sort by displayOrder (ascending)
-                if (a.displayOrder !== null && b.displayOrder !== null) {
-                    return a.displayOrder - b.displayOrder;
-                }
-                // If only a has displayOrder, it comes first
-                if (a.displayOrder !== null && b.displayOrder === null) {
-                    return -1;
-                }
-                // If only b has displayOrder, it comes first
-                if (a.displayOrder === null && b.displayOrder !== null) {
-                    return 1;
-                }
-                // If neither has displayOrder, sort alphabetically by name
-                return a.name.localeCompare(b.name);
-            });
+        function formatCruiseDate(date) {
+            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
 
-            if (filtered.length === 0) {
-                slider.innerHTML = '<div class="flights-loading">No cruise lines found</div>';
+        function displayUpcomingCruises(cruises) {
+            const slider = document.getElementById('spring-cruises-slider');
+
+            if (cruises.length === 0) {
+                slider.innerHTML = '<div class="flights-loading">No upcoming cruises found</div>';
                 return;
             }
 
-            slider.innerHTML = filtered.map(line => {
+            slider.innerHTML = cruises.map(cruise => {
+                const visibleDestinations = cruise.destinationCities.slice(0, 3);
+                const remainingCount = cruise.destinationCities.length - 3;
+
                 const cardContent = `
-                    <img src="${line.photo}" alt="${line.name}" class="flight-card-image">
-                    <div class="destination-name" style="font-size: 1.2rem; margin-bottom: 8px;">${line.name}</div>
-                    <div class="flight-details" style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6);">
-                        ${line.ports.map(p => p.displayName).join(' · ')}
+                    ${cruise.photo ? `<img src="${cruise.photo}" alt="${cruise.title}" class="flight-card-image">` : ''}
+                    <div class="flight-card-content">
+                        <div class="destination-name" style="font-size: 1.1rem; margin-bottom: 6px;">${cruise.title}</div>
+                        <div style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 8px;">${cruise.cruiseLine}</div>
+                        <div style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">
+                            📅 ${formatCruiseDate(cruise.departureDate)}
+                            ${cruise.totalNights ? ` · 🌙 ${cruise.totalNights} Night${cruise.totalNights !== 1 ? 's' : ''}` : ''}
+                        </div>
+                        ${cruise.destinationCities.length > 0 ? `
+                            <div style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 10px;">
+                                ${visibleDestinations.join(' • ')}${remainingCount > 0 ? ` <span style="color: #ff9a56; font-weight: 600;">+ ${remainingCount} More</span>` : ''}
+                            </div>
+                        ` : ''}
+                        ${cruise.url ? `<div style="display: inline-block; color: #ff6ec7; text-decoration: none; font-size: 0.85rem;">View Cruise →</div>` : ''}
                     </div>
-                    ${line.pageUrl ? `<div style="display: inline-block; margin-top: 12px; color: #ff6ec7; text-decoration: none; font-size: 0.85rem;">View Cruises →</div>` : line.website ? `<a href="${line.website}" target="_blank" rel="noopener noreferrer" style="display: inline-block; margin-top: 12px; color: #ff6ec7; text-decoration: none; font-size: 0.85rem;">Visit Website</a>` : ''}
                 `;
 
-                if (line.pageUrl) {
-                    return `<a href="${line.pageUrl}" class="flight-card" style="text-align: center; text-decoration: none; color: inherit; display: block;">${cardContent}</a>`;
+                if (cruise.url) {
+                    return `<a href="${cruise.url}" target="_blank" rel="noopener noreferrer" class="flight-card" style="text-decoration: none; color: inherit; display: block;">${cardContent}</a>`;
                 } else {
-                    return `<div class="flight-card" style="text-align: center;">${cardContent}</div>`;
+                    return `<div class="flight-card">${cardContent}</div>`;
                 }
             }).join('');
         }
 
-        // Port toggle handlers
-        document.querySelectorAll('.cruise-toggle').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.cruise-toggle').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentPortFilter = btn.dataset.port;
-                displaySliderCruiseLines();
-            });
+        // School district dropdown handler - redirect to cruises page
+        document.getElementById('school-district-select').addEventListener('change', (e) => {
+            const selectedDistrict = e.target.value;
+
+            if (!selectedDistrict) {
+                return;
+            }
+
+            const holiday = schoolHolidaysData.find(h => h.district === selectedDistrict);
+            if (holiday) {
+                // Format dates for URL parameters (YYYY-MM-DD format)
+                const fromDate = holiday.startDate.toISOString().split('T')[0];
+                const toDate = holiday.endDate.toISOString().split('T')[0];
+
+                // Redirect to cruises page with URL parameters
+                window.location.href = `cruises/?district=${encodeURIComponent(selectedDistrict)}&from=${fromDate}&to=${toDate}`;
+            }
         });
 
-        // Cruise slider arrow handlers
-        document.getElementById('cruise-slide-left').addEventListener('click', () => {
-            document.getElementById('cruises-slider').scrollBy({ left: -300, behavior: 'smooth' });
+        // Upcoming cruise slider arrow handlers
+        document.getElementById('spring-cruise-slide-left').addEventListener('click', () => {
+            document.getElementById('spring-cruises-slider').scrollBy({ left: -300, behavior: 'smooth' });
         });
 
-        document.getElementById('cruise-slide-right').addEventListener('click', () => {
-            document.getElementById('cruises-slider').scrollBy({ left: 300, behavior: 'smooth' });
+        document.getElementById('spring-cruise-slide-right').addEventListener('click', () => {
+            document.getElementById('spring-cruises-slider').scrollBy({ left: 300, behavior: 'smooth' });
         });
 
-        // Load cruise lines on page load
-        fetchCruiseLinesForSlider();
+        // Load school holidays and upcoming cruises on page load
+        fetchSchoolHolidays();
+        fetchUpcomingCruises();
 
         // ===== DESTINATIONS SLIDER =====
         let allDestinationsData = [];
