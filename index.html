@@ -872,6 +872,26 @@
         </div>
     </div>
 
+    <!-- Spring Break Finder Section -->
+    <section class="flights-slider-section" style="padding: 0; background: #8B5A9E;">
+        <!-- Hero Image -->
+        <img src="optimized-images/SoCal-Cruises.webp" alt="Spring Break Cruises" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+
+        <!-- Content -->
+        <div class="flights-header" style="padding: 30px 50px 40px; flex-direction: column; align-items: flex-start;">
+            <h2 class="flights-title" style="background: none; -webkit-text-fill-color: #fff; color: #fff;">Spring Break Cruise Finder!</h2>
+            <p style="font-size: 1.1rem; color: rgba(255, 255, 255, 0.95); margin-bottom: 20px; max-width: 800px;">It's not too late to book your spring break cruise out of LA, San Diego or Long Beach. Pick your school district to see what cruises you could take during your break.</p>
+
+            <!-- School District Selector -->
+            <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                <label for="school-district-select" style="font-size: 1rem; color: rgba(255, 255, 255, 0.95); font-weight: bold;">Select Your School District:</label>
+                <select id="school-district-select" style="padding: 10px 20px; font-size: 1rem; border-radius: 6px; border: 2px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.15); color: #fff; cursor: pointer;">
+                    <option value="">Choose a district...</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact and Suggest an Adventure Section -->
     <section class="newsletter-section" id="suggest">
         <div class="contact-grid">
@@ -949,32 +969,18 @@
         <a href="destinations/" class="view-all-flights">All SoCal Destinations</a>
     </section>
 
-    <!-- Spring Break Cruises Section -->
+    <!-- Upcoming Cruises Section -->
     <section class="flights-slider-section">
         <div class="flights-header" style="flex-direction: column; align-items: flex-start;">
-            <h2 class="flights-title">Spring Break Cruises!</h2>
-            <p style="font-size: 1.1rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; max-width: 800px;">It's not too late to book your spring break cruise out of LA, San Diego or Long Beach. Pick your school district to see what cruises you could take during your break.</p>
-
-            <!-- School District Selector -->
-            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
-                <label for="school-district-select" style="font-size: 1rem; color: rgba(255, 255, 255, 0.9);">Select Your School District:</label>
-                <select id="school-district-select" style="padding: 10px 20px; font-size: 1rem; border-radius: 6px; border: 2px solid rgba(255, 110, 199, 0.5); background: rgba(255, 255, 255, 0.1); color: #fff; cursor: pointer;">
-                    <option value="">Choose a district...</option>
-                </select>
-            </div>
-
+            <h2 class="flights-title">Upcoming Cruises</h2>
         </div>
 
-        <!-- Upcoming Cruises -->
-        <div style="margin-top: 30px;">
-            <h3 style="font-size: 1.5rem; margin-bottom: 20px; color: #ff6ec7;">Upcoming Cruises</h3>
-            <div class="slider-wrapper">
-                <button class="slider-arrow left" id="spring-cruise-slide-left">&#8249;</button>
-                <div class="flights-slider" id="spring-cruises-slider">
-                    <div class="flights-loading">Loading upcoming cruises...</div>
-                </div>
-                <button class="slider-arrow right" id="spring-cruise-slide-right">&#8250;</button>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" id="spring-cruise-slide-left">&#8249;</button>
+            <div class="flights-slider" id="spring-cruises-slider">
+                <div class="flights-loading">Loading upcoming cruises...</div>
             </div>
+            <button class="slider-arrow right" id="spring-cruise-slide-right">&#8250;</button>
         </div>
 
         <a href="cruises/" class="view-all-flights">View All SoCal Cruises</a>

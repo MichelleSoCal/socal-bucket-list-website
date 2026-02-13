@@ -26,3 +26,6 @@ Temporary Items
 *.swp
 *.swo
 *~
+
+# Sandbox directory (development only)
+sandbox/

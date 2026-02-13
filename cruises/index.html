@@ -36,9 +36,47 @@
 
         /* Filter Section */
         .filter-section {
-            padding: 30px 50px;
             background: rgba(163, 25, 132, 0.1);
             border-bottom: 1px solid rgba(255, 110, 199, 0.2);
+        }
+
+        .filter-toggle-btn {
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(163, 25, 132, 0.15);
+            border: none;
+            color: #ff6ec7;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .filter-toggle-btn:hover {
+            background: rgba(163, 25, 132, 0.25);
+        }
+
+        .filter-toggle-btn .arrow {
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .filter-toggle-btn.collapsed .arrow {
+            transform: rotate(180deg);
+        }
+
+        .filter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .filter-content.expanded {
+            max-height: 2000px;
+            padding: 30px 50px;
         }
 
         .filter-controls {
@@ -147,10 +185,11 @@
         .cruise-meta {
             display: flex;
             gap: 15px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            color: #56CCF2;
             margin-bottom: 15px;
             flex-wrap: wrap;
+            font-weight: 600;
         }
 
         .cruise-photo-strip {
@@ -273,7 +312,12 @@
         }
 
         @media (max-width: 768px) {
-            .filter-section {
+            .filter-toggle-btn {
+                padding: 20px;
+                font-size: 1rem;
+            }
+
+            .filter-content.expanded {
                 padding: 20px;
             }
 
@@ -297,84 +341,94 @@
     <div id="header-placeholder"></div>
 
     <!-- Page Title -->
-    <section style="padding: 40px 50px 20px; text-align: center;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">SoCal Cruises <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 12px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h1>
-        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.7);">Explore all cruises to and from Southern California ports</p>
-        <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); margin-top: 10px; font-style: italic;">For dreaming purposes only. Please verify cruise availability before making travel plans.</p>
+    <section style="padding: 20px 50px 10px; text-align: center;">
+        <h1 style="font-size: 2.2rem; margin-bottom: 0;">SoCal Cruises <span style="font-size: 0.5em; background: rgba(255, 110, 199, 0.3); padding: 4px 12px; border-radius: 12px; vertical-align: middle; margin-left: 8px;">BETA</span></h1>
     </section>
 
-    <!-- Filter Section -->
+    <!-- Spring Break Filter Section -->
     <section class="filter-section">
-        <!-- Spring Break Helper -->
-        <div style="background: rgba(255, 110, 199, 0.1); border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 8px; padding: 20px; margin-bottom: 25px;">
-            <h3 style="font-size: 1.3rem; margin-bottom: 15px; color: #ff6ec7;">🎉 Spring Break Helper</h3>
-            <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 15px;">Select your school district to auto-fill spring break dates, or enter your own dates below.</p>
+        <button class="filter-toggle-btn collapsed" id="spring-break-toggle" onclick="toggleSpringBreak()">
+            <span>🎉 Spring Break Helper</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="filter-content" id="spring-break-content">
+            <div style="background: rgba(255, 110, 199, 0.1); border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 8px; padding: 20px;">
+                <p style="font-size: 0.95rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 15px;">Select your school district to auto-fill spring break dates.</p>
 
-            <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
-                <label for="spring-break-district" style="font-size: 1rem;">School District:</label>
-                <select id="spring-break-district" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.5); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer; min-width: 250px;">
-                    <option value="">Choose a district...</option>
+                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
+                    <label for="spring-break-district" style="font-size: 1rem;">School District:</label>
+                    <select id="spring-break-district" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.5); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer; min-width: 250px;">
+                        <option value="">Choose a district...</option>
+                    </select>
+                </div>
+
+                <div id="spring-break-dates-display" style="display: none; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); padding: 12px; background: rgba(255, 110, 199, 0.08); border-radius: 6px; border: 1px solid rgba(255, 110, 199, 0.2);">
+                    <span id="spring-break-message"></span>
+                    <a id="selected-calendar-link" href="#" target="_blank" style="display: block; margin-top: 8px; color: #ff9a56; text-decoration: none; font-size: 0.85rem;">View Calendar →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Other Filters Section -->
+    <section class="filter-section" style="border-top: 1px solid rgba(255, 110, 199, 0.2);">
+        <button class="filter-toggle-btn collapsed" id="filters-toggle" onclick="toggleOtherFilters()">
+            <span>🔍 Advanced Filters</span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="filter-content" id="filters-content">
+            <div class="filter-controls">
+                <label>Filter by:</label>
+                <select id="direction-filter">
+                    <option value="all">All Directions</option>
+                    <option value="round-trip">Round Trip</option>
+                    <option value="one-way-to-socal">One-Way to SoCal</option>
+                    <option value="one-way-from-socal">One-Way from SoCal</option>
                 </select>
-                <button id="clear-spring-break" style="padding: 10px 20px; font-size: 0.9rem; background: transparent; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; color: rgba(255, 255, 255, 0.7); cursor: pointer; display: none;" onmouseover="this.style.borderColor='rgba(255, 110, 199, 0.6)'; this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255, 110, 199, 0.3)'; this.style.color='rgba(255, 255, 255, 0.7)'">Clear</button>
-            </div>
-
-            <div id="spring-break-dates-display" style="display: none; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); padding: 12px; background: rgba(255, 110, 199, 0.08); border-radius: 6px; border: 1px solid rgba(255, 110, 199, 0.2);">
-                <strong id="selected-district-name"></strong> Spring Break:
-                <span id="selected-spring-dates" style="color: #ff6ec7; font-weight: 600;"></span>
-                <a id="selected-calendar-link" href="#" target="_blank" style="margin-left: 15px; color: #ff9a56; text-decoration: none; font-size: 0.85rem;">View Calendar →</a>
+                <select id="cruise-line-filter">
+                    <option value="">All Cruise Lines</option>
+                </select>
+                <select id="cruise-ship-filter">
+                    <option value="">All Ships</option>
+                </select>
+                <select id="departure-port-filter">
+                    <option value="">All Departure Ports</option>
+                </select>
+                <select id="arrival-port-filter">
+                    <option value="">All Arrival Ports</option>
+                </select>
+                <select id="destination-city-filter">
+                    <option value="">All Destinations</option>
+                </select>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <label style="margin: 0;">Dates:</label>
+                    <input type="date" id="date-from-filter" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer;">
+                    <span style="color: rgba(255, 255, 255, 0.5);">to</span>
+                    <input type="date" id="date-to-filter" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer;">
+                </div>
+                <select id="date-flexibility-filter">
+                    <option value="0">Exact dates</option>
+                    <option value="1">±1 day</option>
+                    <option value="2">±2 days</option>
+                    <option value="3">±3 days</option>
+                    <option value="7">±1 week</option>
+                </select>
+                <select id="nights-filter">
+                    <option value="">All Durations</option>
+                    <option value="1-3">1-3 Nights</option>
+                    <option value="4-7">4-7 Nights</option>
+                    <option value="8-14">8-14 Nights</option>
+                    <option value="15+">15+ Nights</option>
+                </select>
+                <select id="sort-filter">
+                    <option value="date-asc">Earliest Date</option>
+                    <option value="date-desc">Latest Date</option>
+                    <option value="nights-asc">Shortest Duration</option>
+                    <option value="nights-desc">Longest Duration</option>
+                </select>
             </div>
         </div>
-
-        <div class="filter-controls">
-            <label>Filter by:</label>
-            <select id="direction-filter">
-                <option value="all">All Directions</option>
-                <option value="round-trip">Round Trip</option>
-                <option value="one-way-to-socal">One-Way to SoCal</option>
-                <option value="one-way-from-socal">One-Way from SoCal</option>
-            </select>
-            <select id="cruise-line-filter">
-                <option value="">All Cruise Lines</option>
-            </select>
-            <select id="cruise-ship-filter">
-                <option value="">All Ships</option>
-            </select>
-            <select id="departure-port-filter">
-                <option value="">All Departure Ports</option>
-            </select>
-            <select id="arrival-port-filter">
-                <option value="">All Arrival Ports</option>
-            </select>
-            <select id="destination-city-filter">
-                <option value="">All Destinations</option>
-            </select>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <label style="margin: 0;">Dates:</label>
-                <input type="date" id="date-from-filter" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer;">
-                <span style="color: rgba(255, 255, 255, 0.5);">to</span>
-                <input type="date" id="date-to-filter" style="padding: 10px 15px; font-size: 1rem; border: 1px solid rgba(255, 110, 199, 0.3); border-radius: 4px; background: rgba(0, 0, 0, 0.3); color: #fff; cursor: pointer;">
-            </div>
-            <select id="date-flexibility-filter">
-                <option value="0">Exact dates</option>
-                <option value="1">±1 day</option>
-                <option value="2">±2 days</option>
-                <option value="3">±3 days</option>
-                <option value="7">±1 week</option>
-            </select>
-            <select id="nights-filter">
-                <option value="">All Durations</option>
-                <option value="1-3">1-3 Nights</option>
-                <option value="4-7">4-7 Nights</option>
-                <option value="8-14">8-14 Nights</option>
-                <option value="15+">15+ Nights</option>
-            </select>
-            <select id="sort-filter">
-                <option value="date-asc">Earliest Date</option>
-                <option value="date-desc">Latest Date</option>
-                <option value="nights-asc">Shortest Duration</option>
-                <option value="nights-desc">Longest Duration</option>
-            </select>
-        </div>
+    </section>
     </section>
 
     <!-- Cruises Section -->
@@ -389,9 +443,40 @@
         <div class="cruises-grid" id="cruises-grid">
             <div class="loading">Loading cruises...</div>
         </div>
+        <p style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); margin-top: 40px; font-style: italic; text-align: center;">For dreaming purposes only. Please verify cruise availability before making travel plans.</p>
     </section>
 
     <script>
+        // Toggle Spring Break section
+        function toggleSpringBreak() {
+            const toggleBtn = document.getElementById('spring-break-toggle');
+            const filterContent = document.getElementById('spring-break-content');
+            const isCollapsed = toggleBtn.classList.contains('collapsed');
+
+            if (isCollapsed) {
+                toggleBtn.classList.remove('collapsed');
+                filterContent.classList.add('expanded');
+            } else {
+                toggleBtn.classList.add('collapsed');
+                filterContent.classList.remove('expanded');
+            }
+        }
+
+        // Toggle Other Filters section
+        function toggleOtherFilters() {
+            const toggleBtn = document.getElementById('filters-toggle');
+            const filterContent = document.getElementById('filters-content');
+            const isCollapsed = toggleBtn.classList.contains('collapsed');
+
+            if (isCollapsed) {
+                toggleBtn.classList.remove('collapsed');
+                filterContent.classList.add('expanded');
+            } else {
+                toggleBtn.classList.add('collapsed');
+                filterContent.classList.remove('expanded');
+            }
+        }
+
         // Airtable configuration
         const AIRTABLE_TOKEN = 'pat4HICXlDN0QBxkZ.b8d2092207dd1ee3ec676ab0b131f19ae92d17bcc17b0c9fb25d0a64dd1e0024';
         const AIRTABLE_BASE_ID = 'appGoQsy2UiGyyZ3T';
@@ -473,7 +558,6 @@
 
             if (!selectedDistrict) {
                 document.getElementById('spring-break-dates-display').style.display = 'none';
-                document.getElementById('clear-spring-break').style.display = 'none';
                 return;
             }
 
@@ -493,36 +577,45 @@
                 currentDateFrom = fromDateFormatted;
                 currentDateTo = toDateFormatted;
 
-                // Show the dates display
-                document.getElementById('selected-district-name').textContent = holiday.district;
-                document.getElementById('selected-spring-dates').textContent =
-                    `${formatDateForDisplay(holiday.startDate)} - ${formatDateForDisplay(holiday.endDate)}`;
-
+                // Setup calendar link
                 const calendarLink = document.getElementById('selected-calendar-link');
                 if (holiday.calendarLink) {
                     calendarLink.href = holiday.calendarLink;
-                    calendarLink.style.display = 'inline';
+                    calendarLink.style.display = 'block';
                 } else {
                     calendarLink.style.display = 'none';
                 }
 
                 document.getElementById('spring-break-dates-display').style.display = 'block';
-                document.getElementById('clear-spring-break').style.display = 'inline-block';
 
                 // Trigger filter update
                 filterAndDisplayCruises();
+
+                // Update Spring Break message with cruise count
+                updateSpringBreakMessage(holiday.district, holiday.startDate, holiday.endDate);
             }
         });
 
-        // Clear button handler
-        document.getElementById('clear-spring-break').addEventListener('click', () => {
-            document.getElementById('spring-break-district').value = '';
-            document.getElementById('date-from-filter').value = '';
-            document.getElementById('date-to-filter').value = '';
-            document.getElementById('spring-break-dates-display').style.display = 'none';
-            document.getElementById('clear-spring-break').style.display = 'none';
-            filterAndDisplayCruises();
-        });
+        // Update Spring Break message with cruise count
+        function updateSpringBreakMessage(districtName, startDate, endDate) {
+            // Get current filtered cruise count by reading the displayed count
+            const cruiseCountText = document.getElementById('cruise-count').textContent;
+            const countMatch = cruiseCountText.match(/\d+/);
+            const cruiseCount = countMatch ? parseInt(countMatch[0]) : 0;
+
+            // Format dates
+            const startFormatted = formatDateForDisplay(startDate);
+            const endFormatted = formatDateForDisplay(endDate);
+
+            // Create message with colored elements
+            const message = `There ${cruiseCount === 1 ? 'is' : 'are'} <span style="color: #ff6ec7; font-weight: bold;">${cruiseCount} cruise${cruiseCount !== 1 ? 's' : ''}</span> during ${districtName}'s Spring Break from <span style="color: #ff6ec7; font-weight: bold;">${startFormatted} to ${endFormatted}</span>.`;
+
+            document.getElementById('spring-break-message').innerHTML = message;
+
+            // Update calendar link text with district name
+            const calendarLink = document.getElementById('selected-calendar-link');
+            calendarLink.textContent = `View ${districtName}'s calendar →`;
+        }
 
         // Load school holidays on page load
         loadSchoolHolidays();
@@ -533,8 +626,12 @@
             const district = urlParams.get('district');
             const fromDate = urlParams.get('from');
             const toDate = urlParams.get('to');
+            const flex = urlParams.get('flex');
 
             if (district && fromDate && toDate) {
+                // Auto-expand Spring Break section when URL parameters are present
+                toggleSpringBreak();
+
                 // Wait for both school holidays data AND cruise data to load
                 const checkDataLoaded = setInterval(() => {
                     if (schoolHolidaysData.length > 0 && allCruises.length > 0) {
@@ -543,12 +640,42 @@
                         const dropdown = document.getElementById('spring-break-district');
                         dropdown.value = district;
 
+                        // Set flexibility if provided
+                        if (flex) {
+                            document.getElementById('date-flexibility-filter').value = flex;
+                            currentDateFlexibility = flex;
+                        }
+
                         // Trigger the change event to auto-fill dates and filter
                         dropdown.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 }, 100);
 
                 // Timeout after 10 seconds
+                setTimeout(() => clearInterval(checkDataLoaded), 10000);
+            } else if (fromDate || toDate) {
+                // Handle dates without district
+                const checkDataLoaded = setInterval(() => {
+                    if (allCruises.length > 0) {
+                        clearInterval(checkDataLoaded);
+
+                        if (fromDate) {
+                            document.getElementById('date-from-filter').value = fromDate;
+                            currentDateFrom = fromDate;
+                        }
+                        if (toDate) {
+                            document.getElementById('date-to-filter').value = toDate;
+                            currentDateTo = toDate;
+                        }
+                        if (flex) {
+                            document.getElementById('date-flexibility-filter').value = flex;
+                            currentDateFlexibility = flex;
+                        }
+
+                        filterAndDisplayCruises();
+                    }
+                }, 100);
+
                 setTimeout(() => clearInterval(checkDataLoaded), 10000);
             }
         }
@@ -718,6 +845,20 @@
                         <!-- Card Content -->
                         <div class="cruise-card-content">
                             <h3 class="cruise-title">${cruiseTitle}</h3>
+                            ${(() => {
+                                // Determine trip type and format display
+                                const isRoundTrip = departurePort === arrivalPort;
+                                const formatPort = (port) => port.replace(/^Port of /, '');
+
+                                if (isRoundTrip) {
+                                    return `<div style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 5px; font-weight: 600;">Round trip from ${formatPort(departurePort)}</div>`;
+                                } else if (cruise.enriched.isDepartureFromSoCal) {
+                                    return `<div style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 5px; font-weight: 600;">One way to ${formatPort(arrivalPort)}</div>`;
+                                } else if (cruise.enriched.isArrivalToSoCal) {
+                                    return `<div style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 5px; font-weight: 600;">One way from ${formatPort(departurePort)}</div>`;
+                                }
+                                return '';
+                            })()}
                             <div class="cruise-ship">${cruiseShip}</div>
                             <div class="cruise-meta">
                                 <span>📅 ${startDate} - ${endDate}</span>
